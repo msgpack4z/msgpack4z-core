@@ -5,8 +5,6 @@ object UpdateReadme {
 
   private val sonatypeURL = "https://oss.sonatype.org/service/local/repositories/"
 
-  val updateReadmeProcess: ReleaseStep = updateReadmeTask
-
   val updateReadmeTask = { state: State =>
     val extracted = Project.extract(state)
     val scalaV = extracted get scalaBinaryVersion
@@ -37,4 +35,5 @@ object UpdateReadme {
     state
   }
 
+  val updateReadmeProcess: ReleaseStep = updateReadmeTask
 }
