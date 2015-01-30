@@ -11,6 +11,7 @@ object Java06BinarySpec extends BinarySpec("java06") with Java06Spec
 object Java06ScalazSpec extends ScalazSpec("java06") with Java06Spec
 object Java06UIntSpec extends UIntSpec("java06") with Java06Spec
 object Java06IntSpec extends IntSpec("java06") with Java06Spec
+object Java06UnionSpec extends UnionSpec("java06") with Java06Spec
 
 
 
@@ -25,6 +26,7 @@ object Java07BinarySpec extends BinarySpec("java07") with Java07Spec
 object Java07ScalazSpec extends ScalazSpec("java07") with Java07Spec
 object Java07UIntSpec extends UIntSpec("java07") with Java07Spec
 object Java07IntSpec extends IntSpec("java07") with Java07Spec
+object Java07UnionSpec extends UnionSpec("java07") with Java07Spec
 
 
 
@@ -40,3 +42,4 @@ object NativeBinarySpec extends BinarySpec("native") with NativeSpec
 object NativeScalazSpec extends ScalazSpec("native") with NativeSpec
 object NativeUIntSpec extends UIntSpec("native") with NativeSpec
 object NativeIntSpec extends IntSpec("native") with NativeSpec
+object NativeUnionSpec extends UnionSpec("native") with NativeSpec

@@ -13,13 +13,13 @@ abstract class ArraySpec(name: String) extends SpecBase(name + " array") {
 
   property("primitive") = new Properties("") {
     import CodecInstances.anyValArray._
-    property("Short") = checkLawz[Array[Short]]
-    property("Boolean") = checkLawz[Array[Boolean]]
-    property("Int") = checkLawz[Array[Int]]
-    property("Long") = checkLawz[Array[Long]]
-    property("Float") = checkLawz[Array[Float]]
-    property("Double") = checkLawz[Array[Double]]
-    property("Byte") = checkLawzWithExcplicit[Array[Byte]](CodecInstances.byteArray.arrayByte)
+    property("Short") = checkLawWithoutHashCode[Array[Short]]
+    property("Boolean") = checkLawWithoutHashCode[Array[Boolean]]
+    property("Int") = checkLawWithoutHashCode[Array[Int]]
+    property("Long") = checkLawWithoutHashCode[Array[Long]]
+    property("Float") = checkLawWithoutHashCode[Array[Float]]
+    property("Double") = checkLawWithoutHashCode[Array[Double]]
+    property("Byte") = checkLawWithoutHashCode[Array[Byte]](CodecInstances.byteArray.arrayByte, implicitly, arrayEq[Byte])
   }
 
   property("generic") = new Properties("") {
@@ -27,14 +27,14 @@ abstract class ArraySpec(name: String) extends SpecBase(name + " array") {
     import CodecInstances.anyVal._
     import CodecInstances.std.stringCodec
 
-    property("Short") = checkLawz[Array[Short]]
-    property("Boolean") = checkLawz[Array[Boolean]]
-    property("Int") = checkLawz[Array[Int]]
-    property("Long") = checkLawz[Array[Long]]
-    property("Float") = checkLawz[Array[Float]]
-    property("Double") = checkLawz[Array[Double]]
-    property("Byte") = checkLawz[Array[Byte]]
-    property("String") = checkLawz[Array[String]]
+    property("Short") = checkLawWithoutHashCode[Array[Short]]
+    property("Boolean") = checkLawWithoutHashCode[Array[Boolean]]
+    property("Int") = checkLawWithoutHashCode[Array[Int]]
+    property("Long") = checkLawWithoutHashCode[Array[Long]]
+    property("Float") = checkLawWithoutHashCode[Array[Float]]
+    property("Double") = checkLawWithoutHashCode[Array[Double]]
+    property("Byte") = checkLawWithoutHashCode[Array[Byte]]
+    property("String") = checkLawWithoutHashCode[Array[String]]
   }
 
 }

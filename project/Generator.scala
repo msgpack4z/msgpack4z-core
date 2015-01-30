@@ -28,11 +28,13 @@ object Generator {
       val pack = "msgpack4z"
       val dir = (scalaSource in Compile).value / pack
       val caseCodec = dir / "CaseCodec.scala"
+      val caseMapCodec = dir / "CaseMapCodec.scala"
       val arrayCodec = dir / "AnyValArrayCodec.scala"
       val tupleCodec = dir / "TupleCodec.scala"
       val anyValCodec = dir / "AnyValCodec.scala"
       List(
         GeneratedCode(caseCodec, CaseCodec.generate(pack)),
+        GeneratedCode(caseMapCodec, CaseMapCodec.generate(pack)),
         GeneratedCode(arrayCodec, ArrayCodec.generate(pack)),
         GeneratedCode(tupleCodec, TupleCodec.generate(pack)),
         GeneratedCode(anyValCodec, AnyValCodec.generate(pack))

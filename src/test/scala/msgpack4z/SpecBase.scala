@@ -15,27 +15,29 @@ abstract class SpecBase(name: String) extends Properties(name) {
   implicit final val symbolArb: Arbitrary[Symbol] =
     Functor[Arbitrary].map(implicitly[Arbitrary[String]])(Symbol(_))
 
-  final def checkLawzWithExcplicit[A](A: MsgpackCodec[A])(implicit G: Arbitrary[A], E: Equal[A]) =
-    checkLawz[A](A, G, E)
-
-  private def checkRoundTripBytes[A](a: A)(implicit A: MsgpackCodec[A], G: Arbitrary[A], E: Equal[A]): Boolean = {
-    A.roundtripz(a, packer(), unpacker _) match {
-      case None =>
-        true
-      case Some(\/-(b)) =>
-        println("fail roundtrip bytes " + a + " " + b)
-        false
-      case Some(-\/(e)) =>
-        println(e)
-        false
-    }
-  }
-
-  final def checkLawz[A](implicit A: MsgpackCodec[A], G: Arbitrary[A], E: Equal[A]): Prop =
-    Prop.forAll{ (a: A) =>
+  final def checkRoundTripBytes[A](checkHashCode: Boolean)(implicit A: MsgpackCodec[A], G: Arbitrary[A], E: Equal[A]): Prop =
+    Prop.forAll{ a: A =>
       Prop.secure{
         try {
-          checkRoundTripBytes(a)
+          A.roundtripz(a, packer(), unpacker _) match {
+            case None =>
+              if (checkHashCode) {
+                A.unpackAndClose(unpacker(A.toBytes(a, packer()))) match {
+                  case \/-(value) =>
+                    a.## == value.##
+                  case -\/(e) =>
+                    throw e
+                }
+              } else {
+                true
+              }
+            case Some(\/-(b)) =>
+              println("fail roundtrip bytes " + a + " " + b)
+              false
+            case Some(-\/(e)) =>
+              println(e)
+              false
+          }
         }catch{
           case NonFatal(e) =>
             println(a)
@@ -45,7 +47,15 @@ abstract class SpecBase(name: String) extends Properties(name) {
       }
     }
 
+
+  final def checkLawz[A](implicit A: MsgpackCodec[A], G: Arbitrary[A], E: Equal[A]) =
+    checkRoundTripBytes(true)(A, G, E)
+
   final def checkLaw[A](implicit A: MsgpackCodec[A], G: Arbitrary[A]) =
-    checkLawz(A, G, Equal.equalA[A])
+    checkRoundTripBytes(true)(A, G, Equal.equalA[A])
+
+  final def checkLawWithoutHashCode[A](implicit A: MsgpackCodec[A], G: Arbitrary[A], E: Equal[A]) =
+    checkRoundTripBytes(false)(A, G, E)
+
 
 }
