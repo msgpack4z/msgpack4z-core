@@ -16,7 +16,7 @@ object UpdateReadme {
     val readmeFile = file(readme)
     val newReadme = Predef.augmentString(IO.read(readmeFile)).lines.map{ line =>
       val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
-      def n = modules(modules.map("\"" + _ + "\"").indexWhere(line.contains))
+      def n = modules(modules.indexWhere(line.contains))
       if(line.startsWith("libraryDependencies") && matchReleaseOrSnapshot){
         s"""libraryDependencies += "${org}" %% "$n" % "$v""""
       }else if(line.contains(sonatypeURL) && matchReleaseOrSnapshot){
