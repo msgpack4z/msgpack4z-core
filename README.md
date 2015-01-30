@@ -8,7 +8,7 @@
 - <https://github.com/msgpack/msgpack/blob/master/spec.md>
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.1.0"
+libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.1.1"
 ```
 
-- [sxr](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.1.0/msgpack4z-core_2.11-0.1.0-sxr.jar/!/index.html)
+- [sxr](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.1.1/msgpack4z-core_2.11-0.1.1-sxr.jar/!/index.html)
