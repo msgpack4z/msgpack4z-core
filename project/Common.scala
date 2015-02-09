@@ -7,7 +7,7 @@ import sbtbuildinfo.Plugin._
 
 object Common {
 
-  final val ScalazVersion = "7.1.0"
+  final val ScalazVersion = "7.1.1"
 
   private def gitHash: String = scala.util.Try(
     sys.process.Process("git rev-parse HEAD").lines_!.head
