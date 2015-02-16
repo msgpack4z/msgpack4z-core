@@ -18,7 +18,8 @@ object build extends Build {
       ("com.github.xuwei-k" %% "zeroapply-scalaz" % "0.1.2" % "provided") ::
       ("org.typelevel" %% "shapeless-scalaz" % shapelessContrib % "test") ::
       ("org.typelevel" %% "shapeless-scalacheck" % shapelessContrib % "test") ::
-      ("com.github.xuwei-k" % "msgpack4z-java07" % "0.1.2" % "test") ::
+      ("com.github.xuwei-k" % "msgpack4z-java07" % "0.1.3" % "test").exclude("org.msgpack", "msgpack-core") ::
+      ("org.msgpack" % "msgpack-core" % "0.7.0-p7" % "test") ::
       ("com.github.xuwei-k" % "msgpack4z-java06" % "0.1.0" % "test") ::
       ("com.github.xuwei-k" %% "msgpack4z-native" % "0.1.0" % "test") ::
       Nil
