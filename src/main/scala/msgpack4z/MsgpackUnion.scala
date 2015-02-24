@@ -3,6 +3,7 @@ package msgpack4z
 import java.math.BigInteger
 import scala.language.experimental.macros
 import msgpack4z.MsgpackUnion.constNone
+import scalaz.Equal
 
 sealed abstract class MsgpackUnion extends Product with Serializable {
 
@@ -143,6 +144,9 @@ object MsgpackUnion {
 
   private[this] val LongMax = BigInteger.valueOf(Long.MaxValue)
   private[this] val LongMin = BigInteger.valueOf(Long.MinValue)
+
+  implicit val msgpackUnionEqual: Equal[MsgpackUnion] =
+    Equal.equalA[MsgpackUnion]
 
   val unpackF: MsgUnpacker => MsgpackUnion = unpack
 
