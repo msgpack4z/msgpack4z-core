@@ -12,3 +12,7 @@ libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.1.1"
 ```
 
 - [sxr](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.1.1/msgpack4z-core_2.11-0.1.1-sxr.jar/!/index.html)
+
+
+### example
+- <https://github.com/msgpack4z/msgpack4z-core/blob/master/src/test/scala/msgpack4z/CaseClassExample.scala>
