@@ -13,7 +13,7 @@ abstract class ScalazSpec(name: String) extends SpecBase(name + " scalaz"){
   property("IList") = checkLawz[IList[Long]]
   property("ISet") = checkLawz[ISet[Long]]
   property("Maybe") = checkLawz[Maybe[Long]]
-  property("==>>") = checkLawWithoutHashCode[String ==>> Maybe[Byte]]
+  property("==>>") = checkLawz[String ==>> Maybe[Byte]]
   property("NonEmptyList") = checkLawz[NonEmptyList[NonEmptyList[Long]]]
 
   import msgpack4z.EitherCodec.eitherCompactCodec
