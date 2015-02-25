@@ -6,6 +6,7 @@ trait ScalazCodec {
 
   implicit def iListCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[IList[A]]
   implicit def imapCodec[A, B](implicit O: Order[A], A: MsgpackCodec[A], B: MsgpackCodec[B]): MsgpackCodec[A ==>> B]
+  implicit def isetCodec[A](implicit O: Order[A], A: MsgpackCodec[A]): MsgpackCodec[ISet[A]]
   implicit def nonEmptyListCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[NonEmptyList[A]]
   implicit def maybeCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[Maybe[A]]
 
@@ -44,6 +45,35 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
       unpacker.arrayEnd()
       if(error == null)
         \/-(list.reverse)
+      else
+        error
+    }
+  )
+
+  override final def isetCodec[A](implicit O: Order[A], A: MsgpackCodec[A]): MsgpackCodec[ISet[A]] = MsgpackCodec.tryE(
+    (packer, set) => {
+      packer.packArrayHeader(set.size)
+      set.foldLeft(())((_, a) => A.pack(packer, a))
+      packer.arrayEnd()
+    }
+    ,
+    unpacker => {
+      val size = unpacker.unpackArrayHeader()
+      var set = ISet.empty[A]
+      var i = 0
+      var error: -\/[UnpackError] = null
+      while(i < size && error == null){
+        A.unpack(unpacker) match {
+          case \/-(a) =>
+            set = set.insert(a)
+          case e @ -\/(_) =>
+            error = e
+        }
+        i += 1
+      }
+      unpacker.arrayEnd()
+      if(error == null)
+        \/-(set)
       else
         error
     }
