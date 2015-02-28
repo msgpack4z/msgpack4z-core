@@ -1,6 +1,6 @@
 package msgpack4z
 
-final class Opt[A <: AnyRef] private[msgpack4z] (val get: A) extends AnyVal {
+final case class Opt[A <: AnyRef] private[msgpack4z] (val get: A) extends AnyVal {
   def isEmpty: Boolean = get eq null
   def nonEmpty: Boolean = get ne null
   def toOption: Option[A] = Option(get)
