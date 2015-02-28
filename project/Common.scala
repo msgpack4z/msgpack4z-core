@@ -20,6 +20,7 @@ object Common {
     buildInfoSettings
   ).flatten ++ Seq(
     resolvers += Opts.resolver.sonatypeReleases,
+    ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
     testOptions in Test += Tests.Argument(
       TestFrameworks.ScalaCheck, "-minSuccessfulTests", "300"
     ),
