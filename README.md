@@ -31,4 +31,4 @@ resolvers += Opts.resolver.sonatypeSnapshots
 
 ### dependency graph
 
-![graph](http://msgpack4z.github.io/graph.svg)
+[![graph](http://msgpack4z.github.io/graph.svg)](http://msgpack4z.github.io/graph.svg)
