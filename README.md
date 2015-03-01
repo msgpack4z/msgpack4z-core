@@ -28,3 +28,7 @@ resolvers += Opts.resolver.sonatypeSnapshots
 ```
 
 - [sxr](https://oss.sonatype.org/service/local/repositories/snapshots/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.1.3-SNAPSHOT/msgpack4z-core_2.11-0.1.3-SNAPSHOT-sxr.jar/!/index.html)
+
+### dependency graph
+
+![graph](http://msgpack4z.github.io/graph.svg)
