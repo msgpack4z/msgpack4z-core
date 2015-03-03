@@ -75,7 +75,7 @@ object Common {
       "-Ywarn-unused-import" ::
       Nil
     ),
-    scalaVersion := "2.11.5",
+    scalaVersion := "2.11.6",
     crossScalaVersions := scalaVersion.value :: Nil,
     scalacOptions in (Compile, doc) ++= {
       val tag = if(isSnapshot.value) gitHash else { "v" + version.value }
