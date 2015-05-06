@@ -79,11 +79,6 @@ object Common {
       "-language:implicitConversions" ::
       Nil
     ) ::: unusedWarnings,
-    scalacOptions in compile ++= (
-      "-Ywarn-unused" ::
-      "-Ywarn-unused-import" ::
-      Nil
-    ),
     scalaVersion := "2.11.6",
     crossScalaVersions := scalaVersion.value :: Nil,
     scalacOptions in (Compile, doc) ++= {
