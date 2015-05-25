@@ -3,6 +3,7 @@
 [![Build Status](https://secure.travis-ci.org/msgpack4z/msgpack4z-core.png?branch=master)](http://travis-ci.org/msgpack4z/msgpack4z-core)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/msgpack4z-core_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/msgpack4z-core_2.11)
 [![scaladoc](http://javadoc-badge.appspot.com/com.github.xuwei-k/msgpack4z-core_2.11.svg?label=scaladoc)](http://javadoc-badge.appspot.com/com.github.xuwei-k/msgpack4z-core_2.11)
+[![Reference Status](https://www.versioneye.com/java/com.github.xuwei-k:msgpack4z-core_2.11/reference_badge.svg?style=flat)](https://www.versioneye.com/java/com.github.xuwei-k:msgpack4z-core_2.11/references)
 
 - <http://msgpack.org/>
 - <https://github.com/msgpack/msgpack/blob/master/spec.md>
