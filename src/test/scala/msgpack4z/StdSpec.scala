@@ -1,55 +1,52 @@
 package msgpack4z
 
-import org.scalacheck.{Gen, Arbitrary}
-import shapeless.contrib.scalacheck._
-import shapeless.contrib.scalaz._
-import scala.util.Random
-import scalaz.scalacheck.ScalazArbitrary._
-import scalaz.std.AllInstances._
 import msgpack4z.CodecInstances.all._
+import msgpack4z.UnionGen._
+import scala.util.Random
+import scalaprops._
+import scalaz.std.AllInstances._
 
-abstract class StdSpec(name: String) extends SpecBase(name + " std") {
+abstract class StdSpec extends SpecBase {
 
-  property("string 16") = checkLaw[String](
+  val `string 16` = checkLaw[String](
     implicitly,
-    Arbitrary(Gen.const(Random.alphanumeric.take(1 << (8 + 1)).mkString))
+    Gen.value(Random.alphanumeric.take(1 << (8 + 1)).mkString)
   )
 
-  property("string 32") = checkLaw[String](
+  val `string 32` = checkLaw[String](
     implicitly,
-    Arbitrary(Gen.const(Random.alphanumeric.take(1 << (16 + 1)).mkString))
+    Gen.value(Random.alphanumeric.take(1 << (16 + 1)).mkString)
   )
 
-
-  property("int") = checkLaw[Int]
-  property("short") = checkLaw[Short]
-  property("double") = checkLaw[Double]
-  property("float") = checkLaw[Float]
-  property("long") = checkLaw[Long]
-  property("boolean") = checkLaw[Boolean]
-  property("symbol") = checkLaw[Symbol]
-  property("string") = checkLaw[String]
+  val int = checkLaw[Int]
+  val short = checkLaw[Short]
+  val double = checkLaw[Double]
+  val float = checkLaw[Float]
+  val long = checkLaw[Long]
+  val boolean = checkLaw[Boolean]
+  val symbol = checkLaw[Symbol]
+  val string = checkLaw[String]
 
   implicit val twentyTwoCodec: MsgpackCodec[TwentyTwo] =
     CaseCodec.codec22(TwentyTwo.apply, TwentyTwo.unapply)
 
-  property("Option") = checkLaw[Option[Option[Long]]]
+  val option = checkLaw[Option[Option[Long]]]
 
-  property("List[Int]") = checkLaw[List[Int]]
-  property("Vector[Long]") = checkLaw[List[Long]]
-
-
-  property("Tuple1") = checkLawz[Tuple1[Long]]
-  property("Tuple2") = checkLawz[(Long, Int)]
+  val `List[Int]` = checkLaw[List[Int]]
+  val `Vector[Long]` = checkLaw[List[Long]]
 
 
-  property("Map[String, String]") = checkLawz[Map[String, String]]
+  val tuple1 = checkLawz[Tuple1[Long]]
+  val tuple2 = checkLawz[(Long, Int)]
 
-  property("Either String") = checkLaw[Either[Int, Long]](EitherCodec.eitherStringCodec, implicitly)
-  property("Either Compact") = checkLaw[Either[List[Int], Long]](EitherCodec.eitherCompactCodec, implicitly)
 
-  property("TwentyTwo") = checkLaw[TwentyTwo]
+  val `Map[String, String]` = checkLawz[Map[String, String]]
 
-  property("Tuple22") = checkLawz[(Long, String, Long, Long, Long, Int, Long, Long, Long, Long, List[Long], Long, Long, Long, Long, String, Long, Long, Long, Long, Long, Long)]
+  val `Either String` = checkLaw[Either[Int, Long]](EitherCodec.eitherStringCodec, implicitly)
+  val `Either Compact` = checkLaw[Either[List[Int], Long]](EitherCodec.eitherCompactCodec, implicitly)
+
+  val twentyTwo = checkLaw[TwentyTwo]
+
+  val tuple22 = checkLaw[(Long, String, Long, Long, Long, Int, Long, Long, Long, Long, List[Long], Long, Long, Long, Long, String, Long, Long, Long, Long, Long, Long)]
 
 }

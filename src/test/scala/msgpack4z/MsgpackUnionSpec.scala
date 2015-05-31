@@ -1,14 +1,10 @@
 package msgpack4z
 
-import org.scalacheck.{Arbitrary, Properties}
-import scalaz.scalacheck.ScalazProperties
+import scalaprops._
+import UnionGen._
 
-object MsgpackUnionSpec extends Properties("MsgpackUnion") {
+object MsgpackUnionSpec extends Scalaprops {
 
-  private implicit val unionArb =
-    Arbitrary(UnionArbitrary.unionGen)
-
-  property("union equal instance") =
-    ScalazProperties.equal.laws[MsgpackUnion]
+  val equalLaws = scalazlaws.equal.all[MsgpackUnion]
 
 }

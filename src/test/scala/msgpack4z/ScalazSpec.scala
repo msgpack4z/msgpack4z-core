@@ -1,20 +1,19 @@
 package msgpack4z
 
 import msgpack4z.CodecInstances.all._
-import org.scalacheck.Arbitrary
 import scalaz._
-import scalaz.scalacheck.ScalazArbitrary._
 import scalaz.std.AllInstances._
+import scalaprops._
 
-abstract class ScalazSpec(name: String) extends SpecBase(name + " scalaz"){
+abstract class ScalazSpec extends SpecBase {
 
-  implicit final val alpha = Arbitrary(org.scalacheck.Gen.alphaStr)
+  private[this] implicit val stringGen = Gen.asciiString
 
-  property("IList") = checkLawz[IList[Long]]
-  property("ISet") = checkLawz[ISet[Long]]
-  property("Maybe") = checkLawz[Maybe[Long]]
-  property("==>>") = checkLawz[String ==>> Maybe[Byte]]
-  property("NonEmptyList") = checkLawz[NonEmptyList[NonEmptyList[Long]]]
+  val iList = checkLawz[IList[Long]]
+  val iSet = checkLawz[ISet[Long]]
+  val maybe = checkLawz[Maybe[Long]]
+  val iMap = checkLawz[String ==>> Maybe[Byte]]
+  val nonEmptyList = checkLawz[NonEmptyList[NonEmptyList[Long]]]
 
   import msgpack4z.EitherCodec.eitherCompactCodec
 
@@ -22,11 +21,12 @@ abstract class ScalazSpec(name: String) extends SpecBase(name + " scalaz"){
   private type EitherR = Either[Int, String]
   private type EitherTest = EitherL \/ EitherR
 
-  property("""\/ String""") = {
+  val `disjunction String` = {
     import msgpack4z.DisjunctionCodec.disjunctionStringCodec
     checkLaw[EitherTest]
   }
-  property("""\/ Compact""") = {
+
+  val `disjunction Compact` = {
     import msgpack4z.DisjunctionCodec.disjunctionCompactCodec
     checkLaw[EitherTest]
   }

@@ -1,16 +1,17 @@
 package msgpack4z
 
-import org.scalacheck.Properties
 import msgpack4z.CodecInstances.all._
+import scalaprops.Property.forAll
+import scalaprops._
 import scalaz.\/
 
-object CaseClassExample extends Properties("case class example"){
+object CaseClassExample extends Scalaprops {
 
   case class Foo(a: Boolean, b: String, c: List[Int])
 
   val sample = Foo(true, "abcde", List(10, 20, 30))
 
-  property("case class map example") = {
+  val `case class map example` = forAll {
 
     val java07 = new PackerUnpackerFactory {
       def packer = new Msgpack07Packer()
@@ -37,7 +38,7 @@ object CaseClassExample extends Properties("case class example"){
     instance.unpackAndClose(Msgpack07Unpacker.defaultUnpacker(bytes)) == \/.right(sample)
   }
 
-  property("case class array example") = {
+  val `case class array example` = forAll {
 
     val instance = CaseCodec.codec(Foo.apply _, Foo.unapply _)
 

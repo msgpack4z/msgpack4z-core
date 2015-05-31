@@ -1,18 +1,16 @@
 package msgpack4z
 
-import org.scalacheck.{Arbitrary, Prop}
+import scalaprops._
 import scalaz._
 
-abstract class UnionSpec(name: String) extends SpecBase(name + " union") {
+abstract class UnionSpec extends SpecBase {
 
-  private implicit val unionArb =
-    Arbitrary(UnionArbitrary.unionGen)
+  private implicit val unionGen =
+    UnionGen.unionGen
 
-  property("union") = Prop.secure{
-    checkLaw(MsgpackUnion.codecInstance, unionArb)
-  }
+  val union = checkLaw(MsgpackUnion.codecInstance, unionGen)
 
-  property("union equals hashCode") = Prop.forAll{ a: MsgpackUnion =>
+  val `equals hashCode` = Property.forAll{ a: MsgpackUnion =>
     val M = MsgpackCodec[MsgpackUnion]
     val bytes = M.toBytes(a, packer())
     M.unpackAndClose(unpacker(bytes)) match {
@@ -24,7 +22,7 @@ abstract class UnionSpec(name: String) extends SpecBase(name + " union") {
     }
   }
 
-  property("MsgpackLong and MsgpackULong") = Prop.forAll{ a: Long =>
+  val `MsgpackLong and MsgpackULong` = Property.forAll{ a: Long =>
     val x = MsgpackLong(a)
     val y = MsgpackULong(new java.math.BigInteger(a.toString))
     (y == x) && (x == y) && (x.hashCode == y.hashCode)

@@ -1,26 +1,34 @@
 package msgpack4z
 
+import scalaprops.Gen
+
 final case class TwentyTwo(
-  _1 : String,
-  _2 : String,
+  _1 : Int,
+  _2 : Int,
   _3 : List[Int],
-  _4 : String,
+  _4 : Int,
   _5 : Boolean,
-  _6 : String,
-  _7 : String,
+  _6 : Int,
+  _7 : Int,
   _8 : Byte,
-  _9 : String,
-  _10 : String,
-  _11 : String,
+  _9 : Int,
+  _10 : Int,
+  _11 : Boolean,
   _12 : Int,
-  _13 : String,
-  _14 : Option[String],
-  _15 : String,
-  _16 : String,
+  _13 : Int,
+  _14 : Option[Int],
+  _15 : Int,
+  _16 : Int,
   _17 : Long,
-  _18 : String,
-  _19 : String,
+  _18 : Int,
+  _19 : Int,
   _20 : Map[Long, Long],
-  _21 : String,
-  _22 : String
+  _21 : Int,
+  _22 : Int
 )
+
+object TwentyTwo {
+
+  implicit val gen: Gen[TwentyTwo] = Gen.from22(TwentyTwo.apply)
+
+}

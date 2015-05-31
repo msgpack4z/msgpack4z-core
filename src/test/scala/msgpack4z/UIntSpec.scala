@@ -1,47 +1,46 @@
 package msgpack4z
 
-import org.scalacheck.{Gen, Prop}
+import scalaprops.Gen
+import scalaprops.Property.forAllG
 
-abstract class UIntSpec(name: String) extends SpecBase(name + " unsigned int") {
+abstract class UIntSpec extends SpecBase {
 
-  property("uint8") = Prop.secure{
-    Prop.forAll(Gen.choose(0, (1 << 8) - 1)){ x =>
-      def u = unpacker(Array[Byte](msgpack4z.Code.UINT8, x.toByte))
-      if (x < 128) {
-        assert(u.unpackByte() == x)
-      }
+  val uint8 = forAllG(Gen.choose(0, (1 << 8) - 1)){ x =>
+    def u = unpacker(Array[Byte](msgpack4z.Code.UINT8, x.toByte))
+    if (x < 128) {
+      assert(u.unpackByte() == x)
+    }
+    assert(u.unpackShort() == x)
+    assert(u.unpackInt() == x)
+    assert(u.unpackLong() == x)
+    assert(u.unpackBigInteger().bitLength() <= java.lang.Byte.SIZE)
+    assert(u.unpackBigInteger().shortValue() == x)
+    true
+  }
+
+  val uint16 = forAllG(Gen.choose(0, (1 << 16) - 1)){ x =>
+    def u = {
+      val buf = MsgOutBuffer.create()
+      buf.writeByteAndShort(Code.UINT16, x.toShort)
+      unpacker(buf.result)
+    }
+    if (x < Byte.MaxValue) {
+      assert(u.unpackByte() == x)
+    }
+    if (x < Short.MaxValue) {
       assert(u.unpackShort() == x)
-      assert(u.unpackInt() == x)
-      assert(u.unpackLong() == x)
-      assert(u.unpackBigInteger().bitLength() <= java.lang.Byte.SIZE)
-      assert(u.unpackBigInteger().shortValue() == x)
-      true
     }
+    assert(u.unpackInt() == x)
+    assert(u.unpackLong() == x)
+    assert(u.unpackBigInteger().bitLength() <= java.lang.Short.SIZE)
+    assert(u.unpackBigInteger().intValue() == x)
+    true
   }
 
-  property("uint16") = Prop.secure{
-    Prop.forAll(Gen.choose(0, (1 << 16) - 1)){ x =>
-      def u = {
-        val buf = MsgOutBuffer.create()
-        buf.writeByteAndShort(Code.UINT16, x.toShort)
-        unpacker(buf.result)
-      }
-      if (x < Byte.MaxValue) {
-        assert(u.unpackByte() == x)
-      }
-      if (x < Short.MaxValue) {
-        assert(u.unpackShort() == x)
-      }
-      assert(u.unpackInt() == x)
-      assert(u.unpackLong() == x)
-      assert(u.unpackBigInteger().bitLength() <= java.lang.Short.SIZE)
-      assert(u.unpackBigInteger().intValue() == x)
-      true
-    }
-  }
-
-  property("uint32") = Prop.secure{
-    Prop.forAll(Gen.choose(0L, (1L << 32) - 1)){ x =>
+  val uint32 = {
+    val intPos = Gen.choose(0, Int.MaxValue)
+    val g = scalaz.Apply[Gen].apply2(intPos, intPos)(_.toLong + _.toLong).map(_ - 1l)
+    forAllG(g) { x =>
       def u = {
         val buf = MsgOutBuffer.create()
         buf.writeByteAndInt(Code.UINT32, x.intValue())
@@ -63,9 +62,11 @@ abstract class UIntSpec(name: String) extends SpecBase(name + " unsigned int") {
     }
   }
 
-  property("uint64") = Prop.secure{
-    val g = Gen.posNum[Long].flatMap(a1 => Gen.posNum[Long].map(BigInt(a1) + _))
-    Prop.forAll(g){ x =>
+
+  val uint64 = {
+    val longPos = Gen[Long].map(math.abs).map{a => if(a == Long.MinValue) 0 else a}
+    val g = longPos.flatMap(a1 => longPos.map(BigInt(a1) + _))
+    forAllG(g){ x =>
       def u = {
         val buf = MsgOutBuffer.create()
         buf.writeByteAndLong(Code.UINT64, x.longValue())

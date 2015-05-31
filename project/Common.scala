@@ -4,6 +4,7 @@ import xerial.sbt.Sonatype._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
 import sbtbuildinfo.Plugin._
+import scalaprops.ScalapropsPlugin.autoImport._
 
 object Common {
 
@@ -23,8 +24,10 @@ object Common {
     ReleasePlugin.releaseSettings,
     ReleasePlugin.extraReleaseCommands,
     sonatypeSettings,
+    scalapropsWithScalazlaws,
     buildInfoSettings
   ).flatten ++ Seq(
+    scalapropsVersion := "0.1.6",
     resolvers += Opts.resolver.sonatypeReleases,
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
     testOptions in Test += Tests.Argument(
