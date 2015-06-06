@@ -17,7 +17,7 @@ object UnionGen {
     Gen[Long].map(MsgpackLong)
 
   val ulongGen: Gen[MsgpackUnion] =
-    Gen[Long].map(n => if(n == Long.MinValue) 0 else math.abs(n)).flatMap(i => Gen.elements(
+    Gen.chooseLong(0, Long.MaxValue).flatMap(i => Gen.elements(
       MsgpackULong(new BigInteger(i.toString)),
       MsgpackULong(new BigInteger(i.toString).add(new BigInteger((i - 1).toString)))
     ))

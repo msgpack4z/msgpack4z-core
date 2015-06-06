@@ -64,7 +64,7 @@ abstract class UIntSpec extends SpecBase {
 
 
   val uint64 = {
-    val longPos = Gen[Long].map(math.abs).map{a => if(a == Long.MinValue) 0 else a}
+    val longPos = Gen.chooseLong(0, Long.MaxValue)
     val g = longPos.flatMap(a1 => longPos.map(BigInt(a1) + _))
     forAllG(g){ x =>
       def u = {
