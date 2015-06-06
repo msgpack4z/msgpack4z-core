@@ -30,9 +30,6 @@ object Common {
     scalapropsVersion := "0.1.6",
     resolvers += Opts.resolver.sonatypeReleases,
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
-    testOptions in Test += Tests.Argument(
-      TestFrameworks.ScalaCheck, "-minSuccessfulTests", "300"
-    ),
     buildInfoKeys := Seq[BuildInfoKey](
       organization,
       name,
