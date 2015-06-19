@@ -8,7 +8,7 @@ import scalaprops.ScalapropsPlugin.autoImport._
 
 object Common {
 
-  final val ScalazVersion = "7.1.2"
+  def ScalazVersion = "7.1.3"
 
   private def gitHash: String = scala.util.Try(
     sys.process.Process("git rev-parse HEAD").lines_!.head
