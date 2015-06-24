@@ -79,7 +79,7 @@ object Common {
       "-language:implicitConversions" ::
       Nil
     ) ::: unusedWarnings,
-    scalaVersion := "2.11.6",
+    scalaVersion := "2.11.7",
     crossScalaVersions := scalaVersion.value :: Nil,
     scalacOptions in (Compile, doc) ++= {
       val tag = if(isSnapshot.value) gitHash else { "v" + version.value }
