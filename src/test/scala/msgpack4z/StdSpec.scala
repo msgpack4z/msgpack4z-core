@@ -8,6 +8,28 @@ import scalaz.std.AllInstances._
 
 abstract class StdSpec extends SpecBase {
 
+  val unicode = checkLaw[String](
+    implicitly,
+    Gen.arrayOfN(100, Gen.genCharAll).map{ s =>
+      val b = new java.lang.StringBuilder
+      var i = 0
+      while(i < s.length){
+        val c = s(i)
+        if(!Character.isSurrogate(c)){
+          b.append(c)
+          i += 1
+        }else if((i + 1 < s.length) && Character.isSurrogatePair(c, s(i + 1))){
+          b.append(c)
+          b.append(s(i + 1))
+          i += 2
+        }else{
+          i += 1
+        }
+      }
+      b.toString
+    }
+  )
+
   val `string 16` = checkLaw[String](
     implicitly,
     Gen.value(Random.alphanumeric.take(1 << (8 + 1)).mkString)
