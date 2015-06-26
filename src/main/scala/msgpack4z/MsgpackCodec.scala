@@ -70,6 +70,19 @@ object MsgpackCodec {
 
   @inline def apply[A](implicit A: MsgpackCodec[A]): MsgpackCodec[A] = A
 
+  /**
+   * @example {{{
+   * case class UserId(value: Int)
+   *
+   * object UserId {
+   *   implicit val msgpackCodec: MsgpackCodec[UserId] =
+   *     MsgpackCodec.from(apply, unapply)
+   * }
+   * }}}
+   */
+  def from[A, B](applyFunc: A => B, unapplyFunc: B => Option[A])(implicit A: MsgpackCodec[A]): MsgpackCodec[B] =
+    A.xmap(applyFunc, Function.unlift(unapplyFunc))
+
   def codec[A](packerF: Packer[A], unpackerF: Unpacker[A]): MsgpackCodec[A] =
     new MsgpackCodec[A] {
       override def pack(packer: MsgPacker, a: A) =
