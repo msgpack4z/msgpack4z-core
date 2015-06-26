@@ -57,4 +57,18 @@ object CaseClassExample extends Scalaprops {
 
     instance.unpackAndClose(Msgpack07Unpacker.defaultUnpacker(bytes)) == \/.right(sample)
   }
+
+
+  final case class UserId(value: Long)
+  object UserId extends MsgpackCompanion[Long, UserId]
+
+  val `single parameter case class use MsgpackCompanion` = forAll {
+    val userId = UserId(42)
+
+    val bytes = MsgpackCodec[UserId].toBytes(userId, new Msgpack07Packer())
+    val union = MsgpackCodec[MsgpackUnion].unpackAndClose(Msgpack07Unpacker.defaultUnpacker(bytes))
+    assert(union == \/.right(MsgpackUnion.long(userId.value)))
+
+    MsgpackCodec[UserId].unpackAndClose(Msgpack07Unpacker.defaultUnpacker(bytes)) == \/.right(userId)
+  }
 }
