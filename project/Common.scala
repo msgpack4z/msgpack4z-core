@@ -60,6 +60,9 @@ object Common {
       ReleaseStep(state => Project.extract(state).runTask(PgpKeys.publishSigned, state)._1),
       setNextVersion,
       commitNextVersion,
+      ReleaseStep(state =>
+        Project.extract(state).runTask(SonatypeKeys.sonatypeReleaseAll, state)._1
+      ),
       UpdateReadme.updateReadmeProcess,
       pushChanges
     ),
