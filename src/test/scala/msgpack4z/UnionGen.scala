@@ -14,7 +14,7 @@ object UnionGen {
     )
 
   val longGen: Gen[MsgpackUnion] =
-    Gen[Long].map(MsgpackLong)
+    Gen.from1(MsgpackLong)
 
   val ulongGen: Gen[MsgpackUnion] =
     Gen.chooseLong(0, Long.MaxValue).flatMap(i => Gen.elements(
@@ -55,7 +55,7 @@ object UnionGen {
     Tag.unsubst(Gen[String @@ AlphaNum]).map(MsgpackString)
 
   val binaryGen: Gen[MsgpackUnion] =
-    Gen[Array[Byte]].map(MsgpackBinary)
+    Gen.from1(MsgpackBinary)
 
   val unionGen0: Gen[MsgpackUnion] =
     Gen.frequency(
