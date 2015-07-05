@@ -1,7 +1,6 @@
 package msgpack4z
 
 import java.math.BigInteger
-import scala.language.experimental.macros
 import msgpack4z.MsgpackUnion.constNone
 import scalaz.Equal
 
