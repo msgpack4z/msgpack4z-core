@@ -64,6 +64,14 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
   final def isFalse: Boolean =
     this eq MsgpackFalse
 
+  final def isNaN: Boolean =
+    this match {
+      case MsgpackDouble(value) =>
+        value.isNaN
+      case _ =>
+        false
+    }
+
   final def fold[A](
     string: String => A,
     binary: Array[Byte] => A,
