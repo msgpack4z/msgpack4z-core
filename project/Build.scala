@@ -15,7 +15,7 @@ object build extends Build {
       ("com.github.xuwei-k" %% "zeroapply-scalaz" % "0.1.2" % "provided") ::
       ("com.github.xuwei-k" % "msgpack4z-java07" % "0.1.4" % "test") ::
       ("com.github.xuwei-k" % "msgpack4z-java06" % "0.1.1" % "test") ::
-      ("com.github.xuwei-k" %% "msgpack4z-native" % "0.1.0" % "test") ::
+      ("com.github.xuwei-k" %% "msgpack4z-native" % "0.1.1" % "test") ::
       Nil
     )
   ).settings(
