@@ -11,6 +11,8 @@ object Common {
 
   def ScalazVersion = "7.1.3"
 
+  private[this] def Scala211 = "2.11.7"
+
   private def gitHash: String = scala.util.Try(
     sys.process.Process("git rev-parse HEAD").lines_!.head
   ).getOrElse("master")
@@ -45,10 +47,6 @@ object Common {
     sourceGenerators in Compile <+= buildInfo,
     commands += Command.command("updateReadme")(UpdateReadme.updateReadmeTask),
     releaseProcess := Seq[ReleaseStep](
-      ReleaseStep{ state =>
-        assert(Sxr.disableSxr == false)
-        state
-      },
       checkSnapshotDependencies,
       inquireVersions,
       runClean,
@@ -82,8 +80,8 @@ object Common {
       "-language:implicitConversions" ::
       Nil
     ) ::: unusedWarnings,
-    scalaVersion := "2.11.7",
-    crossScalaVersions := scalaVersion.value :: Nil,
+    scalaVersion := Scala211,
+    crossScalaVersions := Scala211 :: "2.12.0-M2" :: Nil,
     scalacOptions in (Compile, doc) ++= {
       val tag = if(isSnapshot.value) gitHash else { "v" + version.value }
       Seq(

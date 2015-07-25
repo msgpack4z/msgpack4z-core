@@ -13,14 +13,19 @@ cache:
 script:
   - git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
   - git show --oneline --check
-  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ${JAVA_HOME} == $(jdk_switcher home oraclejdk7) && "${TRAVIS_BRANCH}" == "master" ]]; then export PUBLISH_SONATYPE=true; fi
+  - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ${JAVA_HOME} == $(jdk_switcher home oraclejdk8) && "${TRAVIS_BRANCH}" == "master" ]]; then export PUBLISH_SONATYPE=true; fi
   - wget https://raw.githubusercontent.com/paulp/sbt-extras/b9c8cb27/sbt && chmod +x ./sbt
-  - ./sbt $(if [[ "${PUBLISH_SONATYPE}" == "true" ]]; then echo "" ; else echo "-Ddisable_sxr"; fi) checkGenerateCodeError test $(if [[ "${PUBLISH_SONATYPE}" == "true" ]]; then echo "publish" ; fi)
+  - ./sbt checkGenerateCodeError test $(if [[ "${PUBLISH_SONATYPE}" == "true" ]]; then echo "publish" ; fi)
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" | xargs rm
   - find $HOME/.ivy2/cache -name "*SNAPSHOT*" | xargs rm -rf
-  - if [[ ${JAVA_HOME} == $(jdk_switcher home oraclejdk7) ]]; then rm -rf $HOME/.ivy2/cache ; fi
+  - if [[ ${JAVA_HOME} == $(jdk_switcher home oraclejdk8) ]]; then rm -rf $HOME/.ivy2/cache ; fi
 
 env:
   global:
   - secure: efI9wJeKrnm+8iRyWi38ibo2Qn0N4uCWIkk5xNqEVpLgRo7NoA7nzA2MkHoFOm/NoB/1jtqttEGh/rFCiYfaKFydT5m8vaSE5PnIPnmOY7rZYmbu8ZlKacbpAjRkCg3urW0rMyLUTB7eLf+M0vBCUAJMEwbqqChVA1NWpBGliSM=
   - secure: kQCyyR/9StRExBZWFb8N4gMA2dXb9k19F1weg8HRVCQnav/i3uscqbBKtqBJh3hKpE9h6Gbx3g8HVdfOsDL1pguq4nuGgU+ICdy3qhMyQ8AbNgeqXZZ2ViUcK/qiBVfMe9aZZ/J/J7sIu2RqCJuzRrVguBjeklqM8T25jScxSsQ=
+
+matrix:
+  include:
+    - scala: 2.12.0-M2
+      jdk: oraclejdk8
