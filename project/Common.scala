@@ -4,6 +4,7 @@ import sbtrelease._
 import sbtrelease.ReleasePlugin.autoImport._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
+import com.typesafe.tools.mima.plugin.MimaKeys.previousArtifact
 import sbtbuildinfo.Plugin._
 import scalaprops.ScalapropsPlugin.autoImport._
 
@@ -22,6 +23,17 @@ object Common {
     "-Ywarn-unused-import" ::
     Nil
   )
+
+  private[this] val setMimaVersion: State => State = { st =>
+    val extracted = Project.extract(st)
+    val (releaseV, _) = st.get(ReleaseKeys.versions).getOrElse(sys.error("impossible"))
+    IO.write(
+      extracted get releaseVersionFile,
+      s"""\n\n${build.mimaBasis.key.label} in ThisBuild := \"${releaseV}\"\n""",
+      append = true
+    )
+    reapply(Seq(build.mimaBasis in ThisBuild := releaseV), st)
+  }
 
   val settings = Seq(
     ReleasePlugin.extraReleaseCommands,
@@ -46,6 +58,17 @@ object Common {
     buildInfoObject := "BuildInfoMsgpack4zCore",
     sourceGenerators in Compile <+= buildInfo,
     commands += Command.command("updateReadme")(UpdateReadme.updateReadmeTask),
+    commands += Command.command("setMimaVersion")(setMimaVersion),
+    previousArtifact := {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, v)) if v >= 12 =>
+          None
+        case _ =>
+          build.mimaBasis.?.value.map { v =>
+            (organization.value % (name.value + "_" + scalaBinaryVersion.value) % v)
+          }
+      }
+    },
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
@@ -57,6 +80,7 @@ object Common {
       tagRelease,
       ReleaseStep(state => Project.extract(state).runTask(PgpKeys.publishSigned, state)._1),
       setNextVersion,
+      setMimaVersion,
       commitNextVersion,
       ReleaseStep(state =>
         Project.extract(state).runTask(SonatypeKeys.sonatypeReleaseAll, state)._1

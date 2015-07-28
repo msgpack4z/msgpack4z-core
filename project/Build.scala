@@ -1,12 +1,20 @@
 import sbt._, Keys._
 
+import com.typesafe.tools.mima.plugin.MimaPlugin
+
 object build extends Build {
 
   private val msgpack4zCoreName = "msgpack4z-core"
   val modules = msgpack4zCoreName :: Nil
 
+  val mimaBasis = SettingKey[String]("mimaBasis")
+
   lazy val msgpack4z = Project("msgpack4z-core", file(".")).settings(
-    Common.settings ++ Generator.settings: _*
+    MimaPlugin.mimaDefaultSettings
+  ).settings(
+    Common.settings
+  ).settings(
+    Generator.settings
   ).settings(
     name := msgpack4zCoreName,
     libraryDependencies ++= (
