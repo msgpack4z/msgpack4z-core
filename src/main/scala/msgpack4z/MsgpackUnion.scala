@@ -2,7 +2,7 @@ package msgpack4z
 
 import java.math.BigInteger
 import msgpack4z.MsgpackUnion.constNone
-import scalaz.{Order, Equal}
+import scalaz.{IMap, Order, Equal}
 
 sealed abstract class MsgpackUnion extends Product with Serializable {
 
@@ -52,6 +52,23 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
     this match {
       case MsgpackMap(value) => new Opt(value)
       case _ => Opt.empty
+    }
+
+  final def imap: Opt[IMap[MsgpackUnion, MsgpackUnion]] =
+    this match {
+      case MsgpackMap(value) =>
+        val i = value.iterator
+        @annotation.tailrec
+        def loop(acc: IMap[MsgpackUnion, MsgpackUnion]): IMap[MsgpackUnion, MsgpackUnion] = {
+          if(i.hasNext) {
+            loop(acc + i.next())
+          } else {
+            acc
+          }
+        }
+        new Opt(loop(IMap.empty))
+      case _ =>
+        Opt.empty
     }
 
   final def bool: Option[Boolean] =
