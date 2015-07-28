@@ -278,6 +278,12 @@ object MsgpackUnion {
     override def apply(value: List[MsgpackUnion]): MsgpackUnion =
       new MsgpackArray(value)
   }
+  val vector: Extractor[Vector[MsgpackUnion]] = new Extractor[Vector[MsgpackUnion]] {
+    override def unapply(value: MsgpackUnion) =
+      value.vector
+    override def apply(value: Vector[MsgpackUnion]): MsgpackUnion =
+      new MsgpackArray(value.toList)
+  }
   val map: Extractor[Map[MsgpackUnion, MsgpackUnion]] = new Extractor[Map[MsgpackUnion, MsgpackUnion]] {
     override def unapply(value: MsgpackUnion) =
       value.map
