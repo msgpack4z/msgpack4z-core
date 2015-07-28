@@ -42,6 +42,12 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
       case _ => Opt.empty
     }
 
+  final def vector: Opt[Vector[MsgpackUnion]] =
+    this match {
+      case MsgpackArray(value) => new Opt(value.toVector)
+      case _ => Opt.empty
+    }
+
   final def map: Opt[Map[MsgpackUnion, MsgpackUnion]] =
     this match {
       case MsgpackMap(value) => new Opt(value)
