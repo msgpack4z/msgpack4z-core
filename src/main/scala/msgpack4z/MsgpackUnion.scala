@@ -2,7 +2,7 @@ package msgpack4z
 
 import java.math.BigInteger
 import msgpack4z.MsgpackUnion.constNone
-import scalaz.Equal
+import scalaz.{Order, Equal}
 
 sealed abstract class MsgpackUnion extends Product with Serializable {
 
@@ -158,8 +158,12 @@ object MsgpackUnion {
   private[this] val LongMax = BigInteger.valueOf(Long.MaxValue)
   private[this] val LongMin = BigInteger.valueOf(Long.MinValue)
 
-  implicit val msgpackUnionEqual: Equal[MsgpackUnion] =
-    Equal.equalA[MsgpackUnion]
+  // for binary compatibility
+  val msgpackUnionEqual: Equal[MsgpackUnion] =
+    MsgpackUnionOrder
+
+  implicit val msgpackUnionInstance: Order[MsgpackUnion] =
+    MsgpackUnionOrder
 
   val unpackF: MsgUnpacker => MsgpackUnion = unpack
 
