@@ -290,6 +290,15 @@ object MsgpackUnion {
     override def apply(value: Map[MsgpackUnion, MsgpackUnion]) =
       new MsgpackMap(value)
   }
+  val imap: Extractor[IMap[MsgpackUnion, MsgpackUnion]] = new Extractor[IMap[MsgpackUnion, MsgpackUnion]] {
+    override def unapply(value: MsgpackUnion) =
+      value.imap
+    override def apply(value: IMap[MsgpackUnion, MsgpackUnion]) = {
+      val builder = Map.newBuilder[MsgpackUnion, MsgpackUnion]
+      value.foldlWithKey(())((_, k, v) => builder += ((k, v)))
+      new MsgpackMap(builder.result())
+    }
+  }
   val ext: MsgpackUnion = MsgpackExt
   val bool: Boolean => MsgpackUnion = { value =>
     if (value) MsgpackTrue

@@ -28,4 +28,16 @@ abstract class UnionSpec extends SpecBase {
     (y == x) && (x == y) && (x.hashCode == y.hashCode)
   }
 
+  val `map imap` = Property.forAll{ a: Map[MsgpackUnion, MsgpackUnion] =>
+    val b = MsgpackUnion.map(a)
+    val c = IMap.fromList(a.toList)
+    val d = MsgpackUnion.imap(c)
+    assert(b.map == Opt(a))
+    assert(b.imap == Opt(c))
+    assert(b.map.map(x => IMap.fromList(x.toList)) == Opt(c))
+    assert(d.map == Opt(a))
+    assert(d.imap == Opt(c))
+    assert(b.map.map(x => IMap.fromList(x.toList)) == Opt(c))
+    true
+  }
 }
