@@ -41,7 +41,7 @@ object Common {
     scalapropsWithScalazlaws,
     buildInfoSettings
   ).flatten ++ Seq(
-    scalapropsVersion := "0.1.11",
+    scalapropsVersion := "0.1.12",
     resolvers += Opts.resolver.sonatypeReleases,
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
     buildInfoKeys := Seq[BuildInfoKey](
