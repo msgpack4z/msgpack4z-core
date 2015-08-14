@@ -43,6 +43,7 @@ object Common {
   ).flatten ++ Seq(
     scalapropsVersion := "0.1.12",
     resolvers += Opts.resolver.sonatypeReleases,
+    fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
     buildInfoKeys := Seq[BuildInfoKey](
       organization,
