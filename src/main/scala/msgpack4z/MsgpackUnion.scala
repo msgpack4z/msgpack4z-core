@@ -104,7 +104,7 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
     array: List[MsgpackUnion] => A,
     map: Map[MsgpackUnion, MsgpackUnion] => A,
     bool: Boolean => A,
-    ext: => A,
+    ext: (Byte, MsgpackBinary) => A,
     nil: => A
   ): A = this match {
     case MsgpackLong(value) =>
@@ -127,8 +127,8 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
       ulong(value)
     case MsgpackDouble(value) =>
       double(value)
-    case MsgpackExt =>
-      ext
+    case MsgpackExt(exttype, data) =>
+      ext(exttype, data)
   }
 
   final def foldOpt[A](
@@ -140,7 +140,7 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
     array: List[MsgpackUnion] => Option[A] = constNone,
     map: Map[MsgpackUnion, MsgpackUnion] => Option[A] = constNone,
     bool: Boolean => Option[A] = constNone,
-    ext: Option[A] = None,
+    ext: (Byte, MsgpackBinary) => Option[A] = (_: Byte, _: MsgpackBinary) => None,
     nil: Option[A] = None
   ): Option[A] = fold[Option[A]](
     string,
@@ -166,7 +166,6 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
     A.unpack(factory.unpacker(p.result()))
   }
 }
-
 
 object MsgpackUnion {
   private[this] val returnConstNone = (_: Any) => None
@@ -243,7 +242,11 @@ object MsgpackUnion {
       case MsgType.BINARY =>
         new MsgpackBinary(unpacker.unpackBinary())
       case MsgType.EXTENDED =>
-        MsgpackExt // TODO
+        val ext = unpacker.unpackExtensionType()
+        val len = ext.length
+        val data = new Array[Byte](len)
+        unpacker.readPayload(data)
+        MsgpackExt(ext.`type`, MsgpackBinary(data))
     }
 
   }
@@ -299,7 +302,7 @@ object MsgpackUnion {
       new MsgpackMap(builder.result())
     }
   }
-  val ext: MsgpackUnion = MsgpackExt
+//  val ext: MsgpackUnion = ??? // TODO implement this
   val bool: Boolean => MsgpackUnion = { value =>
     if (value) MsgpackTrue
     else MsgpackFalse
@@ -410,7 +413,7 @@ final case class MsgpackMap private[msgpack4z](value: Map[MsgpackUnion, MsgpackU
 
 object MsgpackMap extends (Map[MsgpackUnion, MsgpackUnion] => MsgpackUnion)
 
-case object MsgpackExt extends MsgpackUnion {
+case class MsgpackExt private[msgpack4z](`type`: Byte, data: MsgpackBinary) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {}
 }
 
