@@ -10,7 +10,7 @@ import scalaprops.ScalapropsPlugin.autoImport._
 
 object Common {
 
-  def ScalazVersion = "7.1.4"
+  def ScalazVersion = "7.1.5"
 
   private[this] def Scala211 = "2.11.7"
 
@@ -41,7 +41,7 @@ object Common {
     scalapropsWithScalazlaws,
     buildInfoSettings
   ).flatten ++ Seq(
-    scalapropsVersion := "0.1.15",
+    scalapropsVersion := "0.1.16",
     resolvers += Opts.resolver.sonatypeReleases,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
