@@ -104,7 +104,7 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
       }
     case MsgpackULong(xx) =>
       y match {
-        case (_: MsgpackMap) | (_: MsgpackArray) | MsgpackExt =>
+        case (_: MsgpackMap) | (_: MsgpackArray) | (_: MsgpackExt) =>
           GT
         case MsgpackULong(yy) =>
           Order[BigInteger].order(xx, yy)
@@ -113,7 +113,7 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
       }
     case MsgpackArray(xx) =>
       y match {
-        case (_: MsgpackMap) | MsgpackExt =>
+        case (_: MsgpackMap) | (_: MsgpackExt) =>
           GT
         case MsgpackArray(yy) =>
           UnionListOrder.order(xx, yy)
@@ -122,17 +122,21 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
       }
     case MsgpackMap(xx) =>
       y match {
-        case MsgpackExt =>
+        case (_: MsgpackExt) =>
           GT
         case MsgpackMap(yy) =>
           UnionMapOrder.order(xx, yy)
         case _ =>
           LT
       }
-    case MsgpackExt =>
+    case MsgpackExt(xtype, xdata) =>
       y match {
-        case MsgpackExt =>
-          EQ
+        case MsgpackExt(ytype, ydata) =>
+          val res = Order[Byte].order(xtype, ytype)
+          if (res == EQ)
+            order(xdata, ydata)
+          else
+            res
         case _ =>
           LT
       }
