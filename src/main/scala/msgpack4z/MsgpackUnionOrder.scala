@@ -70,26 +70,7 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
         case MsgpackTrue | MsgpackFalse | MsgpackNil | (_: MsgpackLong) | (_: MsgpackString) =>
           LT
         case MsgpackBinary(yy) =>
-          if (xx.length == yy.length) {
-            def loop(i: Int): scalaz.Ordering = {
-              if(i < xx.length) {
-                val a = xx(i)
-                val b = yy(i)
-                if (a < b) {
-                  scalaz.Ordering.LT
-                } else if (a > b) {
-                  scalaz.Ordering.GT
-                } else {
-                  loop(i + 1)
-                }
-              } else EQ
-            }
-            loop(0)
-          } else if (xx.length < yy.length) {
-            LT
-          } else {
-            GT
-          }
+          compareArrayByte(xx, yy)
         case _ =>
           GT
       }
@@ -104,7 +85,7 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
       }
     case MsgpackULong(xx) =>
       y match {
-        case (_: MsgpackMap) | (_: MsgpackArray) | MsgpackExt =>
+        case (_: MsgpackMap) | (_: MsgpackArray) | MsgpackExt(_, _) =>
           GT
         case MsgpackULong(yy) =>
           Order[BigInteger].order(xx, yy)
@@ -113,7 +94,7 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
       }
     case MsgpackArray(xx) =>
       y match {
-        case (_: MsgpackMap) | MsgpackExt =>
+        case (_: MsgpackMap) | MsgpackExt(_, _) =>
           GT
         case MsgpackArray(yy) =>
           UnionListOrder.order(xx, yy)
@@ -122,19 +103,49 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
       }
     case MsgpackMap(xx) =>
       y match {
-        case MsgpackExt =>
+        case MsgpackExt(_, _) =>
           GT
         case MsgpackMap(yy) =>
           UnionMapOrder.order(xx, yy)
         case _ =>
           LT
       }
-    case MsgpackExt =>
+    case MsgpackExt(type1, data1) =>
       y match {
-        case MsgpackExt =>
-          EQ
+        case MsgpackExt(type2, data2) =>
+          Order[Byte].order(type1, type2) match {
+            case scalaz.Ordering.EQ =>
+              compareArrayByte(data1, data2)
+            case other =>
+              other
+          }
         case _ =>
           LT
       }
   }
+
+  private[this] def compareArrayByte(xx: Array[Byte], yy: Array[Byte]): scalaz.Ordering = {
+    if (xx.length == yy.length) {
+      @annotation.tailrec
+      def loop(i: Int): scalaz.Ordering = {
+        if (i < xx.length) {
+          val a = xx(i)
+          val b = yy(i)
+          if (a < b) {
+            scalaz.Ordering.LT
+          } else if (a > b) {
+            scalaz.Ordering.GT
+          } else {
+            loop(i + 1)
+          }
+        } else EQ
+      }
+      loop(0)
+    } else if (xx.length < yy.length) {
+      LT
+    } else {
+      GT
+    }
+  }
+
 }

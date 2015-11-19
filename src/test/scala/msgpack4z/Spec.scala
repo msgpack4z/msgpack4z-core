@@ -11,7 +11,7 @@ object Java06BinarySpec extends BinarySpec with Java06Spec
 object Java06ScalazSpec extends ScalazSpec with Java06Spec
 object Java06UIntSpec extends UIntSpec with Java06Spec
 object Java06IntSpec extends IntSpec with Java06Spec
-object Java06UnionSpec extends UnionSpec with Java06Spec
+object Java06UnionSpec extends UnionSpec(UnionGen.unionWithoutExtGen) with Java06Spec
 
 
 

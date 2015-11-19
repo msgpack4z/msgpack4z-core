@@ -54,6 +54,12 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
       case _ => Opt.empty
     }
 
+  final def ext: Opt[(Byte, Array[Byte])] =
+    this match {
+      case MsgpackExt(tpe, data) => new Opt((tpe, data))
+      case _ => Opt.empty
+    }
+
   final def imap: Opt[IMap[MsgpackUnion, MsgpackUnion]] =
     this match {
       case MsgpackMap(value) =>
@@ -104,7 +110,7 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
     array: List[MsgpackUnion] => A,
     map: Map[MsgpackUnion, MsgpackUnion] => A,
     bool: Boolean => A,
-    ext: => A,
+    ext: (Byte, Array[Byte]) => A,
     nil: => A
   ): A = this match {
     case MsgpackLong(value) =>
@@ -127,8 +133,8 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
       ulong(value)
     case MsgpackDouble(value) =>
       double(value)
-    case MsgpackExt =>
-      ext
+    case MsgpackExt(tpe, value) =>
+      ext(tpe, value)
   }
 
   final def foldOpt[A](
@@ -140,7 +146,7 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
     array: List[MsgpackUnion] => Option[A] = constNone,
     map: Map[MsgpackUnion, MsgpackUnion] => Option[A] = constNone,
     bool: Boolean => Option[A] = constNone,
-    ext: Option[A] = None,
+    ext: (Byte, Array[Byte]) => Option[A] = (_: Byte, _: Array[Byte]) => None,
     nil: Option[A] = None
   ): Option[A] = fold[Option[A]](
     string,
@@ -174,10 +180,6 @@ object MsgpackUnion {
 
   private[this] val LongMax = BigInteger.valueOf(Long.MaxValue)
   private[this] val LongMin = BigInteger.valueOf(Long.MinValue)
-
-  // for binary compatibility
-  val msgpackUnionEqual: Equal[MsgpackUnion] =
-    MsgpackUnionOrder
 
   implicit val msgpackUnionInstance: Order[MsgpackUnion] =
     MsgpackUnionOrder
@@ -242,8 +244,9 @@ object MsgpackUnion {
         MsgpackMap(builder.result())
       case MsgType.BINARY =>
         new MsgpackBinary(unpacker.unpackBinary())
-      case MsgType.EXTENDED =>
-        MsgpackExt // TODO
+      case MsgType.EXTENSION =>
+        val header = unpacker.unpackExtTypeHeader
+        new MsgpackExt(header.getType, unpacker.readPayload(header.getLength))
     }
 
   }
@@ -299,7 +302,14 @@ object MsgpackUnion {
       new MsgpackMap(builder.result())
     }
   }
-  val ext: MsgpackUnion = MsgpackExt
+  def extension(tpe: Byte, data: Array[Byte]): MsgpackUnion =
+    new MsgpackExt(tpe, data)
+  val ext: Extractor[(Byte, Array[Byte])] = new Extractor[(Byte, Array[Byte])] {
+    override def unapply(value: MsgpackUnion) =
+      value.ext
+    override def apply(t: (Byte, Array[Byte])) =
+      new MsgpackExt(t._1, t._2)
+  }
   val bool: Boolean => MsgpackUnion = { value =>
     if (value) MsgpackTrue
     else MsgpackFalse
@@ -410,8 +420,28 @@ final case class MsgpackMap private[msgpack4z](value: Map[MsgpackUnion, MsgpackU
 
 object MsgpackMap extends (Map[MsgpackUnion, MsgpackUnion] => MsgpackUnion)
 
-case object MsgpackExt extends MsgpackUnion {
-  override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {}
+final case class MsgpackExt private[msgpack4z] (tpe: Byte, data: Array[Byte]) extends MsgpackUnion {
+  override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {
+    packer.packExtTypeHeader(tpe, data.length)
+    packer.writePayload(data)
+  }
+
+  override def toString: String = hexString("MsgpackExt(type = " + tpe + ", value = ", " ", ")", 4)
+
+  def hexString(start: String, sep: String, end: String, n: Int): String  = {
+    data.sliding(n, n).map(_.map(x => "%02x".format(x & 0xff)).mkString).mkString(start, sep, end)
+  }
+
+  override def hashCode = (tpe * 31) + java.util.Arrays.hashCode(data)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: MsgpackExt =>
+      (this eq that) || (
+        (this.tpe == that.tpe) && java.util.Arrays.equals(this.data, that.data)
+      )
+    case _ =>
+      false
+  }
 }
 
 case object MsgpackTrue extends MsgpackUnion {
