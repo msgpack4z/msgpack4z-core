@@ -15,10 +15,10 @@
 ### latest stable version
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.1.4"
+libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.2.0"
 ```
 
-- [sxr](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.1.4/msgpack4z-core_2.11-0.1.4-sxr.jar/!/index.html)
+- [sxr](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.2.0/msgpack4z-core_2.11-0.2.0-sxr.jar/!/index.html)
 
 ### snapshot version
 
