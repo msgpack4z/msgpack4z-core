@@ -11,6 +11,7 @@
 
 ### example
 - <https://github.com/msgpack4z/msgpack4z-core/blob/master/src/test/scala/msgpack4z/CaseClassExample.scala>
+- <https://github.com/xuwei-k/msgpack-json/blob/640878e88171/src/main/scala/App.scala>
 
 ### latest stable version
 
