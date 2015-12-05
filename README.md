@@ -34,3 +34,7 @@ resolvers += Opts.resolver.sonatypeSnapshots
 ### dependency graph
 
 [![graph](http://msgpack4z.github.io/graph.svg)](http://msgpack4z.github.io/graph.svg)
+
+### for scalaz 7.1.x
+
+<https://github.com/msgpack4z/msgpack4z-core/tree/0.2.x>
