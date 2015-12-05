@@ -2,7 +2,7 @@ package msgpack4z
 
 import java.math.BigInteger
 import msgpack4z.MsgpackUnion.constNone
-import scalaz.{IMap, Order, Equal}
+import scalaz.{IMap, Order}
 
 sealed abstract class MsgpackUnion extends Product with Serializable {
 
