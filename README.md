@@ -24,12 +24,12 @@ libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.3.0"
 ### snapshot version
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.2.1-SNAPSHOT"
+libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.3.1-SNAPSHOT"
 
 resolvers += Opts.resolver.sonatypeSnapshots
 ```
 
-- [sxr](https://oss.sonatype.org/service/local/repositories/snapshots/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.2.1-SNAPSHOT/msgpack4z-core_2.11-0.2.1-SNAPSHOT-sxr.jar/!/index.html)
+- [sxr](https://oss.sonatype.org/service/local/repositories/snapshots/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.3.1-SNAPSHOT/msgpack4z-core_2.11-0.3.1-SNAPSHOT-sxr.jar/!/index.html)
 
 ### dependency graph
 
