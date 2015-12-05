@@ -20,7 +20,7 @@ object build extends Build {
     libraryDependencies ++= (
       ("com.github.xuwei-k" % "msgpack4z-api" % "0.2.0") ::
       ("org.scalaz" %% "scalaz-core" % Common.ScalazVersion) ::
-      ("com.github.xuwei-k" %% "zeroapply-scalaz" % "0.1.3" % "provided") ::
+      ("com.github.xuwei-k" %% "zeroapply-scalaz" % "0.2.0" % "provided") ::
       ("com.github.xuwei-k" % "msgpack4z-java07" % "0.2.0" % "test") ::
       ("com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test") ::
       ("com.github.xuwei-k" %% "msgpack4z-native" % "0.2.0" % "test") ::

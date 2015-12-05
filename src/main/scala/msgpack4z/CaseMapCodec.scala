@@ -1,6 +1,6 @@
 package msgpack4z
 
-import scalaz.{NonEmptyList, -\/, \/-}
+import scalaz._
 
 // GENERATED CODE: DO NOT EDIT.
 object CaseMapCodec {
@@ -29,12 +29,12 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2)
-        var keys: List[K] = Nil
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply2(
@@ -59,13 +59,13 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3)
-        var keys: List[K] = Nil
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply3(
@@ -90,14 +90,14 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4)
-        var keys: List[K] = Nil
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply4(
@@ -122,15 +122,15 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5)
-        var keys: List[K] = Nil
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply5(
@@ -155,16 +155,16 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6)
-        var keys: List[K] = Nil
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply6(
@@ -189,17 +189,17 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7)
-        var keys: List[K] = Nil
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply7(
@@ -224,18 +224,18 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8)
-        var keys: List[K] = Nil
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply8(
@@ -260,19 +260,19 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9)
-        var keys: List[K] = Nil
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply9(
@@ -297,20 +297,20 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10)
-        var keys: List[K] = Nil
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply10(
@@ -335,21 +335,21 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11)
-        var keys: List[K] = Nil
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply11(
@@ -374,22 +374,22 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12)
-        var keys: List[K] = Nil
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply12(
@@ -414,23 +414,23 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13)
-        var keys: List[K] = Nil
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply13(
@@ -455,24 +455,24 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14)
-        var keys: List[K] = Nil
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply14(
@@ -497,25 +497,25 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14); val b15 = value.get(a15)
-        var keys: List[K] = Nil
-        if(b15.isEmpty){ keys = new ::(a15, keys) }
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b15.isEmpty){ keys = new ICons(a15, keys) }
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply15(
@@ -540,26 +540,26 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14); val b15 = value.get(a15); val b16 = value.get(a16)
-        var keys: List[K] = Nil
-        if(b16.isEmpty){ keys = new ::(a16, keys) }
-        if(b15.isEmpty){ keys = new ::(a15, keys) }
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b16.isEmpty){ keys = new ICons(a16, keys) }
+        if(b15.isEmpty){ keys = new ICons(a15, keys) }
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply16(
@@ -584,27 +584,27 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14); val b15 = value.get(a15); val b16 = value.get(a16); val b17 = value.get(a17)
-        var keys: List[K] = Nil
-        if(b17.isEmpty){ keys = new ::(a17, keys) }
-        if(b16.isEmpty){ keys = new ::(a16, keys) }
-        if(b15.isEmpty){ keys = new ::(a15, keys) }
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b17.isEmpty){ keys = new ICons(a17, keys) }
+        if(b16.isEmpty){ keys = new ICons(a16, keys) }
+        if(b15.isEmpty){ keys = new ICons(a15, keys) }
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply17(
@@ -629,28 +629,28 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14); val b15 = value.get(a15); val b16 = value.get(a16); val b17 = value.get(a17); val b18 = value.get(a18)
-        var keys: List[K] = Nil
-        if(b18.isEmpty){ keys = new ::(a18, keys) }
-        if(b17.isEmpty){ keys = new ::(a17, keys) }
-        if(b16.isEmpty){ keys = new ::(a16, keys) }
-        if(b15.isEmpty){ keys = new ::(a15, keys) }
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b18.isEmpty){ keys = new ICons(a18, keys) }
+        if(b17.isEmpty){ keys = new ICons(a17, keys) }
+        if(b16.isEmpty){ keys = new ICons(a16, keys) }
+        if(b15.isEmpty){ keys = new ICons(a15, keys) }
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply18(
@@ -675,29 +675,29 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14); val b15 = value.get(a15); val b16 = value.get(a16); val b17 = value.get(a17); val b18 = value.get(a18); val b19 = value.get(a19)
-        var keys: List[K] = Nil
-        if(b19.isEmpty){ keys = new ::(a19, keys) }
-        if(b18.isEmpty){ keys = new ::(a18, keys) }
-        if(b17.isEmpty){ keys = new ::(a17, keys) }
-        if(b16.isEmpty){ keys = new ::(a16, keys) }
-        if(b15.isEmpty){ keys = new ::(a15, keys) }
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b19.isEmpty){ keys = new ICons(a19, keys) }
+        if(b18.isEmpty){ keys = new ICons(a18, keys) }
+        if(b17.isEmpty){ keys = new ICons(a17, keys) }
+        if(b16.isEmpty){ keys = new ICons(a16, keys) }
+        if(b15.isEmpty){ keys = new ICons(a15, keys) }
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply19(
@@ -722,30 +722,30 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14); val b15 = value.get(a15); val b16 = value.get(a16); val b17 = value.get(a17); val b18 = value.get(a18); val b19 = value.get(a19); val b20 = value.get(a20)
-        var keys: List[K] = Nil
-        if(b20.isEmpty){ keys = new ::(a20, keys) }
-        if(b19.isEmpty){ keys = new ::(a19, keys) }
-        if(b18.isEmpty){ keys = new ::(a18, keys) }
-        if(b17.isEmpty){ keys = new ::(a17, keys) }
-        if(b16.isEmpty){ keys = new ::(a16, keys) }
-        if(b15.isEmpty){ keys = new ::(a15, keys) }
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b20.isEmpty){ keys = new ICons(a20, keys) }
+        if(b19.isEmpty){ keys = new ICons(a19, keys) }
+        if(b18.isEmpty){ keys = new ICons(a18, keys) }
+        if(b17.isEmpty){ keys = new ICons(a17, keys) }
+        if(b16.isEmpty){ keys = new ICons(a16, keys) }
+        if(b15.isEmpty){ keys = new ICons(a15, keys) }
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply20(
@@ -770,31 +770,31 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14); val b15 = value.get(a15); val b16 = value.get(a16); val b17 = value.get(a17); val b18 = value.get(a18); val b19 = value.get(a19); val b20 = value.get(a20); val b21 = value.get(a21)
-        var keys: List[K] = Nil
-        if(b21.isEmpty){ keys = new ::(a21, keys) }
-        if(b20.isEmpty){ keys = new ::(a20, keys) }
-        if(b19.isEmpty){ keys = new ::(a19, keys) }
-        if(b18.isEmpty){ keys = new ::(a18, keys) }
-        if(b17.isEmpty){ keys = new ::(a17, keys) }
-        if(b16.isEmpty){ keys = new ::(a16, keys) }
-        if(b15.isEmpty){ keys = new ::(a15, keys) }
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b21.isEmpty){ keys = new ICons(a21, keys) }
+        if(b20.isEmpty){ keys = new ICons(a20, keys) }
+        if(b19.isEmpty){ keys = new ICons(a19, keys) }
+        if(b18.isEmpty){ keys = new ICons(a18, keys) }
+        if(b17.isEmpty){ keys = new ICons(a17, keys) }
+        if(b16.isEmpty){ keys = new ICons(a16, keys) }
+        if(b15.isEmpty){ keys = new ICons(a15, keys) }
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply21(
@@ -819,32 +819,32 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
     unpacker => mapCodec.unpack(unpacker) match {
       case \/-(value) =>
         val b1 = value.get(a1); val b2 = value.get(a2); val b3 = value.get(a3); val b4 = value.get(a4); val b5 = value.get(a5); val b6 = value.get(a6); val b7 = value.get(a7); val b8 = value.get(a8); val b9 = value.get(a9); val b10 = value.get(a10); val b11 = value.get(a11); val b12 = value.get(a12); val b13 = value.get(a13); val b14 = value.get(a14); val b15 = value.get(a15); val b16 = value.get(a16); val b17 = value.get(a17); val b18 = value.get(a18); val b19 = value.get(a19); val b20 = value.get(a20); val b21 = value.get(a21); val b22 = value.get(a22)
-        var keys: List[K] = Nil
-        if(b22.isEmpty){ keys = new ::(a22, keys) }
-        if(b21.isEmpty){ keys = new ::(a21, keys) }
-        if(b20.isEmpty){ keys = new ::(a20, keys) }
-        if(b19.isEmpty){ keys = new ::(a19, keys) }
-        if(b18.isEmpty){ keys = new ::(a18, keys) }
-        if(b17.isEmpty){ keys = new ::(a17, keys) }
-        if(b16.isEmpty){ keys = new ::(a16, keys) }
-        if(b15.isEmpty){ keys = new ::(a15, keys) }
-        if(b14.isEmpty){ keys = new ::(a14, keys) }
-        if(b13.isEmpty){ keys = new ::(a13, keys) }
-        if(b12.isEmpty){ keys = new ::(a12, keys) }
-        if(b11.isEmpty){ keys = new ::(a11, keys) }
-        if(b10.isEmpty){ keys = new ::(a10, keys) }
-        if(b9.isEmpty){ keys = new ::(a9, keys) }
-        if(b8.isEmpty){ keys = new ::(a8, keys) }
-        if(b7.isEmpty){ keys = new ::(a7, keys) }
-        if(b6.isEmpty){ keys = new ::(a6, keys) }
-        if(b5.isEmpty){ keys = new ::(a5, keys) }
-        if(b4.isEmpty){ keys = new ::(a4, keys) }
-        if(b3.isEmpty){ keys = new ::(a3, keys) }
-        if(b2.isEmpty){ keys = new ::(a2, keys) }
-        if(b1.isEmpty){ keys = new ::(a1, keys) }
+        var keys: IList[K] = IList.empty
+        if(b22.isEmpty){ keys = new ICons(a22, keys) }
+        if(b21.isEmpty){ keys = new ICons(a21, keys) }
+        if(b20.isEmpty){ keys = new ICons(a20, keys) }
+        if(b19.isEmpty){ keys = new ICons(a19, keys) }
+        if(b18.isEmpty){ keys = new ICons(a18, keys) }
+        if(b17.isEmpty){ keys = new ICons(a17, keys) }
+        if(b16.isEmpty){ keys = new ICons(a16, keys) }
+        if(b15.isEmpty){ keys = new ICons(a15, keys) }
+        if(b14.isEmpty){ keys = new ICons(a14, keys) }
+        if(b13.isEmpty){ keys = new ICons(a13, keys) }
+        if(b12.isEmpty){ keys = new ICons(a12, keys) }
+        if(b11.isEmpty){ keys = new ICons(a11, keys) }
+        if(b10.isEmpty){ keys = new ICons(a10, keys) }
+        if(b9.isEmpty){ keys = new ICons(a9, keys) }
+        if(b8.isEmpty){ keys = new ICons(a8, keys) }
+        if(b7.isEmpty){ keys = new ICons(a7, keys) }
+        if(b6.isEmpty){ keys = new ICons(a6, keys) }
+        if(b5.isEmpty){ keys = new ICons(a5, keys) }
+        if(b4.isEmpty){ keys = new ICons(a4, keys) }
+        if(b3.isEmpty){ keys = new ICons(a3, keys) }
+        if(b2.isEmpty){ keys = new ICons(a2, keys) }
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
 
         keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply22(

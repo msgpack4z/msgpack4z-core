@@ -122,11 +122,14 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
     (packer, nel) => {
       packer.packArrayHeader(nel.size)
       A.pack(packer, nel.head)
-      var list: List[A] = nel.tail
-      while(list ne Nil){
-        A.pack(packer, list.head)
-        list = list.tail
+      @annotation.tailrec
+      def loop(xs: IList[A]): Unit = xs match {
+        case ICons(h, t) =>
+          A.pack(packer, h)
+          loop(t)
+        case _ =>
       }
+      loop(nel.tail)
       packer.arrayEnd()
     }
     ,
@@ -135,7 +138,7 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
       if(size >= 1) {
         A.unpack(unpacker) match {
           case \/-(h) =>
-            var list: List[A] = Nil
+            var list: IList[A] = IList.empty
             var i = 1
             var error: -\/[UnpackError] = null
             while (i < size && error == null) {

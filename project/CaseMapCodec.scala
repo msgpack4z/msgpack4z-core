@@ -51,11 +51,11 @@ s"""$K.pack($packer, ${params0(i)}); ${tparams0(i)}.pack($packer, $t._${i + 1})"
     $unpacker => $mapCodec.unpack($unpacker) match {
       case $right($value) =>
         ${(0 until n).map(i => s"val b${i + 1} = value.get(${params0(i)})").mkString("; ")}
-        var $keys: List[K] = Nil
-        ${(n to 1 by -1).map(i => s"if(b$i.isEmpty){ $keys = new ::(a$i, $keys) }").mkString("\n        ")}
+        var $keys: IList[K] = IList.empty
+        ${(n to 1 by -1).map(i => s"if(b$i.isEmpty){ $keys = new ICons(a$i, $keys) }").mkString("\n        ")}
 
         $keys match {
-          case h :: t =>
+          case ICons(h, t) =>
             $left(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), $K)))
           case _ =>
             zeroapply.DisjunctionApply.apply$n(
@@ -73,7 +73,7 @@ s"""$K.pack($packer, ${params0(i)}); ${tparams0(i)}.pack($packer, $t._${i + 1})"
 
 s"""package $pack
 
-import scalaz.{NonEmptyList, $left, $right}
+import scalaz._
 
 // GENERATED CODE: DO NOT EDIT.
 object CaseMapCodec {
