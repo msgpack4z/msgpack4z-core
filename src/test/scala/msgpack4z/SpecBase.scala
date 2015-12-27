@@ -6,6 +6,16 @@ import scalaz._
 
 abstract class SpecBase extends Scalaprops {
 
+  protected[this] final def expectException[A](f: => A): Unit = {
+    val ex = new Exception("expect Exception")
+    try {
+      val _ = f
+      throw ex
+    } catch {
+      case NonFatal(e) if e ne ex =>
+    }
+  }
+
   protected[this] def packer(): MsgPacker
   protected[this] def unpacker(bytes: Array[Byte]): MsgUnpacker
 
