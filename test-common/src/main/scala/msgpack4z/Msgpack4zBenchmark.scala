@@ -5,16 +5,16 @@ import scalaz.{-\/, \/-}
 object Msgpack4zBenchmark {
 
   private[this] def gen(size: Int) =
-    UnionGen.unionWithoutExtGen.samples(listSize = size)
+    UnionGen.unionWithoutExtGen.samples(listSize = size, seed = Long.MaxValue / 13)
 
   val unionValues: List[MsgpackUnion] =
-    gen(10000)
+    gen(1000)
 
   val unionLargeArray: MsgpackUnion =
     MsgpackArray(unionValues)
 
   val unionLargeMap: MsgpackUnion = {
-    val size = 10000
+    val size = 1000
     MsgpackMap(
       (gen(size), gen(size)).zipped.toMap
     )
