@@ -49,7 +49,7 @@ object build extends Build {
       ("com.github.scalaprops" %% "scalaprops" % scalapropsVersion.value) ::
       ("com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0") ::
       ("com.github.xuwei-k" %% "msgpack4z-native" % "0.2.1") ::
-      ("com.github.pocketberserker" %% "scodec-msgpack" % "0.4.2") ::
+      ("com.github.pocketberserker" %% "scodec-msgpack" % "0.4.3") ::
       Nil
     )
   ).dependsOn(msgpack4z)
