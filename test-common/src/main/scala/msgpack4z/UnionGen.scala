@@ -76,12 +76,12 @@ object UnionGen {
     Gen.from2(MsgpackExt.apply)
 
   val unionWithoutExtGen: Gen[MsgpackUnion] =
-    Gen.oneOf(
-      unionGen0,
-      arrayGen,
-      mapGen,
-      stringGen,
-      binaryGen
+    Gen.frequency(
+      1 -> unionGen0,
+      5 -> arrayGen,
+      5 -> mapGen,
+      1 -> stringGen,
+      1 -> binaryGen
     )
 
   implicit val unionGen: Gen[MsgpackUnion] =
