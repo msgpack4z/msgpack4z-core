@@ -26,7 +26,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
 
   val `MsgpackLong and MsgpackULong` = Property.forAll{ a: Long =>
     val x = MsgpackLong(a)
-    val y = MsgpackULong(new java.math.BigInteger(a.toString))
+    val y = MsgpackULong(java.math.BigInteger.valueOf(a))
     (y == x) && (x == y) && (x.hashCode == y.hashCode)
   }
 
