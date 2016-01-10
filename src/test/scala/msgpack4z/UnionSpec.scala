@@ -55,7 +55,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
 
   val extSize1 = Property.forAllG(UnionGen.extGen) { e =>
     if(supportExtType) {
-      extSizeTest(e.asInstanceOf[MsgpackExt])
+      extSizeTest(e)
     } else true
   }
 
