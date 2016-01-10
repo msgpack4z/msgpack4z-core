@@ -72,7 +72,7 @@ object UnionGen {
   val mapGen: Gen[MsgpackUnion] =
     Gen.mapGen(unionGen0, unionGen0).map(MsgpackMap)
 
-  val extGen: Gen[MsgpackUnion] =
+  val extGen: Gen[MsgpackExt] =
     Gen.from2(MsgpackExt.apply)
 
   val unionWithoutExtGen: Gen[MsgpackUnion] =
@@ -90,7 +90,7 @@ object UnionGen {
       arrayGen,
       mapGen,
       stringGen,
-      extGen,
+      extGen.widen,
       binaryGen
     )
 
