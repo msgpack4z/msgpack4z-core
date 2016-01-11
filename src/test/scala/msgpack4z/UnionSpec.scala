@@ -42,7 +42,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     }
   }
 
-  val extEqualsHashcode = Property.forAllG(UnionGen.extGen){ case e1: MsgpackExt =>
+  val extEqualsHashcode = Property.forAllG(UnionGen.extGen){ e1: MsgpackExt =>
     val e2 = e1.copy()
     (e1 ne e2) && (e1 == e2) && (e1.## == e2.##)
   }
