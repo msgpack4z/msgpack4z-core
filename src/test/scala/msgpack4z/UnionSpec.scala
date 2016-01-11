@@ -30,6 +30,18 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     (y == x) && (x == y) && (x.hashCode == y.hashCode)
   }
 
+  val `MsgpackLong pack/unpack MsgpackLong` = Property.forAll{ a: Long =>
+    val M = MsgpackCodec[MsgpackUnion]
+    val b = MsgpackLong(a)
+    val c = M.toBytes(b, packer())
+    M.unpackAndClose(unpacker(c)) match {
+      case \/-(_: MsgpackLong) =>
+        true
+      case other =>
+        sys.error(other.toString)
+    }
+  }
+
   val extEqualsHashcode = Property.forAllG(UnionGen.extGen){ case e1: MsgpackExt =>
     val e2 = e1.copy()
     (e1 ne e2) && (e1 == e2) && (e1.## == e2.##)
