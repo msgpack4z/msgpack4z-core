@@ -204,7 +204,7 @@ object MsgpackUnion {
           MsgpackFalse
       case MsgType.INTEGER =>
         val i = unpacker.unpackBigInteger()
-        if(LongMin.compareTo(i) < 0 && i.compareTo(LongMax) < 0){
+        if(LongMin.compareTo(i) <= 0 && i.compareTo(LongMax) <= 0){
           MsgpackLong(i.longValue())
         }else{
           MsgpackULong(i)
