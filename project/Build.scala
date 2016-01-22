@@ -55,7 +55,8 @@ object build extends Build {
     Common.settings,
     noPublish,
     libraryDependencies ++= (
-      ("com.github.xuwei-k" % "msgpack4z-java" % "0.3.0" % "test") ::
+      ("com.github.xuwei-k" % "msgpack4z-java" % "0.3.0" % "test").exclude("org.msgpack", "msgpack-core") ::
+      ("org.msgpack" % "msgpack-core" % "0.8.2") ::
       Nil
     )
   ).dependsOn(msgpack4z % "test->test")
