@@ -10,13 +10,19 @@ import scalaprops.ScalapropsPlugin.autoImport._
 
 object Common {
 
+  val tagName = Def.setting{
+    s"v${if (releaseUseGlobalVersion.value) (version in ThisBuild).value else version.value}"
+  }
+  val tagOrHash = Def.setting{
+    if(isSnapshot.value) gitHash() else tagName.value
+  }
+
   def ScalazVersion = "7.2.1"
 
   private[this] def Scala211 = "2.11.7"
 
-  private def gitHash: String = scala.util.Try(
+  private def gitHash(): String =
     sys.process.Process("git rev-parse HEAD").lines_!.head
-  ).getOrElse("master")
 
   private[this] val unusedWarnings = (
     "-Ywarn-unused" ::
@@ -68,6 +74,7 @@ object Common {
           Set.empty
       }
     },
+    releaseTagName := tagName.value,
     releaseProcess := Seq[ReleaseStep](
       checkSnapshotDependencies,
       inquireVersions,
@@ -107,7 +114,7 @@ object Common {
     scalaVersion := Scala211,
     crossScalaVersions := Scala211 :: Nil, // "2.12.0-M3" https://issues.scala-lang.org/browse/SI-9546
     scalacOptions in (Compile, doc) ++= {
-      val tag = if(isSnapshot.value) gitHash else { "v" + version.value }
+      val tag = tagOrHash.value
       Seq(
         "-sourcepath", (baseDirectory in LocalRootProject).value.getAbsolutePath,
         "-doc-source-url", s"https://github.com/msgpack4z/msgpack4z-core/tree/${tag}€{FILE_PATH}.scala"
