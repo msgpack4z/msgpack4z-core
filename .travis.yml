@@ -11,7 +11,7 @@ cache:
     - $HOME/.ivy2/cache
 
 scala:
-  - 2.11.7
+  - 2.11.8
 
 script:
   - git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
