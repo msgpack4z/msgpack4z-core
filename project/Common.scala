@@ -19,7 +19,7 @@ object Common {
 
   def ScalazVersion = "7.2.1"
 
-  private[this] def Scala211 = "2.11.7"
+  private[this] def Scala211 = "2.11.8"
 
   private def gitHash(): String =
     sys.process.Process("git rev-parse HEAD").lines_!.head
