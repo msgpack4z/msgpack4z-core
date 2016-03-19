@@ -131,7 +131,7 @@ object Common {
       <scm>
         <url>git@github.com:msgpack4z/msgpack4z-core.git</url>
         <connection>scm:git:git@github.com:msgpack4z/msgpack4z-core.git</connection>
-        <tag>{if(isSnapshot.value) gitHash else { "v" + version.value }}</tag>
+        <tag>{tagOrHash.value}</tag>
       </scm>
     ,
     description := "typeclass based msgpack serializer/deserializer",
