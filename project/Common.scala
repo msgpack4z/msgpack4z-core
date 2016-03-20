@@ -4,7 +4,7 @@ import sbtrelease._
 import sbtrelease.ReleasePlugin.autoImport._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
-import com.typesafe.tools.mima.plugin.MimaKeys.previousArtifacts
+import com.typesafe.tools.mima.plugin.MimaKeys.mimaPreviousArtifacts
 import sbtbuildinfo.BuildInfoPlugin.autoImport._
 import scalaprops.ScalapropsPlugin.autoImport._
 
@@ -64,7 +64,7 @@ object Common {
     buildInfoObject := "BuildInfoMsgpack4zCore",
     commands += Command.command("updateReadme")(UpdateReadme.updateReadmeTask),
     commands += Command.command("setMimaVersion")(setMimaVersion),
-    previousArtifacts := {
+    mimaPreviousArtifacts := {
       build.mimaBasis.?.value match {
         case Some(v) =>
           Set(organization.value % (name.value + "_" + scalaBinaryVersion.value) % v)
