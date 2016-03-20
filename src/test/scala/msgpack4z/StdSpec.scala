@@ -8,6 +8,9 @@ import scalaz.std.AllInstances._
 
 abstract class StdSpec extends SpecBase {
 
+  private[this] def isSurrogate(c: Char): Boolean =
+    (Character.MIN_SURROGATE <= c) && (c <= Character.MAX_SURROGATE)
+
   val unicode = checkLaw[String](
     implicitly,
     Gen.arrayOfN(100, Gen.genCharAll).map{ s =>
@@ -15,7 +18,7 @@ abstract class StdSpec extends SpecBase {
       var i = 0
       while(i < s.length){
         val c = s(i)
-        if(!Character.isSurrogate(c)){
+        if(!isSurrogate(c)){
           b.append(c)
           i += 1
         }else if((i + 1 < s.length) && Character.isSurrogatePair(c, s(i + 1))){
