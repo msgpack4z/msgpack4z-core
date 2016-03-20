@@ -4,8 +4,8 @@ import sbtrelease._
 import sbtrelease.ReleasePlugin.autoImport._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
-import sbtbuildinfo.Plugin._
 import com.typesafe.tools.mima.plugin.MimaKeys.mimaPreviousArtifacts
+import sbtbuildinfo.BuildInfoPlugin.autoImport._
 import scalaprops.ScalapropsPlugin.autoImport._
 
 object Common {
@@ -43,8 +43,7 @@ object Common {
   val settings = Seq(
     ReleasePlugin.extraReleaseCommands,
     sonatypeSettings,
-    scalapropsWithScalazlaws,
-    buildInfoSettings
+    scalapropsWithScalazlaws
   ).flatten ++ Seq(
     scalapropsVersion := "0.1.17",
     resolvers += Opts.resolver.sonatypeReleases,
@@ -62,7 +61,6 @@ object Common {
     ),
     buildInfoPackage := "msgpack4z",
     buildInfoObject := "BuildInfoMsgpack4zCore",
-    sourceGenerators in Compile <+= buildInfo,
     commands += Command.command("updateReadme")(UpdateReadme.updateReadmeTask),
     commands += Command.command("setMimaVersion")(setMimaVersion),
     mimaPreviousArtifacts := {

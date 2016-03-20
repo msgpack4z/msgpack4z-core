@@ -27,6 +27,8 @@ object build extends Build {
     )
   ).settings(
     Sxr.settings
+  ).enablePlugins(
+    sbtbuildinfo.BuildInfoPlugin
   )
 
   private[this] lazy val noPublish = Seq(
