@@ -46,7 +46,7 @@ object Common {
     sonatypeSettings,
     scalapropsWithScalazlaws
   ).flatten ++ Seq(
-    scalapropsVersion := "0.2.1",
+    scalapropsVersion := "0.3.0",
     resolvers += Opts.resolver.sonatypeReleases,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
