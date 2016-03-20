@@ -44,9 +44,8 @@ object Common {
   val settings = Seq(
     ReleasePlugin.extraReleaseCommands,
     sonatypeSettings,
-    scalapropsWithScalazlaws
+    scalapropsCoreSettings
   ).flatten ++ Seq(
-    scalapropsVersion := "0.3.0",
     resolvers += Opts.resolver.sonatypeReleases,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
