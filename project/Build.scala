@@ -1,5 +1,6 @@
 import sbt._, Keys._
 
+import com.typesafe.sbt.pgp.PgpKeys
 import com.typesafe.tools.mima.plugin.MimaPlugin
 
 object build extends Build {
@@ -32,6 +33,8 @@ object build extends Build {
   )
 
   private[this] lazy val noPublish = Seq(
+    PgpKeys.publishSigned := {},
+    PgpKeys.publishLocalSigned := {},
     publishLocal := {},
     publish := {},
     publishArtifact := false
