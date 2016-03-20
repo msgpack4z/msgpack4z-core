@@ -14,16 +14,16 @@ object CaseClassExample extends Scalaprops {
   val `case class map example` = forAll {
 
     val factory = new PackerUnpackerFactory {
-      def packer = new MsgpackJavaPacker()
-      def unpacker(bytes: Array[Byte]) = MsgpackJavaUnpacker.defaultUnpacker(bytes)
+      def packer = MsgOutBuffer.create()
+      def unpacker(bytes: Array[Byte]) = MsgInBuffer(bytes)
     }
 
     val mapCodec = CaseMapCodec.string(factory)
 
     val instance = mapCodec.codec(Foo.apply _, Foo.unapply _)("a", "b", "c")
 
-    val bytes = instance.toBytes(sample, new MsgpackJavaPacker())
-    val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgpackJavaUnpacker.defaultUnpacker(bytes))
+    val bytes = instance.toBytes(sample, MsgOutBuffer.create())
+    val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgInBuffer(bytes))
 
     assert(union == \/.right(MsgpackUnion.map(
       Map(
@@ -35,15 +35,15 @@ object CaseClassExample extends Scalaprops {
       )
     )))
 
-    instance.unpackAndClose(MsgpackJavaUnpacker.defaultUnpacker(bytes)) == \/.right(sample)
+    instance.unpackAndClose(MsgInBuffer(bytes)) == \/.right(sample)
   }
 
   val `case class array example` = forAll {
 
     val instance = CaseCodec.codec(Foo.apply _, Foo.unapply _)
 
-    val bytes = instance.toBytes(sample, new MsgpackJavaPacker())
-    val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgpackJavaUnpacker.defaultUnpacker(bytes))
+    val bytes = instance.toBytes(sample, MsgOutBuffer.create())
+    val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgInBuffer(bytes))
 
     assert(union == \/.right(MsgpackUnion.array(
       List(
@@ -55,7 +55,7 @@ object CaseClassExample extends Scalaprops {
       )
     )))
 
-    instance.unpackAndClose(MsgpackJavaUnpacker.defaultUnpacker(bytes)) == \/.right(sample)
+    instance.unpackAndClose(MsgInBuffer(bytes)) == \/.right(sample)
   }
 
 
@@ -65,10 +65,10 @@ object CaseClassExample extends Scalaprops {
   val `single parameter case class use MsgpackCompanion` = forAll {
     val userId = UserId(42)
 
-    val bytes = MsgpackCodec[UserId].toBytes(userId, new MsgpackJavaPacker())
-    val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgpackJavaUnpacker.defaultUnpacker(bytes))
+    val bytes = MsgpackCodec[UserId].toBytes(userId, MsgOutBuffer.create())
+    val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgInBuffer(bytes))
     assert(union == \/.right(MsgpackUnion.long(userId.value)))
 
-    MsgpackCodec[UserId].unpackAndClose(MsgpackJavaUnpacker.defaultUnpacker(bytes)) == \/.right(userId)
+    MsgpackCodec[UserId].unpackAndClose(MsgInBuffer(bytes)) == \/.right(userId)
   }
 }
