@@ -40,7 +40,7 @@ abstract class StdSpec extends SpecBase {
 
   val `string 32` = checkLaw[String](
     implicitly,
-    Gen.value(Random.alphanumeric.take(1 << (16 + 1)).mkString)
+    Gen.value(Random.alphanumeric.take((1 << 16) + 5).mkString)
   )
 
   val int = checkLaw[Int]
