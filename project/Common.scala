@@ -4,8 +4,8 @@ import sbtrelease._
 import sbtrelease.ReleasePlugin.autoImport._
 import ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
-import com.typesafe.tools.mima.plugin.MimaKeys.previousArtifact
 import sbtbuildinfo.Plugin._
+import com.typesafe.tools.mima.plugin.MimaKeys.mimaPreviousArtifacts
 import scalaprops.ScalapropsPlugin.autoImport._
 
 object Common {
@@ -60,14 +60,12 @@ object Common {
     sourceGenerators in Compile <+= buildInfo,
     commands += Command.command("updateReadme")(UpdateReadme.updateReadmeTask),
     commands += Command.command("setMimaVersion")(setMimaVersion),
-    previousArtifact := {
-      CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((2, v)) if v >= 12 =>
-          None
-        case _ =>
-          build.mimaBasis.?.value.map { v =>
-            (organization.value % (name.value + "_" + scalaBinaryVersion.value) % v)
-          }
+    mimaPreviousArtifacts := {
+      build.mimaBasis.?.value match {
+        case Some(v) =>
+          Set(organization.value % (name.value + "_" + scalaBinaryVersion.value) % v)
+        case None =>
+          Set.empty
       }
     },
     releaseProcess := Seq[ReleaseStep](
