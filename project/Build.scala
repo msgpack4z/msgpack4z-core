@@ -1,5 +1,6 @@
 import sbt._, Keys._
 
+import com.typesafe.sbt.pgp.PgpKeys
 import com.typesafe.tools.mima.plugin.MimaPlugin
 import org.scalajs.sbtplugin.cross.CrossProject
 import org.scalajs.sbtplugin.ScalaJSPlugin
@@ -61,6 +62,8 @@ object build extends Build {
   lazy val msgpack4zJS = msgpack4z.js
 
   private[this] lazy val noPublish = Seq(
+    PgpKeys.publishSigned := {},
+    PgpKeys.publishLocalSigned := {},
     publishLocal := {},
     publish := {},
     publishArtifact := false
