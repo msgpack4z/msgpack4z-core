@@ -66,7 +66,8 @@ object build extends Build {
     PgpKeys.publishLocalSigned := {},
     publishLocal := {},
     publish := {},
-    publishArtifact := false
+    publishArtifact in Compile := false,
+    publishArtifact in Test := false
   )
 
   private[this] def rootId = "root"
