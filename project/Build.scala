@@ -37,7 +37,8 @@ object build extends Build {
     PgpKeys.publishLocalSigned := {},
     publishLocal := {},
     publish := {},
-    publishArtifact := false
+    publishArtifact in Compile := false,
+    publishArtifact in Test := false
   )
 
   lazy val root = Project("root", file("root")).settings(
