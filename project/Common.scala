@@ -10,7 +10,7 @@ import scalaprops.ScalapropsPlugin.autoImport._
 
 object Common {
 
-  def ScalazVersion = "7.1.6"
+  def ScalazVersion = "7.1.7"
 
   private[this] def Scala211 = "2.11.7"
 
