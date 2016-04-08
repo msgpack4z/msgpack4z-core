@@ -30,10 +30,7 @@ env:
 
 matrix:
   include:
-    - scala: 2.12.0-M3
-      jdk: oraclejdk8
-  allow_failures:
-    - scala: 2.12.0-M3 # https://issues.scala-lang.org/browse/SI-9546
+    - scala: 2.12.0-M4
       jdk: oraclejdk8
 
 addons:
