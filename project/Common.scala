@@ -41,7 +41,7 @@ object Common {
     scalapropsWithScalazlaws,
     buildInfoSettings
   ).flatten ++ Seq(
-    scalapropsVersion := "0.1.16",
+    scalapropsVersion := "0.1.17",
     resolvers += Opts.resolver.sonatypeReleases,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
