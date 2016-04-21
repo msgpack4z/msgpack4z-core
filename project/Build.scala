@@ -26,7 +26,7 @@ object build extends Build {
     name := msgpack4zCoreName,
     libraryDependencies ++= (
       ("org.scalaz" %%% "scalaz-core" % Common.ScalazVersion) ::
-      ("com.github.xuwei-k" %% "zeroapply-scalaz" % "0.2.0" % "provided") ::
+      ("com.github.xuwei-k" %% "zeroapply-scalaz" % "0.2.1" % "provided") ::
       ("com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test") ::
       ("com.github.scalaprops" %%% "scalaprops-scalazlaws" % scalapropsVersion % "test") ::
       Nil
