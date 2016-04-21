@@ -22,7 +22,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
         println(e)
         false
     }
-  }
+  }.toProperties((), Param.minSuccessful(10000))
 
   val `MsgpackLong and MsgpackULong` = Property.forAll{ a: Long =>
     val x = MsgpackLong(a)
