@@ -391,6 +391,13 @@ final case class MsgpackULong private[msgpack4z](value: BigInteger) extends Msgp
 final case class MsgpackDouble private[msgpack4z](value: Double) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packDouble(value)
+  override def equals(other: Any): Boolean = other match {
+    case that: MsgpackDouble =>
+      java.lang.Double.doubleToLongBits(this.value) == java.lang.Double.doubleToLongBits(that.value)
+    case _ =>
+      false
+  }
+  override final def hashCode = scala.runtime.ScalaRunTime.hash(value)
 }
 
 object MsgpackDouble extends (Double => MsgpackUnion)
