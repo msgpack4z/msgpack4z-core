@@ -17,7 +17,7 @@ object Common {
     if(isSnapshot.value) gitHash() else tagName.value
   }
 
-  def ScalazVersion = "7.2.3"
+  def ScalazVersion = "7.2.4"
 
   private[this] def Scala211 = "2.11.8"
 
