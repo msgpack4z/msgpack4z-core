@@ -14,7 +14,7 @@ object build extends Build {
   val mimaBasis = SettingKey[String]("mimaBasis")
 
   private[this] val msgpack4zNativeVersion = "0.3.0"
-  private[this] val scalapropsVersion = "0.3.1"
+  private[this] val scalapropsVersion = "0.3.2"
 
   lazy val msgpack4z = CrossProject("msgpack4z-core", file("."), CustomCrossType).settings(
     Seq(
