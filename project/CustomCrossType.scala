@@ -3,7 +3,7 @@ import org.scalajs.sbtplugin.cross.CrossType
 
 /**
   * avoid move files
-  * @see [[https://github.com/scala-js/scala-js/blob/v0.6.8/sbt-plugin/src/main/scala/scala/scalajs/sbtplugin/cross/CrossProject.scala#L193-L206]]
+  * @see [[https://github.com/scala-js/scala-js/blob/v0.6.10/sbt-plugin/src/main/scala/org/scalajs/sbtplugin/cross/CrossProject.scala#L193-L206]]
   */
 object CustomCrossType extends CrossType {
   override def projectDir(crossBase: File, projectType: String) =

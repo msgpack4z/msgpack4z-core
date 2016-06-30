@@ -4,7 +4,7 @@ addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.6.1")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "0.4.0")
 addSbtPlugin("com.github.scalaprops" % "sbt-scalaprops" % "0.1.1")
 addSbtPlugin("com.typesafe" % "sbt-mima-plugin" % "0.1.9")
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.8")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.10")
 
 scalacOptions ++= (
   "-deprecation" ::
