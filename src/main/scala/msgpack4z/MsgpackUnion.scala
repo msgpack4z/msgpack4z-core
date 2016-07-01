@@ -397,7 +397,7 @@ final case class MsgpackDouble private[msgpack4z](value: Double) extends Msgpack
     case _ =>
       false
   }
-  override final def hashCode = scala.runtime.ScalaRunTime.hash(value)
+  override final def hashCode = scala.runtime.Statics.doubleHash(value)
 }
 
 object MsgpackDouble extends (Double => MsgpackUnion)
