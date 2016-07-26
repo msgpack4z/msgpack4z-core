@@ -96,7 +96,7 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
   final def isNaN: Boolean =
     this match {
       case MsgpackDouble(value) =>
-        value.isNaN
+        java.lang.Double.isNaN(value)
       case _ =>
         false
     }
