@@ -35,7 +35,7 @@ object Common {
     val (releaseV, _) = st.get(ReleaseKeys.versions).getOrElse(sys.error("impossible"))
     IO.write(
       extracted get releaseVersionFile,
-      s"""\n\n${build.mimaBasis.key.label} in ThisBuild := \"${releaseV}\"\n""",
+      s"""\nbuild.${build.mimaBasis.key.label} in ThisBuild := \"${releaseV}\"\n""",
       append = true
     )
     reapply(Seq(build.mimaBasis in ThisBuild := releaseV), st)

@@ -3,18 +3,17 @@ import sbt._, Keys._
 import com.typesafe.sbt.pgp.PgpKeys
 import com.typesafe.tools.mima.plugin.MimaPlugin
 import org.scalajs.sbtplugin.cross.CrossProject
-import org.scalajs.sbtplugin.ScalaJSPlugin
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 
-object build extends Build {
+object build {
 
-  private val msgpack4zCoreName = "msgpack4z-core"
+  val msgpack4zCoreName = "msgpack4z-core"
   val modules = msgpack4zCoreName :: Nil
 
   val mimaBasis = SettingKey[String]("mimaBasis")
 
-  private[this] val msgpack4zNativeVersion = "0.3.0"
-  private[this] val scalapropsVersion = "0.3.3"
+  val msgpack4zNativeVersion = "0.3.0"
+  val scalapropsVersion = "0.3.3"
 
   lazy val msgpack4z = CrossProject("msgpack4z-core", file("."), CustomCrossType).settings(
     Seq(
@@ -58,10 +57,7 @@ object build extends Build {
     )
   )
 
-  lazy val msgpack4zJVM = msgpack4z.jvm
-  lazy val msgpack4zJS = msgpack4z.js
-
-  private[this] lazy val noPublish = Seq(
+  lazy val noPublish = Seq(
     PgpKeys.publishSigned := {},
     PgpKeys.publishLocalSigned := {},
     publishLocal := {},
@@ -69,37 +65,4 @@ object build extends Build {
     publishArtifact in Compile := false,
     publishArtifact in Test := false
   )
-
-  private[this] def rootId = "root"
-
-  lazy val root = Project(rootId, file(".")).settings(
-    Common.settings,
-    noPublish,
-    commands += Command.command("testSequential"){
-      projects.map(_.id).filterNot(Set(rootId)).map(_ + "/test").sorted ::: _
-    },
-    scalaSource in Compile := file("duumy"),
-    scalaSource in Test := file("duumy")
-  ).aggregate(
-    msgpack4zJVM, msgpack4zJS, testJava07, testJavaLatest
-  )
-
-  lazy val testJava07 = Project("testJava07", file("test-java07")).settings(
-    Common.settings,
-    noPublish,
-    libraryDependencies ++= (
-      ("com.github.xuwei-k" % "msgpack4z-java07" % "0.2.0" % "test") ::
-      Nil
-    )
-  ).dependsOn(msgpack4zJVM % "test->test")
-
-  lazy val testJavaLatest = Project("testJavaLatest", file("test-java-latest")).settings(
-    Common.settings,
-    noPublish,
-    libraryDependencies ++= (
-      ("com.github.xuwei-k" % "msgpack4z-java" % "0.3.4" % "test") ::
-      Nil
-    )
-  ).dependsOn(msgpack4zJVM % "test->test")
-
 }
