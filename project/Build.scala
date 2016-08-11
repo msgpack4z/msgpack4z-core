@@ -2,6 +2,7 @@ import sbt._, Keys._
 
 import com.typesafe.sbt.pgp.PgpKeys
 import com.typesafe.tools.mima.plugin.MimaPlugin
+import com.typesafe.tools.mima.plugin.MimaKeys.mimaPreviousArtifacts
 import org.scalajs.sbtplugin.cross.CrossProject
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport._
 
@@ -58,6 +59,7 @@ object build {
   )
 
   lazy val noPublish = Seq(
+    mimaPreviousArtifacts := Set.empty,
     PgpKeys.publishSigned := {},
     PgpKeys.publishLocalSigned := {},
     publishLocal := {},
