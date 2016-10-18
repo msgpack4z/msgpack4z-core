@@ -50,7 +50,6 @@ object build {
     },
     scalaJSSemantics ~= { _.withStrictFloats(true) },
     scalaJSStage in Test := FastOptStage,
-    scalaJSUseRhino in Global := false,
     jsEnv := NodeJSEnv().value,
     libraryDependencies ++= (
       ("com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion) ::
