@@ -24,11 +24,21 @@ object Sxr {
     }
 
   val settings: Seq[Setting[_]] = Defaults.packageTaskSettings(
-    sxr in Compile, (crossTarget in Compile, compile in Compile).map{ (dir, _) =>
+    sxr in Compile,
+    Def.task{
+      val dir = (crossTarget in Compile).value
+      val _ = (compile in Compile).value
       Path.allSubpaths(dir / "classes.sxr").toSeq
     }
   ) ++ Seq[Setting[_]](
-    enableSxr := { scalaVersion.value.startsWith("2.12") == false },
+    enableSxr := {
+      CrossVersion.partialVersion(scalaVersion.value) match {
+        case Some((2, v)) if v <= 11 =>
+          true
+        case _ =>
+          false
+      }
+    },
     ifSxrAvailable(
       resolvers,
       Def.setting(resolvers.value :+ ("bintray/paulp" at "https://dl.bintray.com/paulp/maven"))
