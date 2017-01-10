@@ -1,7 +1,16 @@
 import build._
 
-lazy val msgpack4zJVM = msgpack4z.jvm
-lazy val msgpack4zJS = msgpack4z.js
+val scalapropsURI = uri("git://github.com/scalaprops/scalaprops.git#9e49b6ca7bd0da10a66b3706471fbe0611d42ab8")
+
+lazy val msgpack4zJVM = msgpack4z.jvm.dependsOn(
+  ProjectRef(scalapropsURI, "scalapropsJVM"),
+  ProjectRef(scalapropsURI, "scalazlawsJVM")
+)
+
+lazy val msgpack4zJS = msgpack4z.js.dependsOn(
+  ProjectRef(scalapropsURI, "scalapropsJS"),
+  ProjectRef(scalapropsURI, "scalazlawsJS")
+)
 
 lazy val root = Project("root", file(".")).settings(
   Common.settings,

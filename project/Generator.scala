@@ -3,7 +3,7 @@ import sbt._, Keys._
 object Generator {
 
   private val generateCode = TaskKey[Unit]("generateCode")
-  private val generateFiles = SettingKey[Seq[GeneratedCode]]("generateFiles")
+  private val generateFiles = SettingKey[Seq[GeneratedCode]]("generateFiles0")
   private val checkGenerateCode = TaskKey[Boolean]("checkGenerateCode")
   private val checkGenerateCodeError = TaskKey[Unit]("checkGenerateCodeError")
 
