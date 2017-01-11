@@ -44,6 +44,7 @@ object Generator {
     checkGenerateCode := generateFiles.value.forall(_.check),
     checkGenerateCodeError := {
       generateCode.value
+      Thread.sleep(1000)
       val diff = "git diff".!!
       if(diff.nonEmpty){
         sys.error("Working directory is dirty!\n" + diff)
