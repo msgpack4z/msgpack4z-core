@@ -55,7 +55,6 @@ object Common {
       version,
       scalaVersion,
       sbtVersion,
-      scalacOptions,
       licenses,
       "scalazVersion" -> ScalazVersion
     ),
