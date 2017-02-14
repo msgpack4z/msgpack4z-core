@@ -90,9 +90,7 @@ object Common {
       setNextVersion,
       setMimaVersion,
       commitNextVersion,
-      ReleaseStep(state =>
-        Project.extract(state).runTask(SonatypeKeys.sonatypeReleaseAll, state)._1
-      ),
+      releaseStepCommand("sonatypeReleaseAll"),
       UpdateReadme.updateReadmeProcess,
       pushChanges
     ),
