@@ -33,8 +33,8 @@ object Sxr {
   ) ++ Seq[Setting[_]](
     enableSxr := {
       CrossVersion.partialVersion(scalaVersion.value) match {
-        case Some((2, v)) if v <= 11 =>
-          true
+        case Some((2, v)) =>
+          v <= 12
         case _ =>
           false
       }
@@ -45,7 +45,7 @@ object Sxr {
     ),
     ifSxrAvailable(
       libraryDependencies,
-      Def.setting(libraryDependencies.value :+ compilerPlugin("org.improving" %% "sxr" % "1.0.1"))
+      Def.setting(libraryDependencies.value :+ compilerPlugin("org.improving" %% "sxr" % "1.0.2"))
     ),
     ifSxrAvailable(
       packagedArtifacts,
