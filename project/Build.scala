@@ -17,12 +17,9 @@ object build {
   val scalapropsVersion = "0.4.1"
 
   lazy val msgpack4z = CrossProject("msgpack4z-core", file("."), CustomCrossType).settings(
-    Seq(
-      MimaPlugin.mimaDefaultSettings,
-      Common.settings,
-      Generator.settings
-    ).flatten : _*
-  ).settings(
+    MimaPlugin.mimaDefaultSettings,
+    Common.settings,
+    Generator.settings,
     name := msgpack4zCoreName,
     libraryDependencies ++= (
       ("org.scalaz" %%% "scalaz-core" % Common.ScalazVersion) ::
