@@ -21,6 +21,8 @@ object Common {
 
   private[this] def Scala211 = "2.11.11"
 
+  private[this] val SetScala211 = releaseStepCommand("++" + Scala211)
+
   private def gitHash(): String =
     sys.process.Process("git rev-parse HEAD").lines_!.head
 
@@ -76,6 +78,8 @@ object Common {
       inquireVersions,
       runClean,
       runTest,
+      SetScala211,
+      releaseStepCommand(build.nativeTestId + "/run"),
       setReleaseVersion,
       commitReleaseVersion,
       UpdateReadme.updateReadmeProcess,
@@ -87,6 +91,8 @@ object Common {
         },
         enableCrossBuild = true
       ),
+      SetScala211,
+      releaseStepCommand(build.msgpack4zCoreName + "Native/publishSigned"),
       setNextVersion,
       setMimaVersion,
       commitNextVersion,
