@@ -19,7 +19,7 @@ object Common {
 
   def ScalazVersion = "7.2.11"
 
-  private[this] def Scala211 = "2.11.8"
+  private[this] def Scala211 = "2.11.11"
 
   private def gitHash(): String =
     sys.process.Process("git rev-parse HEAD").lines_!.head
@@ -113,7 +113,7 @@ object Common {
       Nil
     ) ::: unusedWarnings,
     scalaVersion := Scala211,
-    crossScalaVersions := Scala211 :: "2.12.1" :: Nil,
+    crossScalaVersions := Scala211 :: "2.12.2" :: Nil,
     scalacOptions in (Compile, doc) ++= {
       val tag = tagOrHash.value
       Seq(
