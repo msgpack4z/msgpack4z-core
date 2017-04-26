@@ -12,7 +12,7 @@ final case class NotEnoughArraySize(expect: Int, actual: Int) extends UnpackErro
 
 final case class UnexpectedMapSize(expect: Int, actual: Int) extends UnpackError(s"expect = $expect, actual = $actual", null)
 
-final case class UnexpectedEitherKey[A](left: A, right: A, actual: A)(implicit A: MsgpackCodec[A])
+final case class UnexpectedEitherKey[A](left: A, right: A, actual: A)(implicit val A: MsgpackCodec[A])
   extends UnpackError(s"expect = $left or $right, actual = $actual", null)
 
 final case class MapKeyNotFound(key1: String, key2: String) extends UnpackError("", null)
