@@ -33,7 +33,12 @@ matrix:
   include:
     - scala: 2.12.2
       jdk: oraclejdk8
-
+    - scala: 2.13.0-M1
+      jdk: oraclejdk8
+      script:
+      - sbt ++${TRAVIS_SCALA_VERSION} msgpack4z-coreJVM/test testJava07/test testJavaLatest/test
+      - find $HOME/.ivy2/cache -name "ivydata-*.properties" | xargs rm
+      - find $HOME/.ivy2/cache -name "*SNAPSHOT*" | xargs rm -rf
     - dist: trusty
       group: edge
       sudo: required
