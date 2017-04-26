@@ -30,7 +30,7 @@ lazy val testJavaLatest = Project("testJavaLatest", file("test-java-latest")).se
   Common.settings,
   noPublish,
   libraryDependencies ++= (
-    ("com.github.xuwei-k" % "msgpack4z-java" % "0.3.4" % "test") ::
+    ("com.github.xuwei-k" % "msgpack4z-java" % "0.3.5" % "test") ::
     Nil
   )
 ).dependsOn(msgpack4zJVM % "test->test")
