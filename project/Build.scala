@@ -57,7 +57,6 @@ object build {
     },
     scalaJSSemantics ~= { _.withStrictFloats(true) },
     scalaJSStage in Test := FastOptStage,
-    jsEnv := NodeJSEnv().value,
     libraryDependencies ++= (
       ("com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion) ::
       Nil
