@@ -76,8 +76,9 @@ matrix:
       - sudo make install prefix=/usr
       - make testinstall prefix=/usr
       - popd
+      - wget https://raw.githubusercontent.com/paulp/sbt-extras/9ade5fa54914ca8aded44105bf4b9a60966f3ccd/sbt && chmod +x ./sbt
       script:
-      - sbt ++$TRAVIS_SCALA_VERSION nativeTest/run
+      - ./sbt ++$TRAVIS_SCALA_VERSION nativeTest/run
 
 addons:
   apt:
