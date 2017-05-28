@@ -17,7 +17,7 @@ object build {
   val mimaBasis = SettingKey[String]("mimaBasis")
 
   val msgpack4zNativeVersion = "0.3.3"
-  val scalapropsVersion = "0.4.2"
+  val scalapropsVersion = "0.4.3"
 
   val nativeTestId = "nativeTest"
 
