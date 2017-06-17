@@ -17,9 +17,7 @@ object build {
   val mimaBasis = SettingKey[String]("mimaBasis")
 
   val msgpack4zNativeVersion = "0.3.3"
-  val scalapropsVersion = "0.4.3"
-
-  val nativeTestId = "nativeTest"
+  val scalapropsVersion = "0.5.0"
 
   lazy val msgpack4zCore = CrossProject(
     id = msgpack4zCoreName,
@@ -34,6 +32,8 @@ object build {
     libraryDependencies ++= (
       ("org.scalaz" %%% "scalaz-core" % Common.ScalazVersion) ::
       ("com.github.xuwei-k" %% "zeroapply-scalaz" % "0.2.2" % "provided") ::
+      ("com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test") ::
+      ("com.github.scalaprops" %%% "scalaprops-scalazlaws" % scalapropsVersion % "test") ::
       Nil
     )
   ).enablePlugins(
@@ -63,19 +63,11 @@ object build {
       s"-P:scalajs:mapSourceURI:$a->$g/"
     },
     scalaJSSemantics ~= { _.withStrictFloats(true) }
-  ).platformsSettings(JVMPlatform, JSPlatform)(
-    libraryDependencies ++= (
-      ("com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test") ::
-      ("com.github.scalaprops" %%% "scalaprops-scalazlaws" % scalapropsVersion % "test") ::
-      Nil
-    )
   ).platformsSettings(NativePlatform, JSPlatform)(
     libraryDependencies ++= (
       ("com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion) ::
       Nil
     )
-  ).nativeSettings(
-    sources in Test := Nil
   )
 
   lazy val noPublish = Seq(

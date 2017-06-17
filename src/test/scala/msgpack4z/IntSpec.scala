@@ -4,7 +4,7 @@ import scalaprops.Property.forAll
 
 abstract class IntSpec extends SpecBase {
 
-  override def param = super.param.copy(minSuccessful = 1000)
+  override def param = super.param.copy(minSuccessful = 200)
 
   val int8 = forAll{ x: Byte =>
     def u = unpacker(Array[Byte](msgpack4z.Code.INT8, x))

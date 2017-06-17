@@ -2,7 +2,9 @@ import build._
 
 lazy val msgpack4zCoreJVM = msgpack4zCore.jvm
 lazy val msgpack4zCoreJS = msgpack4zCore.js
-lazy val msgpack4zCoreNative = msgpack4zCore.native
+lazy val msgpack4zCoreNative = msgpack4zCore.native.settings(
+  scalapropsNativeSettings
+)
 
 lazy val root = Project("root", file(".")).settings(
   Common.settings,
@@ -16,15 +18,6 @@ lazy val root = Project("root", file(".")).settings(
   scalaSource in Test := file("duumy")
 ).aggregate(
   msgpack4zCoreJVM, msgpack4zCoreJS, testJava07, testJavaLatest
-)
-
-lazy val nativeTest = Project(nativeTestId, file("native-test")).settings(
-  Common.settings,
-  noPublish
-).dependsOn(
-  msgpack4zCoreNative
-).enablePlugins(
-  ScalaNativePlugin
 )
 
 lazy val testJava07 = Project("testJava07", file("test-java07")).settings(

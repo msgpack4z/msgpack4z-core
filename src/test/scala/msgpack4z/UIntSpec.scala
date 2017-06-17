@@ -5,7 +5,7 @@ import scalaprops.Property.forAllG
 
 abstract class UIntSpec extends SpecBase {
 
-  override def param = super.param.copy(minSuccessful = 1000)
+  override def param = super.param.copy(minSuccessful = 200)
 
   private[this] def chooseWithBoundaries(min: Int, max: Int) =
     Gen.frequency(

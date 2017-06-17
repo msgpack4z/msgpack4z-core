@@ -79,7 +79,7 @@ object Common {
       runClean,
       runTest,
       SetScala211,
-      releaseStepCommand(build.nativeTestId + "/run"),
+      releaseStepCommand(build.msgpack4zCoreName + "Native/test"),
       setReleaseVersion,
       commitReleaseVersion,
       UpdateReadme.updateReadmeProcess,
