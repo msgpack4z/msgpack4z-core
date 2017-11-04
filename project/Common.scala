@@ -48,6 +48,12 @@ object Common {
     sonatypeSettings,
     scalapropsCoreSettings
   ).flatten ++ Seq(
+    publishTo := Some(
+      if (isSnapshot.value)
+        Opts.resolver.sonatypeSnapshots
+      else
+        Opts.resolver.sonatypeStaging
+    ),
     resolvers += Opts.resolver.sonatypeReleases,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
     ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
