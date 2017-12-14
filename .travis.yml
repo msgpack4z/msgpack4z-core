@@ -18,7 +18,7 @@ script:
   - git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
   - git show --oneline --check
   - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ${JAVA_HOME} == $(jdk_switcher home oraclejdk8) && "${TRAVIS_BRANCH}" == "master" ]]; then export PUBLISH_SONATYPE=true; fi
-  - wget https://raw.githubusercontent.com/paulp/sbt-extras/b9c8cb27/sbt && chmod +x ./sbt
+  - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
   - ./sbt ++${TRAVIS_SCALA_VERSION} checkGenerateCodeError compile test:compile testSequential publishLocal $(if [[ "${PUBLISH_SONATYPE}" == "true" ]]; then echo "publish" ; fi)
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" | xargs rm
   - find $HOME/.ivy2/cache -name "*SNAPSHOT*" | xargs rm -rf
@@ -41,7 +41,7 @@ matrix:
       dist: trusty
       before_install:
       - curl https://raw.githubusercontent.com/scala-native/scala-native/21539aa97947f7/bin/travis_setup.sh | bash -x
-      - wget https://raw.githubusercontent.com/paulp/sbt-extras/3ba0e52f32d32c0454ec3a926caae2db0caaca12/sbt && chmod +x ./sbt
+      - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
       script:
       - ./sbt ++$TRAVIS_SCALA_VERSION msgpack4z-coreNative/test
 
