@@ -31,6 +31,8 @@ env:
 
 matrix:
   include:
+    - scala: 2.12.4
+      jdk: oraclejdk9
     - scala: 2.11.11
       jdk: oraclejdk8
       sudo: required
