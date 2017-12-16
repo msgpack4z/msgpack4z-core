@@ -10,7 +10,7 @@ lazy val root = Project("root", file(".")).settings(
   Common.settings,
   noPublish,
   commands += Command.command("testSequential"){
-    Seq(
+    List(
       msgpack4zCoreJVM, msgpack4zCoreJS, testJava07, testJavaLatest
     ).map(_.id).map(_ + "/test").sorted ::: _
   },

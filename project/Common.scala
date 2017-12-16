@@ -24,7 +24,7 @@ object Common {
   private[this] val SetScala211 = releaseStepCommand("++" + Scala211)
 
   private def gitHash(): String =
-    sys.process.Process("git rev-parse HEAD").lines_!.head
+    sys.process.Process("git rev-parse HEAD").lineStream_!.head
 
   private[this] val unusedWarnings = (
     "-Ywarn-unused" ::
@@ -56,7 +56,7 @@ object Common {
     ),
     resolvers += Opts.resolver.sonatypeReleases,
     fullResolvers ~= {_.filterNot(_.name == "jcenter")},
-    ivyScala ~= { _.map(_.copy(overrideScalaVersion = true)) },
+    scalaModuleInfo ~= (_.map(_.withOverrideScalaVersion(true))),
     buildInfoKeys := Seq[BuildInfoKey](
       organization,
       name,

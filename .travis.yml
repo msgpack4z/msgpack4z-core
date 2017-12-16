@@ -20,7 +20,7 @@ script:
   - git show --oneline --check
   - if [[ "${TRAVIS_PULL_REQUEST}" == "false" && ${JAVA_HOME} == $(jdk_switcher home oraclejdk8) && "${TRAVIS_BRANCH}" == "master" ]]; then export PUBLISH_SONATYPE=true; fi
   - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
-  - ./sbt ++${TRAVIS_SCALA_VERSION} checkGenerateCodeError compile test:compile testSequential publishLocal $(if [[ "${PUBLISH_SONATYPE}" == "true" ]]; then echo "publish" ; fi)
+  - ./sbt "++${TRAVIS_SCALA_VERSION}!" checkGenerateCodeError compile test:compile testSequential publishLocal $(if [[ "${PUBLISH_SONATYPE}" == "true" ]]; then echo "publish" ; fi)
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" | xargs rm
   - find $HOME/.ivy2/cache -name "*SNAPSHOT*" | xargs rm -rf
 
