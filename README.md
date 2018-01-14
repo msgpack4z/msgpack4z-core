@@ -2,11 +2,11 @@
 
 [![Build Status](https://secure.travis-ci.org/msgpack4z/msgpack4z-core.png?branch=master)](http://travis-ci.org/msgpack4z/msgpack4z-core)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/msgpack4z-core_2.11/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.xuwei-k/msgpack4z-core_2.11)
-[![scaladoc](http://javadoc-badge.appspot.com/com.github.xuwei-k/msgpack4z-core_2.12.svg?label=scaladoc)](http://javadoc-badge.appspot.com/com.github.xuwei-k/msgpack4z-core_2.12/msgpack4z/index.html?javadocio=true)
+[![scaladoc](https://javadoc-badge.appspot.com/com.github.xuwei-k/msgpack4z-core_2.12.svg?label=scaladoc)](https://javadoc-badge.appspot.com/com.github.xuwei-k/msgpack4z-core_2.12/msgpack4z/index.html?javadocio=true)
 [![Reference Status](https://www.versioneye.com/java/com.github.xuwei-k:msgpack4z-core_2.11/reference_badge.svg?style=flat)](https://www.versioneye.com/java/com.github.xuwei-k:msgpack4z-core_2.11/references)
 [![Scala.js](https://www.scala-js.org/assets/badges/scalajs-0.6.13.svg)](https://www.scala-js.org)
 
-- <http://msgpack.org/>
+- <https://msgpack.org/>
 - <https://github.com/msgpack/msgpack/blob/master/spec.md>
 
 
@@ -34,7 +34,7 @@ resolvers += Opts.resolver.sonatypeSnapshots
 
 ### dependency graph
 
-[![graph](http://msgpack4z.github.io/graph.svg)](http://msgpack4z.github.io/graph.svg)
+[![graph](https://msgpack4z.github.io/graph.svg)](https://msgpack4z.github.io/graph.svg)
 
 ### for scalaz 7.1.x
 
