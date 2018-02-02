@@ -84,8 +84,6 @@ object Common {
       inquireVersions,
       runClean,
       runTest,
-      SetScala211,
-      releaseStepCommand(build.msgpack4zCoreName + "Native/test"),
       setReleaseVersion,
       commitReleaseVersion,
       UpdateReadme.updateReadmeProcess,
