@@ -38,7 +38,7 @@ matrix:
       sudo: required
       env: SCALA_NATIVE=true
       before_install:
-      - curl https://raw.githubusercontent.com/scala-native/scala-native/21539aa97947f7/bin/travis_setup.sh | bash -x
+      - curl https://raw.githubusercontent.com/scala-native/scala-native/9ea8ba3610ef4eba2/bin/travis_setup.sh | bash -x
       - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
       script:
       - ./sbt ++$TRAVIS_SCALA_VERSION msgpack4z-coreNative/test
