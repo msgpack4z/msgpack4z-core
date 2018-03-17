@@ -7,6 +7,7 @@ import scalanative.sbtplugin.ScalaNativePlugin.autoImport._
 import scalajscrossproject.ScalaJSCrossPlugin.autoImport.{toScalaJSGroupID => _, _}
 import sbtcrossproject.CrossProject
 import sbtcrossproject.CrossPlugin.autoImport._
+import org.portablescala.sbtplatformdeps.PlatformDepsPlugin.autoImport._
 import org.scalajs.sbtplugin.ScalaJSPlugin.autoImport.{scalaJSOptimizerOptions, scalaJSSemantics}
 
 object build {
@@ -21,9 +22,11 @@ object build {
 
   lazy val msgpack4zCore = CrossProject(
     id = msgpack4zCoreName,
-    base = file("."),
-    crossType = CustomCrossType,
-    platforms = JSPlatform, JVMPlatform, NativePlatform
+    base = file(".")
+  )(
+    JSPlatform, JVMPlatform, NativePlatform
+  ).crossType(
+    CustomCrossType
   ).settings(
     MimaPlugin.mimaDefaultSettings,
     Common.settings,
