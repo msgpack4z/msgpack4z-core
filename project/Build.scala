@@ -4,6 +4,7 @@ import com.typesafe.sbt.pgp.PgpKeys
 import com.typesafe.tools.mima.plugin.MimaPlugin
 import com.typesafe.tools.mima.plugin.MimaKeys.mimaPreviousArtifacts
 import scalanative.sbtplugin.ScalaNativePlugin.autoImport._
+import scalanativecrossproject.ScalaNativeCrossPlugin.autoImport._
 import scalajscrossproject.ScalaJSCrossPlugin.autoImport.{toScalaJSGroupID => _, _}
 import sbtcrossproject.CrossProject
 import sbtcrossproject.CrossPlugin.autoImport._

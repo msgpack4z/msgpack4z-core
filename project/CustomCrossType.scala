@@ -1,5 +1,5 @@
 import sbt._
-import scalanative.sbtplugin.ScalaNativePlugin.autoImport._
+import scalanativecrossproject.ScalaNativeCrossPlugin.autoImport._
 import scalajscrossproject.ScalaJSCrossPlugin.autoImport._
 import sbtcrossproject.CrossPlugin.autoImport._
 
