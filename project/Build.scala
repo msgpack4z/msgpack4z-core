@@ -18,8 +18,8 @@ object build {
 
   val mimaBasis = SettingKey[String]("mimaBasis")
 
-  val msgpack4zNativeVersion = "0.3.4"
-  val scalapropsVersion = "0.5.4"
+  val msgpack4zNativeVersion = "0.3.5"
+  val scalapropsVersion = "0.5.5"
 
   lazy val msgpack4zCore = CrossProject(
     id = msgpack4zCoreName,
