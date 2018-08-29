@@ -136,7 +136,7 @@ abstract class UIntSpec extends SpecBase {
     forAllG(g){ x =>
       def u = {
         val buf = MsgOutBuffer.create()
-        buf.writeByteAndLong(Code.UINT64, x.longValue())
+        buf.writeByteAndLong(Code.UINT64, x.longValue)
         unpacker(buf.result)
       }
       if (x <= Byte.MaxValue) {

@@ -14,6 +14,7 @@ scala:
   - 2.11.12
   - 2.12.6
   - 2.13.0-M4
+  - 2.13.0-M5
 
 script:
   - git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol

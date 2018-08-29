@@ -118,7 +118,7 @@ val commonSettings = Def.settings(
       "-Yno-adapted-args"
   }.toList,
   scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.6" :: "2.13.0-M4" :: Nil,
+  crossScalaVersions := Scala211 :: "2.12.6" :: "2.13.0-M4" :: "2.13.0-M5" :: Nil,
   scalacOptions in (Compile, doc) ++= {
     val tag = tagOrHash.value
     Seq(
