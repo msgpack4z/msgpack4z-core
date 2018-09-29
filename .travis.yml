@@ -12,7 +12,7 @@ cache:
 
 scala:
   - 2.11.12
-  - 2.12.6
+  - 2.12.7
   - 2.13.0-M4
   - 2.13.0-M5
 
@@ -32,7 +32,7 @@ env:
 
 matrix:
   include:
-    - scala: 2.12.6
+    - scala: 2.12.7
       jdk: oraclejdk11
     - scala: 2.11.12
       jdk: oraclejdk8
