@@ -43,8 +43,3 @@ matrix:
       - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
       script:
       - ./sbt ++$TRAVIS_SCALA_VERSION msgpack4z-coreNative/test
-
-addons:
-  apt:
-    packages:
-      - oracle-java8-installer
