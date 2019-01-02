@@ -26,14 +26,13 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
       }
       loop(list)
       packer.arrayEnd()
-    }
-    ,
+    },
     unpacker => {
       val size = unpacker.unpackArrayHeader()
       var list: IList[A] = INil()
       var i = 0
       var error: -\/[UnpackError] = null
-      while(i < size && error == null){
+      while (i < size && error == null) {
         A.unpack(unpacker) match {
           case \/-(a) =>
             list ::= a
@@ -43,7 +42,7 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
         i += 1
       }
       unpacker.arrayEnd()
-      if(error == null)
+      if (error == null)
         \/-(list.reverse)
       else
         error
@@ -55,14 +54,13 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
       packer.packArrayHeader(set.size)
       set.foldLeft(())((_, a) => A.pack(packer, a))
       packer.arrayEnd()
-    }
-    ,
+    },
     unpacker => {
       val size = unpacker.unpackArrayHeader()
       var set = ISet.empty[A]
       var i = 0
       var error: -\/[UnpackError] = null
-      while(i < size && error == null){
+      while (i < size && error == null) {
         A.unpack(unpacker) match {
           case \/-(a) =>
             set = set.insert(a)
@@ -72,7 +70,7 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
         i += 1
       }
       unpacker.arrayEnd()
-      if(error == null)
+      if (error == null)
         \/-(set)
       else
         error
@@ -83,19 +81,18 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
     MsgpackCodec.tryE(
       (packer, m) => {
         packer.packMapHeader(m.size)
-        m.fold(()){ (key, value, _) =>
+        m.fold(()) { (key, value, _) =>
           A.pack(packer, key)
           B.pack(packer, value)
         }
         packer.mapEnd()
-      }
-      ,
+      },
       unpacker => {
         val size = unpacker.unpackMapHeader()
         var i = 0
         var error: -\/[UnpackError] = null
         var imap: A ==>> B = ==>>.empty
-        while(i < size && error == null){
+        while (i < size && error == null) {
           A.unpack(unpacker) match {
             case \/-(k) =>
               B.unpack(unpacker) match {
@@ -110,7 +107,7 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
           i += 1
         }
         unpacker.mapEnd()
-        if(error == null)
+        if (error == null)
           \/-(imap)
         else
           error
@@ -131,11 +128,10 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
       }
       loop(nel.tail)
       packer.arrayEnd()
-    }
-    ,
+    },
     unpacker => {
       val size = unpacker.unpackArrayHeader()
-      if(size >= 1) {
+      if (size >= 1) {
         A.unpack(unpacker) match {
           case \/-(h) =>
             var list: IList[A] = IList.empty
@@ -151,14 +147,14 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
               i += 1
             }
             unpacker.arrayEnd()
-            if(error == null)
+            if (error == null)
               \/-(NonEmptyList.nel(h, list.reverse))
             else
               error
           case e @ -\/(_) =>
             e
         }
-      }else{
+      } else {
         -\/(NotEnoughArraySize(1, 0))
       }
     }

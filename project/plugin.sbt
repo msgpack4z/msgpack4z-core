@@ -8,15 +8,15 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.26")
 addSbtPlugin("org.portable-scala" % "sbt-scalajs-crossproject" % "0.6.0")
 addSbtPlugin("org.portable-scala" % "sbt-scala-native-crossproject" % "0.6.0")
 addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.3.8")
+addSbtPlugin("com.geirsson" % "sbt-scalafmt" % "1.6.0-RC4")
 
-scalacOptions ++= (
-  "-deprecation" ::
-  "-unchecked" ::
-  "-language:existentials" ::
-  "-language:higherKinds" ::
-  "-language:implicitConversions" ::
-  "-Yno-adapted-args" ::
-  Nil
+scalacOptions ++= Seq(
+  "-deprecation",
+  "-unchecked",
+  "-language:existentials",
+  "-language:higherKinds",
+  "-language:implicitConversions",
+  "-Yno-adapted-args",
 )
 
-fullResolvers ~= {_.filterNot(_.name == "jcenter")}
+fullResolvers ~= { _.filterNot(_.name == "jcenter") }

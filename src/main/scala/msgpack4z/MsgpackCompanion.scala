@@ -7,7 +7,7 @@ package msgpack4z
  * object UserId extends MsgpackCompanion[Int, UserId]
  * }}}
  */
-abstract class MsgpackCompanion[A, B](implicit A: MsgpackCodec[A]) extends (A => B){
+abstract class MsgpackCompanion[A, B](implicit A: MsgpackCodec[A]) extends (A => B) {
   implicit final val msgpackCodec: MsgpackCodec[B] =
     MsgpackCodec.from(apply, unapply)
 

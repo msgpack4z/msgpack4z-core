@@ -6,30 +6,30 @@ final case class Opt[A <: AnyRef] private[msgpack4z] (val get: A) extends AnyVal
   def toOption: Option[A] = Option(get)
 
   def map[B <: AnyRef](f: A => B): Opt[B] =
-    if(isEmpty) Opt.empty[B]
+    if (isEmpty) Opt.empty[B]
     else new Opt(f(get))
 
   def orNull: A = get
 
   def exists(f: A => Boolean): Boolean =
-    if(isEmpty) false
+    if (isEmpty) false
     else f(get)
 
   def forall(f: A => Boolean): Boolean =
-    if(isEmpty) true
+    if (isEmpty) true
     else f(get)
 
   def filter(f: A => Boolean): Opt[A] =
-    if(isEmpty) this
-    else if(f(get)) this
+    if (isEmpty) this
+    else if (f(get)) this
     else Opt.empty[A]
 
   def flatMap[B <: AnyRef](f: A => Opt[B]): Opt[B] =
-    if(isEmpty) Opt.empty[B]
+    if (isEmpty) Opt.empty[B]
     else f(get)
 
   def toList: List[A] =
-    if(isEmpty) Nil
+    if (isEmpty) Nil
     else (get :: Nil)
 }
 

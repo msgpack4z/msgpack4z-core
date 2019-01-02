@@ -1,10 +1,9 @@
 package msgpack4z
 
-trait NativeSpec{ _: SpecBase =>
+trait NativeSpec { _: SpecBase =>
   override protected[this] def packer() = MsgOutBuffer.create()
   override protected[this] def unpacker(bytes: Array[Byte]) = MsgInBuffer(bytes)
 }
-
 
 object NativeArraySpec extends ArraySpec with NativeSpec
 object NativeStdSpec extends StdSpec with NativeSpec

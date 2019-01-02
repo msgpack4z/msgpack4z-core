@@ -2,7 +2,7 @@ package msgpack4z
 
 import scalaz.NonEmptyList
 
-sealed abstract class CaseClassMapMissingKeyError extends RuntimeException{
+sealed abstract class CaseClassMapMissingKeyError extends RuntimeException {
   type K
   val keys: NonEmptyList[K]
   val codec: MsgpackCodec[K]

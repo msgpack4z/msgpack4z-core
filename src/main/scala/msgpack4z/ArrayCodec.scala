@@ -39,14 +39,13 @@ object ArrayCodecImpl extends ArrayCodec {
         i += 1
       }
       packer.arrayEnd()
-    }
-    ,
+    },
     unpacker => {
       val size = unpacker.unpackArrayHeader()
       val array = new Array[A](size)
       var i = 0
       var error: -\/[UnpackError] = null
-      while(i < size && error == null){
+      while (i < size && error == null) {
         A.unpack(unpacker) match {
           case \/-(a) =>
             array(i) = a
@@ -56,7 +55,7 @@ object ArrayCodecImpl extends ArrayCodec {
         i += 1
       }
       unpacker.arrayEnd()
-      if(error == null)
+      if (error == null)
         \/-(array)
       else
         error

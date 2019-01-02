@@ -10,9 +10,9 @@ object Generator {
   private final case class GeneratedCode(file: File, code: String) {
     def write(): Unit = IO.write(file, code)
     def check: Boolean = {
-      if(file.isFile){
+      if (file.isFile) {
         IO.read(file) == code
-      }else{
+      } else {
         println(red(file + " not found!"))
         false
       }
@@ -46,15 +46,15 @@ object Generator {
       generateCode.value
       Thread.sleep(1000)
       val diff = scala.sys.process.Process("git diff").!!
-      if(diff.nonEmpty){
+      if (diff.nonEmpty) {
         sys.error("Working directory is dirty!\n" + diff)
       }
     },
     shellPrompt := { state =>
       val extracted = Project.extract(state)
-      if(extracted.runTask(checkGenerateCode, state)._2){
+      if (extracted.runTask(checkGenerateCode, state)._2) {
         shellPrompt.?.value.map(_.apply(state)).getOrElse("")
-      }else{
+      } else {
         red("generator code changed. please execute " + generateCode.key.label)
       }
     }

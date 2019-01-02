@@ -18,7 +18,10 @@ object EitherCodec {
     eitherCodec[A, B, Byte](0, 1)
   }
 
-  private[this] def eitherCodecImpl[A, B, X](LeftKey: X, RightKey: X)(implicit A: MsgpackCodec[A], B: MsgpackCodec[B], X: MsgpackCodec[X]): MsgpackCodec[Either[A, B]] =
+  private[this] def eitherCodecImpl[A, B, X](
+    LeftKey: X,
+    RightKey: X
+  )(implicit A: MsgpackCodec[A], B: MsgpackCodec[B], X: MsgpackCodec[X]): MsgpackCodec[Either[A, B]] =
     MsgpackCodec.tryE(
       (packer, either) => {
         packer.packMapHeader(headerSize)
@@ -31,11 +34,10 @@ object EitherCodec {
             B.pack(packer, b)
         }
         packer.mapEnd()
-      }
-      ,
+      },
       unpacker => {
         val size = unpacker.unpackMapHeader()
-        if(size == headerSize){
+        if (size == headerSize) {
           for {
             value <- X.unpack(unpacker)
             result <- value match {
@@ -50,7 +52,7 @@ object EitherCodec {
             unpacker.mapEnd()
             result
           }
-        }else{
+        } else {
           -\/(new UnexpectedMapSize(headerSize, size))
         }
       }

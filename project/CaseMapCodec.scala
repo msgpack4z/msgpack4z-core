@@ -22,7 +22,9 @@ object CaseMapCodec {
 
     private def signature(name: String) = {
       val implicits = tparams0.map(a => s"$a: $c[$a]").mkString("implicit ", ", ", "")
-      s"""  def $name[$tparams1, $Z]($apply: ($tparams1) => $Z, $unapply: $Z => Option[($tparams1)])(${params0.map(_ + ": " + K).mkString(", ")})($implicits): $c[$Z] ="""
+      s"""  def $name[$tparams1, $Z]($apply: ($tparams1) => $Z, $unapply: $Z => Option[($tparams1)])(${params0
+        .map(_ + ": " + K)
+        .mkString(", ")})($implicits): $c[$Z] ="""
     }
 
     private def overload(name: String) = {
@@ -44,7 +46,7 @@ ${signature(name)}
       $packer.packMapHeader($n)
       val $t = $unapply($value).get
       ${(0 until n).map { i =>
-s"""$K.pack($packer, ${params0(i)}); ${tparams0(i)}.pack($packer, $t._${i + 1})"""
+        s"""$K.pack($packer, ${params0(i)}); ${tparams0(i)}.pack($packer, $t._${i + 1})"""
       }.mkString("; ")}
       $packer.mapEnd()
     },
@@ -71,7 +73,7 @@ s"""$K.pack($packer, ${params0(i)}); ${tparams0(i)}.pack($packer, $t._${i + 1})"
 
   def generate(pack: String): String = {
 
-s"""package $pack
+    s"""package $pack
 
 import scalaz._
 
@@ -90,9 +92,9 @@ class CaseMapCodec[$K]($factory: PackerUnpackerFactory)(implicit K: $c[K]) {
   private[this] val $mapCodec =
     msgpack4z.CodecInstances.std.mapCodec[K, MsgpackUnion]
 
-${(2 to 22).map{n =>
-  new Method(n).methods
-}.mkString("\n")}
+${(2 to 22).map { n =>
+      new Method(n).methods
+    }.mkString("\n")}
 }
 """
   }

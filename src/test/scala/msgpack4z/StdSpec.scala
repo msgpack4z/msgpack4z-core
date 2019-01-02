@@ -13,19 +13,19 @@ abstract class StdSpec extends SpecBase {
 
   val unicode = checkLaw[String](
     implicitly,
-    Gen.arrayOfN(100, Gen.genCharAll).map{ s =>
+    Gen.arrayOfN(100, Gen.genCharAll).map { s =>
       val b = new java.lang.StringBuilder
       var i = 0
-      while(i < s.length){
+      while (i < s.length) {
         val c = s(i)
-        if(!isSurrogate(c)){
+        if (!isSurrogate(c)) {
           b.append(c)
           i += 1
-        }else if((i + 1 < s.length) && Character.isSurrogatePair(c, s(i + 1))){
+        } else if ((i + 1 < s.length) && Character.isSurrogatePair(c, s(i + 1))) {
           b.append(c)
           b.append(s(i + 1))
           i += 2
-        }else{
+        } else {
           i += 1
         }
       }
@@ -60,10 +60,8 @@ abstract class StdSpec extends SpecBase {
   val `List[Int]` = checkLaw[List[Int]]
   val `Vector[Long]` = checkLaw[List[Long]]
 
-
   val tuple1 = checkLawz[Tuple1[Long]]
   val tuple2 = checkLawz[(Long, Int)]
-
 
   val `Map[String, String]` = checkLawz[Map[String, String]]
 
@@ -72,6 +70,8 @@ abstract class StdSpec extends SpecBase {
 
   val twentyTwo = checkLaw[TwentyTwo]
 
-  val tuple22 = checkLaw[(Long, String, Long, Long, Long, Int, Long, Long, Long, Long, List[Long], Long, Long, Long, Long, String, Long, Long, Long, Long, Long, Long)]
+  val tuple22 = checkLaw[
+    (Long, String, Long, Long, Long, Int, Long, Long, Long, Long, List[Long], Long, Long, Long, Long, String, Long, Long, Long, Long, Long, Long)
+  ]
 
 }

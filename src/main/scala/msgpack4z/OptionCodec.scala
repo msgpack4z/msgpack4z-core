@@ -20,12 +20,11 @@ object OptionCodec {
             packer.packNil()
         }
         packer.mapEnd()
-      }
-      ,
+      },
       unpacker => {
         val size = unpacker.unpackMapHeader()
-        if(size == HeaderSize) {
-          val result = B.unpack(unpacker).flatMap{
+        if (size == HeaderSize) {
+          val result = B.unpack(unpacker).flatMap {
             case SomeKey =>
               A.unpack(unpacker).map(Some(_))
             case NoneKey =>
@@ -36,7 +35,7 @@ object OptionCodec {
           }
           unpacker.mapEnd()
           result
-        }else{
+        } else {
           -\/(new UnexpectedMapSize(HeaderSize, size))
         }
       }

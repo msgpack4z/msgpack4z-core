@@ -1,6 +1,6 @@
 package msgpack4z
 
-import scalaz.{-\/, Maybe, \/, \/-}
+import scalaz.{-\/, \/, \/-, Maybe}
 
 object MaybeCodec {
 
@@ -21,12 +21,11 @@ object MaybeCodec {
             packer.packNil()
         }
         packer.mapEnd()
-      }
-      ,
+      },
       unpacker => {
         val size = unpacker.unpackMapHeader()
-        if(size == HeaderSize) {
-          val result = B.unpack(unpacker).flatMap{
+        if (size == HeaderSize) {
+          val result = B.unpack(unpacker).flatMap {
             case JustKey =>
               A.unpack(unpacker).map(Maybe.Just(_))
             case EmptyKey =>
@@ -37,7 +36,7 @@ object MaybeCodec {
           }
           unpacker.mapEnd()
           result
-        }else{
+        } else {
           -\/(new UnexpectedMapSize(HeaderSize, size))
         }
       }

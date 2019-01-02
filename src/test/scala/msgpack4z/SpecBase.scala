@@ -55,7 +55,6 @@ abstract class SpecBase extends Scalaprops {
       }
     }
 
-
   final def checkLawz[A](implicit A: MsgpackCodec[A], G: Gen[A], E: Equal[A]) =
     checkRoundTripBytes(true)(A, G, E)
 
@@ -64,6 +63,5 @@ abstract class SpecBase extends Scalaprops {
 
   final def checkLawWithoutHashCode[A](implicit A: MsgpackCodec[A], G: Gen[A], E: Equal[A]) =
     checkRoundTripBytes(false)(A, G, E)
-
 
 }

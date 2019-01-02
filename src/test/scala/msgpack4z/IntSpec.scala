@@ -6,7 +6,7 @@ abstract class IntSpec extends SpecBase {
 
   override def param = super.param.copy(minSuccessful = 200)
 
-  val int8 = forAll{ x: Byte =>
+  val int8 = forAll { x: Byte =>
     def u = unpacker(Array[Byte](msgpack4z.Code.INT8, x))
     assert(u.unpackByte() == x)
     assert(u.unpackShort() == x)
@@ -17,13 +17,13 @@ abstract class IntSpec extends SpecBase {
     true
   }
 
-  val int16 = forAll{ x: Short =>
+  val int16 = forAll { x: Short =>
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndShort(Code.INT16, x)
       unpacker(buf.result)
     }
-    if(Byte.MinValue <= x && x <= Byte.MaxValue) {
+    if (Byte.MinValue <= x && x <= Byte.MaxValue) {
       assert(u.unpackByte() == x)
     } else {
       expectException {
@@ -38,20 +38,20 @@ abstract class IntSpec extends SpecBase {
     true
   }
 
-  val int32 = forAll{ x: Int =>
+  val int32 = forAll { x: Int =>
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndInt(Code.INT32, x)
       unpacker(buf.result)
     }
-    if(Byte.MinValue <= x && x <= Byte.MaxValue) {
+    if (Byte.MinValue <= x && x <= Byte.MaxValue) {
       assert(u.unpackByte() == x, "byte")
     } else {
       expectException {
         u.unpackByte()
       }
     }
-    if(Short.MinValue <= x && x <= Short.MaxValue) {
+    if (Short.MinValue <= x && x <= Short.MaxValue) {
       assert(u.unpackShort() == x, "short")
     } else {
       expectException {
@@ -65,27 +65,27 @@ abstract class IntSpec extends SpecBase {
     true
   }
 
-  val int64 = forAll{ x: Long =>
+  val int64 = forAll { x: Long =>
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndLong(Code.INT64, x)
       unpacker(buf.result)
     }
-    if(Byte.MinValue <= x && x <= Byte.MaxValue) {
+    if (Byte.MinValue <= x && x <= Byte.MaxValue) {
       assert(u.unpackByte() == x, "byte")
     } else {
       expectException {
         u.unpackByte()
       }
     }
-    if(Short.MinValue <= x && x <= Short.MaxValue) {
+    if (Short.MinValue <= x && x <= Short.MaxValue) {
       assert(u.unpackShort() == x, "short")
     } else {
       expectException {
         u.unpackShort()
       }
     }
-    if(Int.MinValue <= x && x <= Int.MaxValue) {
+    if (Int.MinValue <= x && x <= Int.MaxValue) {
       assert(u.unpackInt() == x, "int")
     } else {
       expectException {

@@ -9,7 +9,7 @@ object ArrayCodec {
   private def f(t: String) = {
     val name = nameF(t)
     val tpe = typeF(t)
-s"""
+    s"""
   implicit final override val ${defdef(t)} = MsgpackCodec.tryConst(
     { (packer, array) =>
       packer.packArrayHeader(array.length)
@@ -37,7 +37,7 @@ s"""
 
   def single(pack: String, t: String) = {
     val c = t + "ArrayCodec"
-s"""
+    s"""
 trait $c {
   implicit def ${defdef(t)}
 }
@@ -49,14 +49,14 @@ private[$pack] object ${c}Impl extends $c {
   }
 
   def generate(pack: String): String = {
-    val implicitDef = types.map{ t =>
+    val implicitDef = types.map { t =>
       {
         if (t == "Byte") "  "
         else "  implicit "
       } + "def " + defdef(t)
     }.mkString("\n")
 
-s"""package $pack
+    s"""package $pack
 
 // GENERATED CODE: DO NOT EDIT.
 trait AnyValArrayCodec {

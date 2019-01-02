@@ -25,15 +25,19 @@ object CaseClassExample extends Scalaprops {
     val bytes = instance.toBytes(sample, MsgOutBuffer.create())
     val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgInBuffer(bytes))
 
-    assert(union == \/.right(MsgpackUnion.map(
-      Map(
-        MsgpackUnion.string("a") -> MsgpackUnion.True,
-        MsgpackUnion.string("b") -> MsgpackUnion.string("abcde"),
-        MsgpackUnion.string("c") -> MsgpackUnion.array(
-          List(10, 20, 30).map(MsgpackUnion.int)
+    assert(
+      union == \/.right(
+        MsgpackUnion.map(
+          Map(
+            MsgpackUnion.string("a") -> MsgpackUnion.True,
+            MsgpackUnion.string("b") -> MsgpackUnion.string("abcde"),
+            MsgpackUnion.string("c") -> MsgpackUnion.array(
+              List(10, 20, 30).map(MsgpackUnion.int)
+            )
+          )
         )
       )
-    )))
+    )
 
     instance.unpackAndClose(MsgInBuffer(bytes)) == \/.right(sample)
   }
@@ -45,19 +49,22 @@ object CaseClassExample extends Scalaprops {
     val bytes = instance.toBytes(sample, MsgOutBuffer.create())
     val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgInBuffer(bytes))
 
-    assert(union == \/.right(MsgpackUnion.array(
-      List(
-        MsgpackUnion.True,
-        MsgpackUnion.string("abcde"),
+    assert(
+      union == \/.right(
         MsgpackUnion.array(
-          List(10, 20, 30).map(MsgpackUnion.int)
+          List(
+            MsgpackUnion.True,
+            MsgpackUnion.string("abcde"),
+            MsgpackUnion.array(
+              List(10, 20, 30).map(MsgpackUnion.int)
+            )
+          )
         )
       )
-    )))
+    )
 
     instance.unpackAndClose(MsgInBuffer(bytes)) == \/.right(sample)
   }
-
 
   final case class UserId(value: Long)
   object UserId extends MsgpackCompanion[Long, UserId]

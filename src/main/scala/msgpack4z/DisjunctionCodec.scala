@@ -18,7 +18,10 @@ object DisjunctionCodec {
     disjunctionCodec[A, B, Byte](0, 1)
   }
 
-  private[this] def disjunctionCodecImpl[A, B, X](LeftKey: X, RightKey: X)(implicit A: MsgpackCodec[A], B: MsgpackCodec[B], X: MsgpackCodec[X]): MsgpackCodec[A \/ B] =
+  private[this] def disjunctionCodecImpl[A, B, X](
+    LeftKey: X,
+    RightKey: X
+  )(implicit A: MsgpackCodec[A], B: MsgpackCodec[B], X: MsgpackCodec[X]): MsgpackCodec[A \/ B] =
     MsgpackCodec.tryE(
       (packer, disjunction) => {
         packer.packMapHeader(headerSize)
@@ -31,11 +34,10 @@ object DisjunctionCodec {
             B.pack(packer, b)
         }
         packer.mapEnd()
-      }
-      ,
+      },
       unpacker => {
         val size = unpacker.unpackMapHeader()
-        if(size == headerSize){
+        if (size == headerSize) {
           for {
             value <- X.unpack(unpacker)
             result <- value match {
@@ -50,7 +52,7 @@ object DisjunctionCodec {
             unpacker.mapEnd()
             result
           }
-        }else{
+        } else {
           -\/(new UnexpectedMapSize(headerSize, size))
         }
       }

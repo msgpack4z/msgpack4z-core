@@ -4,8 +4,8 @@ import scalajscrossproject.ScalaJSCrossPlugin.autoImport._
 import sbtcrossproject.CrossPlugin.autoImport._
 
 /**
-  * avoid move files
-  */
+ * avoid move files
+ */
 object CustomCrossType extends sbtcrossproject.CrossType {
   override def projectDir(crossBase: File, projectType: String) =
     crossBase / projectType

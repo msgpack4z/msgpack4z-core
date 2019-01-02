@@ -16,9 +16,9 @@ trait MsgpackCodec[A] {
   }
 
   final def unpackAndClose(unpacker: MsgUnpacker): UnpackResult[A] =
-    try{
+    try {
       unpack(unpacker)
-    }finally{
+    } finally {
       unpacker.close()
     }
 
@@ -34,7 +34,7 @@ trait MsgpackCodec[A] {
     val u = unpacker(toBytes(a, packer))
     unpackAndClose(u) match {
       case aa @ \/-(a0) =>
-        if(A.equal(a, a0))
+        if (A.equal(a, a0))
           None
         else
           Some(aa)
@@ -56,7 +56,7 @@ trait MsgpackCodec[A] {
 private class MsgpackCodecConstant[A](
   override val packF: Packer[A],
   override val unpackF: Unpacker[A]
-) extends MsgpackCodec[A]{
+) extends MsgpackCodec[A] {
 
   override def pack(packer: MsgPacker, a: A) =
     packF(packer, a)
@@ -100,12 +100,13 @@ object MsgpackCodec {
 
   private[msgpack4z] def tryE[A](packF: Packer[A], unpackF: MsgUnpacker => UnpackResult[A]): MsgpackCodec[A] = codec[A](
     packF,
-    u => try{
-      unpackF(u)
-    }catch{
-      case NonFatal(e) =>
-        -\/(Err(e))
-    }
+    u =>
+      try {
+        unpackF(u)
+      } catch {
+        case NonFatal(e) =>
+          -\/(Err(e))
+      }
   )
 
   private[msgpack4z] def tryConst[A](packF: Packer[A], unpackF: MsgUnpacker => A): MsgpackCodec[A] =
@@ -114,11 +115,12 @@ object MsgpackCodec {
   private[msgpack4z] def tryConstE[A](packF: Packer[A], unpackF: MsgUnpacker => UnpackResult[A]): MsgpackCodec[A] =
     new MsgpackCodecConstant[A](
       packF,
-      u => try{
-        unpackF(u)
-      }catch{
-        case NonFatal(e) =>
-          -\/(Err(e))
-      }
+      u =>
+        try {
+          unpackF(u)
+        } catch {
+          case NonFatal(e) =>
+            -\/(Err(e))
+        }
     )
 }

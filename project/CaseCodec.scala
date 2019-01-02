@@ -1,4 +1,3 @@
-
 object CaseCodec {
 
   private def tparamList(i: Int) = (1 to i).map("A" + _)
@@ -12,14 +11,14 @@ object CaseCodec {
   private[this] val f: Int => String = { i =>
     val tparams = tparamList(i)
     val tparams1 = tparams.mkString(", ")
-    val implicitParams = tparams.map(x => x + ": MsgpackCodec[" + x + "]" ).mkString(", ")
-    val pack = tparams.zipWithIndex.map{case (t, n) => t + ".pack(packer, x._" + (n + 1) + ")"}.mkString("; ")
+    val implicitParams = tparams.map(x => x + ": MsgpackCodec[" + x + "]").mkString(", ")
+    val pack = tparams.zipWithIndex.map { case (t, n) => t + ".pack(packer, x._" + (n + 1) + ")" }.mkString("; ")
     val unpack = tparams.map(_ + ".unpack(unpacker)").mkString(", ")
     val methodName = "codec" + i
     def methodDef(name: String) =
       s"""def $name[$tparams1, $Z]($construct: ($tparams1) => $Z, $extract: $Z => Option[($tparams1)])(implicit $implicitParams): MsgpackCodec[$Z] ="""
 
-s"""
+    s"""
   ${methodDef(methodName)}
     MsgpackCodec.codec(
       (packer, z) => {
@@ -54,7 +53,7 @@ s"""
     def methodDef(name: String) =
       s"""def $name[$A1, Z]($construct: $A1 => Z, $extract: Z => Option[$A1])(implicit $A1: MsgpackCodec[$A1]): MsgpackCodec[Z] ="""
 
-s"""
+    s"""
   ${methodDef(codec1)}
     MsgpackCodec.codec(
       (packer, z) => {
@@ -79,7 +78,7 @@ s"""
   }
 
   def generate(pack: String): String = {
-s"""package $pack
+    s"""package $pack
 
 import scalaz.$left
 

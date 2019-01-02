@@ -66,7 +66,7 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
         val i = value.iterator
         @annotation.tailrec
         def loop(acc: IMap[MsgpackUnion, MsgpackUnion]): IMap[MsgpackUnion, MsgpackUnion] = {
-          if(i.hasNext) {
+          if (i.hasNext) {
             loop(acc + i.next())
           } else {
             acc
@@ -173,7 +173,6 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
   }
 }
 
-
 object MsgpackUnion {
   private[this] val returnConstNone = (_: Any) => None
   private def constNone[A, B]: A => Option[B] = returnConstNone.asInstanceOf[A => Option[B]]
@@ -198,15 +197,15 @@ object MsgpackUnion {
         unpacker.unpackNil()
         MsgpackNil
       case MsgType.BOOLEAN =>
-        if(unpacker.unpackBoolean())
+        if (unpacker.unpackBoolean())
           MsgpackTrue
         else
           MsgpackFalse
       case MsgType.INTEGER =>
         val i = unpacker.unpackBigInteger()
-        if(LongMin.compareTo(i) <= 0 && i.compareTo(LongMax) <= 0){
+        if (LongMin.compareTo(i) <= 0 && i.compareTo(LongMax) <= 0) {
           MsgpackLong(i.longValue())
-        }else{
+        } else {
           MsgpackULong(i)
         }
       case MsgType.FLOAT =>
@@ -217,14 +216,14 @@ object MsgpackUnion {
         val size = unpacker.unpackArrayHeader()
         val array = new Array[MsgpackUnion](size)
         var i = 0
-        while(i < size){
+        while (i < size) {
           array(i) = unpack(unpacker)
           i += 1
         }
         unpacker.arrayEnd()
         var list: List[MsgpackUnion] = Nil
         i -= 1
-        while(i >= 0){
+        while (i >= 0) {
           list = new ::(array(i), list)
           i -= 1
         }
@@ -234,7 +233,7 @@ object MsgpackUnion {
         val builder = Map.newBuilder[MsgpackUnion, MsgpackUnion]
         builder.sizeHint(size)
         var i = 0
-        while(i < size){
+        while (i < size) {
           val key = unpack(unpacker)
           val value = unpack(unpacker)
           builder += (key -> value)
@@ -251,7 +250,7 @@ object MsgpackUnion {
 
   }
 
-  val string: Extractor[String] = new Extractor[String]{
+  val string: Extractor[String] = new Extractor[String] {
     override def unapply(value: MsgpackUnion) =
       value.string
     override def apply(value: String) =
@@ -320,18 +319,18 @@ object MsgpackUnion {
 
 }
 
-sealed abstract class Extractor[A <: AnyRef] extends (A => MsgpackUnion){
+sealed abstract class Extractor[A <: AnyRef] extends (A => MsgpackUnion) {
   def unapply(value: MsgpackUnion): Opt[A]
 }
 
-final case class MsgpackString (value: String) extends MsgpackUnion {
+final case class MsgpackString(value: String) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packString(value)
 }
 
 object MsgpackString extends (String => MsgpackUnion)
 
-final case class MsgpackBinary private[msgpack4z](value: Array[Byte]) extends MsgpackUnion {
+final case class MsgpackBinary private[msgpack4z] (value: Array[Byte]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packBinary(value)
   override def equals(other: Any): Boolean = {
@@ -348,7 +347,7 @@ final case class MsgpackBinary private[msgpack4z](value: Array[Byte]) extends Ms
 
 object MsgpackBinary extends (Array[Byte] => MsgpackUnion)
 
-final case class MsgpackLong private[msgpack4z](value: Long) extends MsgpackUnion {
+final case class MsgpackLong private[msgpack4z] (value: Long) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packLong(value)
 
@@ -370,7 +369,7 @@ final case class MsgpackLong private[msgpack4z](value: Long) extends MsgpackUnio
 
 object MsgpackLong extends (Long => MsgpackUnion)
 
-final case class MsgpackULong private[msgpack4z](value: BigInteger) extends MsgpackUnion {
+final case class MsgpackULong private[msgpack4z] (value: BigInteger) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packBigInteger(value)
 
@@ -388,7 +387,7 @@ final case class MsgpackULong private[msgpack4z](value: BigInteger) extends Msgp
   }
 }
 
-final case class MsgpackDouble private[msgpack4z](value: Double) extends MsgpackUnion {
+final case class MsgpackDouble private[msgpack4z] (value: Double) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packDouble(value)
   override def equals(other: Any): Boolean = other match {
@@ -402,11 +401,11 @@ final case class MsgpackDouble private[msgpack4z](value: Double) extends Msgpack
 
 object MsgpackDouble extends (Double => MsgpackUnion)
 
-final case class MsgpackArray private[msgpack4z](value: List[MsgpackUnion]) extends MsgpackUnion {
+final case class MsgpackArray private[msgpack4z] (value: List[MsgpackUnion]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {
     packer.packArrayHeader(value.size)
     var list = value
-    while(list ne Nil){
+    while (list ne Nil) {
       list.head.pack(packer)
       list = list.tail
     }
@@ -414,12 +413,13 @@ final case class MsgpackArray private[msgpack4z](value: List[MsgpackUnion]) exte
   }
 }
 
-final case class MsgpackMap private[msgpack4z](value: Map[MsgpackUnion, MsgpackUnion]) extends MsgpackUnion {
+final case class MsgpackMap private[msgpack4z] (value: Map[MsgpackUnion, MsgpackUnion]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {
     packer.packMapHeader(value.size)
-    value.foreach{ case (k, v) =>
-      k.pack(packer)
-      v.pack(packer)
+    value.foreach {
+      case (k, v) =>
+        k.pack(packer)
+        v.pack(packer)
     }
     packer.mapEnd()
   }
@@ -435,7 +435,7 @@ final case class MsgpackExt private[msgpack4z] (tpe: Byte, data: Array[Byte]) ex
 
   override def toString: String = hexString("MsgpackExt(type = " + tpe + ", value = ", " ", ")", 4)
 
-  def hexString(start: String, sep: String, end: String, n: Int): String  = {
+  def hexString(start: String, sep: String, end: String, n: Int): String = {
     data.sliding(n, n).map(_.map(x => "%02x".format(x & 0xff)).mkString).mkString(start, sep, end)
   }
 
