@@ -2,8 +2,9 @@ package msgpack4z
 
 import java.math.BigInteger
 import scalaprops._
-import scalaprops.GenTags._
+import scalaprops.ScalapropsScalaz._
 import scalaz._
+import scalaz.syntax.functor._
 
 object UnionGen {
 
@@ -56,7 +57,7 @@ object UnionGen {
     Gen.oneOf(integerGen, doubleGen)
 
   val stringGen: Gen[MsgpackUnion] =
-    Tag.unsubst(Gen[String @@ AlphaNum]).map(MsgpackString)
+    Gen.alphaNumString.map(MsgpackString)
 
   val binaryGen: Gen[MsgpackUnion] =
     Gen.from1(MsgpackBinary)

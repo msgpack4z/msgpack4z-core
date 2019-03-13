@@ -20,10 +20,10 @@ abstract class SpecBase extends Scalaprops {
   protected[this] def unpacker(bytes: Array[Byte]): MsgUnpacker
 
   implicit final val symbolGen: Gen[Symbol] =
-    Tag.unsubst(Gen[String @@ GenTags.AlphaNum]).map(Symbol(_))
+    Gen.alphaNumString.map(Symbol(_))
 
   implicit final val stringGen: Gen[String] =
-    Tag.unsubst(Gen[String @@ GenTags.AlphaNum])
+    Gen.alphaNumString
 
   final def checkRoundTripBytes[A](checkHashCode: Boolean)(implicit A: MsgpackCodec[A], G: Gen[A], E: Equal[A]): Property =
     Property.forAll { a: A =>
