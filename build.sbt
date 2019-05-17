@@ -108,7 +108,6 @@ val commonSettings = Def.settings(
     "-deprecation",
     "-unchecked",
     "-Xlint",
-    "-Xfuture",
     "-language:existentials",
     "-language:higherKinds",
     "-language:implicitConversions",
@@ -117,9 +116,13 @@ val commonSettings = Def.settings(
   scalacOptions ++= PartialFunction
     .condOpt(CrossVersion.partialVersion(scalaVersion.value)) {
       case Some((2, v)) if v <= 12 =>
-        "-Yno-adapted-args"
+        Seq(
+          "-Xfuture",
+          "-Yno-adapted-args"
+        )
     }
-    .toList,
+    .toList
+    .flatten,
   scalaVersion := Scala211,
   crossScalaVersions := Scala211 :: "2.12.8" :: "2.13.0-RC2" :: Nil,
   scalacOptions in (Compile, doc) ++= {
