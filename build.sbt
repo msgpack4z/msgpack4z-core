@@ -124,7 +124,7 @@ val commonSettings = Def.settings(
     .toList
     .flatten,
   scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.8" :: "2.13.0-RC3" :: Nil,
+  crossScalaVersions := Scala211 :: "2.12.8" :: "2.13.0" :: Nil,
   scalacOptions in (Compile, doc) ++= {
     val tag = tagOrHash.value
     Seq(
@@ -179,7 +179,7 @@ lazy val msgpack4zCore = CrossProject(
     name := msgpack4zCoreName,
     libraryDependencies ++= Seq(
       "org.scalaz" %%% "scalaz-core" % ScalazVersion,
-      "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.2.2" % "provided",
+      "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.2.3" % "provided",
       "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
       "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
     )
