@@ -1,9 +1,11 @@
 language: scala
 
+dist: xenial
+
 sudo: false
 
 jdk:
-  - oraclejdk8
+  - openjdk8
 
 cache:
   directories:
@@ -26,9 +28,9 @@ script:
 matrix:
   include:
     - scala: 2.12.8
-      jdk: oraclejdk11
+      jdk: openjdk11
     - scala: 2.11.12
-      jdk: oraclejdk8
+      jdk: openjdk8
       sudo: required
       env: SCALA_NATIVE=true
       before_install:
