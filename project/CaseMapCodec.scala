@@ -73,6 +73,34 @@ ${signature(name)}
 
   def generate(pack: String): String = {
 
+    val codec1 = """
+  def codec1[A1, Z](apply: A1 => Z, unapply: Z => Option[A1])(a1: K)(implicit A1: MsgpackCodec[A1]): MsgpackCodec[Z] =
+    MsgpackCodec.codec[Z](
+    (packer, value) => {
+      packer.packMapHeader(1)
+      val t = unapply(value).get
+      K.pack(packer, a1); A1.pack(packer, t)
+      packer.mapEnd()
+    },
+    unpacker => mapCodec.unpack(unpacker) match {
+      case \/-(value) =>
+        val b1 = value.get(a1)
+        var keys: IList[K] = IList.empty
+        if(b1.isEmpty){ keys = new ICons(a1, keys) }
+
+        keys match {
+          case ICons(h, t) =>
+            -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
+          case _ =>
+            b1.get.as[A1](factory)(A1).map(apply)
+        }
+      case e @ -\/(_) => e
+    }
+  )
+
+  def codec[A1, Z](apply: A1 => Z, unapply: Z => Option[A1])(a1: K)(implicit A1: MsgpackCodec[A1]): MsgpackCodec[Z] =
+    codec1(apply, unapply)(a1)(A1)"""
+
     s"""package $pack
 
 import scalaz._
@@ -91,7 +119,7 @@ class CaseMapCodec[$K]($factory: PackerUnpackerFactory)(implicit K: $c[K]) {
 
   private[this] val $mapCodec =
     msgpack4z.CodecInstances.std.mapCodec[K, MsgpackUnion]
-
+${codec1}
 ${(2 to 22).map { n =>
       new Method(n).methods
     }.mkString("\n")}
