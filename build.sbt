@@ -262,7 +262,7 @@ lazy val testJavaLatest = Project("testJavaLatest", file("test-java-latest"))
     commonSettings,
     noPublish,
     libraryDependencies ++= Seq(
-      ("com.github.xuwei-k" % "msgpack4z-java" % "0.3.5" % "test"),
+      ("com.github.xuwei-k" % "msgpack4z-java" % "0.3.6" % "test"),
     )
   )
   .dependsOn(msgpack4zCoreJVM % "test->test")
