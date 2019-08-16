@@ -4,7 +4,7 @@ import com.typesafe.sbt.pgp.PgpKeys
 import sbtcrossproject.CrossProject
 
 val msgpack4zNativeVersion = "0.3.5"
-val scalapropsVersion = "0.6.0"
+val scalapropsVersion = "0.6.1"
 def ScalazVersion = "7.2.28"
 def Scala211 = "2.11.12"
 
