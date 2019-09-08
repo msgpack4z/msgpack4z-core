@@ -44,7 +44,6 @@ val commonSettings = Def.settings(
     else
       Opts.resolver.sonatypeStaging
   ),
-  resolvers += Opts.resolver.sonatypeReleases,
   fullResolvers ~= { _.filterNot(_.name == "jcenter") },
   scalaModuleInfo ~= (_.map(_.withOverrideScalaVersion(true))),
   buildInfoKeys := Seq[BuildInfoKey](
