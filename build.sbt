@@ -123,7 +123,7 @@ val commonSettings = Def.settings(
     .toList
     .flatten,
   scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.8" :: "2.13.0" :: Nil,
+  crossScalaVersions := Scala211 :: "2.12.10" :: "2.13.1" :: Nil,
   scalacOptions in (Compile, doc) ++= {
     val tag = tagOrHash.value
     Seq(

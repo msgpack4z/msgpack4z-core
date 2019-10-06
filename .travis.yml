@@ -15,8 +15,8 @@ cache:
 
 scala:
   - 2.11.12
-  - 2.12.8
-  - 2.13.0
+  - 2.12.10
+  - 2.13.1
 
 script:
   - git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
@@ -28,7 +28,7 @@ script:
 
 matrix:
   include:
-    - scala: 2.12.8
+    - scala: 2.12.10
       jdk: openjdk11
     - scala: 2.11.12
       jdk: openjdk8
@@ -47,4 +47,4 @@ matrix:
       - source .install-jdk-travis.sh
       - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
       script:
-      - ./sbt "++ 2.13.0" msgpack4z-coreJVM/test testJava07/test testJavaLatest/test
+      - ./sbt "++ 2.13.1" msgpack4z-coreJVM/test testJava07/test testJavaLatest/test
