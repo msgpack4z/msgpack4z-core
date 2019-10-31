@@ -71,5 +71,4 @@ ${types.map(f).mkString("\n")}
 
 ${types.map(single(pack, _)).mkString("\n")}"""
   }
-
 }

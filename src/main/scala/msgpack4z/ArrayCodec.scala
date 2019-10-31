@@ -9,7 +9,6 @@ trait ArrayCodec {
 }
 
 object ArrayCodecImpl extends ArrayCodec {
-
   implicit def arrayCodec[A](implicit A: MsgpackCodec[A], C: ClassTag[A]): MsgpackCodec[Array[A]] =
     (C match {
       case ClassTag.Byte =>
@@ -61,5 +60,4 @@ object ArrayCodecImpl extends ArrayCodec {
         error
     }
   )
-
 }

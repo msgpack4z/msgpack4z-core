@@ -8,7 +8,6 @@ import scalaz.std.list._
 import scalaz.std.string._
 
 abstract class ArraySpec extends SpecBase {
-
   private implicit def arrayEq[A](implicit A: Equal[A]): Equal[Array[A]] =
     Equal.equalBy(_.toList)
 
@@ -41,5 +40,4 @@ abstract class ArraySpec extends SpecBase {
       checkLawWithoutHashCode[Array[String]].toProperties("String")
     )
   }
-
 }

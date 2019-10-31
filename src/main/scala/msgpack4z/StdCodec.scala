@@ -22,7 +22,6 @@ private[msgpack4z] object AllImpl
   with StdCodec
   with BinaryCodecImpl
   with ScalazCodecImpl {
-
   override implicit def listCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[List[A]] = MsgpackCodec.tryE(
     { (packer, list) =>
       packer.packArrayHeader(list.length)

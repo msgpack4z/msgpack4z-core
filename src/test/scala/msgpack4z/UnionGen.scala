@@ -6,7 +6,6 @@ import scalaprops.ScalapropsScalaz._
 import scalaz.syntax.functor._
 
 object UnionGen {
-
   val booleanGen: Gen[MsgpackUnion] =
     Gen.elements(
       MsgpackUnion.True,
@@ -97,5 +96,4 @@ object UnionGen {
       extGen.widen,
       binaryGen
     )
-
 }

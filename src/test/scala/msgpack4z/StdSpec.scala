@@ -7,7 +7,6 @@ import scalaprops._
 import scalaz.std.AllInstances._
 
 abstract class StdSpec extends SpecBase {
-
   private[this] def isSurrogate(c: Char): Boolean =
     (Character.MIN_SURROGATE <= c) && (c <= Character.MAX_SURROGATE)
 
@@ -73,5 +72,4 @@ abstract class StdSpec extends SpecBase {
   val tuple22 = checkLaw[
     (Long, String, Long, Long, Long, Int, Long, Long, Long, Long, List[Long], Long, Long, Long, Long, String, Long, Long, Long, Long, Long, Long)
   ]
-
 }

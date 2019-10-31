@@ -1,7 +1,6 @@
 import sbt._, Keys._
 
 object Sxr {
-
   val enableSxr = SettingKey[Boolean]("enableSxr")
   val sxr = TaskKey[File]("packageSxr")
 
@@ -68,5 +67,4 @@ object Sxr {
       }
     )
   )
-
 }

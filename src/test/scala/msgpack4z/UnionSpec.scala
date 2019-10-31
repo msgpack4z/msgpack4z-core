@@ -5,7 +5,6 @@ import scalaprops._
 import scalaz._
 
 abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) extends SpecBase {
-
   private implicit def unionGen = unionGen0
 
   private def supportExtType: Boolean = unionGen == UnionGen.unionGen

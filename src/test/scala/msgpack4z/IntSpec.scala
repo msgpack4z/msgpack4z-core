@@ -3,7 +3,6 @@ package msgpack4z
 import scalaprops.Property.forAll
 
 abstract class IntSpec extends SpecBase {
-
   override def param = super.param.copy(minSuccessful = 200)
 
   val int8 = forAll { x: Byte =>
@@ -97,5 +96,4 @@ abstract class IntSpec extends SpecBase {
     assert(u.unpackBigInteger().longValue == x, "biginteger")
     true
   }
-
 }

@@ -8,7 +8,6 @@ import scalaz.std.java.math.bigInteger._
 import scalaz.std.string._
 
 private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
-
   override def equalIsNatural = true
   override val toScalaOrdering = super.toScalaOrdering
 
@@ -147,5 +146,4 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
       GT
     }
   }
-
 }

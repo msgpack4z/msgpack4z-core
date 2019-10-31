@@ -1,7 +1,6 @@
 package msgpack4z
 
 object CodecInstances {
-
   val all: AnyValCodec with TupleCodec with AnyValArrayCodec with RefArrayCodec with StdCodec with BinaryCodec with ScalazCodec = AllImpl
 
   val anyVal: AnyValCodec = AllImpl
@@ -25,5 +24,4 @@ object CodecInstances {
   val longArray: LongArrayCodec = LongArrayCodecImpl
   val floatArray: FloatArrayCodec = FloatArrayCodecImpl
   val doubleArray: DoubleArrayCodec = DoubleArrayCodecImpl
-
 }

@@ -28,7 +28,5 @@ final case class TwentyTwo(
 )
 
 object TwentyTwo {
-
   implicit val gen: Gen[TwentyTwo] = Gen.from22(TwentyTwo.apply)
-
 }

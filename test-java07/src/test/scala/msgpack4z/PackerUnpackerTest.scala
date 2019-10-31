@@ -4,7 +4,6 @@ import scalaprops._
 import scalaz.\/-
 
 object PackerUnpackerTest extends Scalaprops {
-
   val packerGen1: Gen[() => msgpack4z.MsgPacker] =
     Gen.elements(
       () => new Msgpack07Packer,
@@ -44,5 +43,4 @@ object PackerUnpackerTest extends Scalaprops {
   }
 
   override def param = super.param.copy(minSuccessful = 2000, maxSize = 1000)
-
 }

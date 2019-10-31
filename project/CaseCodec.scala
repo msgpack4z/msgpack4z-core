@@ -1,5 +1,4 @@
 object CaseCodec {
-
   private def tparamList(i: Int) = (1 to i).map("A" + _)
 
   private final val left = """-\/""" // avoid InvalidEscapeException
@@ -90,5 +89,4 @@ ${(2 to 22).map(f).mkString("\n")}
 }
 """
   }
-
 }

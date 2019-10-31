@@ -6,7 +6,6 @@ import scalaprops._
 import scalaz.Equal
 
 abstract class BinarySpec extends SpecBase {
-
   private implicit val binaryEq: Equal[Binary] =
     Equal.equal((a, b) => java.util.Arrays.equals(a.value, b.value))
 
@@ -24,5 +23,4 @@ abstract class BinarySpec extends SpecBase {
     implicitly,
     Gen.value(new Binary(Array.fill[Byte](1 << (16 + 1))(Random.nextInt.toByte)))
   )
-
 }
