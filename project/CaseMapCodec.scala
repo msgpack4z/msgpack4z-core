@@ -72,7 +72,6 @@ ${signature(name)}
   }
 
   def generate(pack: String): String = {
-
     val codec1 = """
   def codec1[A1, Z](apply: A1 => Z, unapply: Z => Option[A1])(a1: K)(implicit A1: MsgpackCodec[A1]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](

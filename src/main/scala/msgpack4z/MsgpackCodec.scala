@@ -4,7 +4,6 @@ import scala.util.control.NonFatal
 import scalaz._
 
 trait MsgpackCodec[A] {
-
   def pack(packer: MsgPacker, a: A): Unit
 
   def packF: Packer[A] =
@@ -57,17 +56,14 @@ private class MsgpackCodecConstant[A](
   override val packF: Packer[A],
   override val unpackF: Unpacker[A]
 ) extends MsgpackCodec[A] {
-
   override def pack(packer: MsgPacker, a: A) =
     packF(packer, a)
 
   override def unpack(unpacker: MsgUnpacker): UnpackResult[A] =
     unpackF(unpacker)
-
 }
 
 object MsgpackCodec {
-
   @inline def apply[A](implicit A: MsgpackCodec[A]): MsgpackCodec[A] = A
 
   /**

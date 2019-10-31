@@ -5,7 +5,6 @@ import scala.util.control.NonFatal
 import scalaz._
 
 abstract class SpecBase extends Scalaprops {
-
   protected[this] final def expectException[A](f: => A): Unit = {
     val ex = new Exception("expect Exception")
     try {
@@ -63,5 +62,4 @@ abstract class SpecBase extends Scalaprops {
 
   final def checkLawWithoutHashCode[A](implicit A: MsgpackCodec[A], G: Gen[A], E: Equal[A]) =
     checkRoundTripBytes(false)(A, G, E)
-
 }

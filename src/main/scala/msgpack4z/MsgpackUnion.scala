@@ -5,7 +5,6 @@ import msgpack4z.MsgpackUnion.constNone
 import scalaz.{IMap, Order}
 
 sealed abstract class MsgpackUnion extends Product with Serializable {
-
   final def string: Opt[String] =
     this match {
       case MsgpackString(value) => new Opt(value)
@@ -247,7 +246,6 @@ object MsgpackUnion {
         val header = unpacker.unpackExtTypeHeader
         new MsgpackExt(header.getType, unpacker.readPayload(header.getLength))
     }
-
   }
 
   val string: Extractor[String] = new Extractor[String] {
@@ -316,7 +314,6 @@ object MsgpackUnion {
   val True: MsgpackUnion = MsgpackTrue
   val False: MsgpackUnion = MsgpackFalse
   val nil: MsgpackUnion = MsgpackNil
-
 }
 
 sealed abstract class Extractor[A <: AnyRef] extends (A => MsgpackUnion) {

@@ -3,7 +3,6 @@ package msgpack4z
 import scalaz.{-\/, \/-}
 
 object OptionCodec {
-
   private[this] val RightNone = \/-(None)
 
   final def optionCodec[A, B](SomeKey: B, NoneKey: B)(implicit A: MsgpackCodec[A], B: MsgpackCodec[B]): MsgpackCodec[Option[A]] = {
@@ -51,5 +50,4 @@ object OptionCodec {
     import CodecInstances.std.stringCodec
     optionCodec[A, String]("some", "none")
   }
-
 }

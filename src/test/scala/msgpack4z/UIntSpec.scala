@@ -4,7 +4,6 @@ import scalaprops.Gen
 import scalaprops.Property.forAllG
 
 abstract class UIntSpec extends SpecBase {
-
   override def param = super.param.copy(minSuccessful = 200)
 
   private[this] def chooseWithBoundaries(min: Int, max: Int) =
@@ -171,5 +170,4 @@ abstract class UIntSpec extends SpecBase {
       true
     }
   }
-
 }

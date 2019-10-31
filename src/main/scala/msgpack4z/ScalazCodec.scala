@@ -3,17 +3,14 @@ package msgpack4z
 import scalaz._
 
 trait ScalazCodec {
-
   implicit def iListCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[IList[A]]
   implicit def imapCodec[A, B](implicit O: Order[A], A: MsgpackCodec[A], B: MsgpackCodec[B]): MsgpackCodec[A ==>> B]
   implicit def isetCodec[A](implicit O: Order[A], A: MsgpackCodec[A]): MsgpackCodec[ISet[A]]
   implicit def nonEmptyListCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[NonEmptyList[A]]
   implicit def maybeCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[Maybe[A]]
-
 }
 
 private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
-
   override final def iListCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[IList[A]] = MsgpackCodec.tryE(
     (packer, list) => {
       packer.packArrayHeader(list.length)

@@ -3,7 +3,6 @@ package msgpack4z
 import scalaz.{-\/, \/, \/-, Maybe}
 
 object MaybeCodec {
-
   private[this] val RightEmpty = \/-(Maybe.Empty())
   private[this] def rightEmpty[A]: UnpackError \/ Maybe[A] = RightEmpty.asInstanceOf[UnpackError \/ Maybe[A]]
 
@@ -52,5 +51,4 @@ object MaybeCodec {
     import CodecInstances.std.stringCodec
     maybeCodec[A, String]("just", "empty")
   }
-
 }

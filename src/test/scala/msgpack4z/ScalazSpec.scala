@@ -7,7 +7,6 @@ import scalaprops._
 import scalaprops.ScalapropsScalaz._
 
 abstract class ScalazSpec extends SpecBase {
-
   private[this] implicit val stringGen = Gen.asciiString
 
   val iList = checkLawz[IList[Long]]

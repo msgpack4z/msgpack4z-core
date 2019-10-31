@@ -6,13 +6,11 @@ import scalaprops._
 import scalaz.\/
 
 object CaseClassExample extends Scalaprops {
-
   case class Foo(a: Boolean, b: String, c: List[Int])
 
   val sample = Foo(true, "abcde", List(10, 20, 30))
 
   val `case class map example` = forAll {
-
     val factory = new PackerUnpackerFactory {
       def packer = MsgOutBuffer.create()
       def unpacker(bytes: Array[Byte]) = MsgInBuffer(bytes)
@@ -43,7 +41,6 @@ object CaseClassExample extends Scalaprops {
   }
 
   val `case class array example` = forAll {
-
     val instance = CaseCodec.codec(Foo.apply _, Foo.unapply _)
 
     val bytes = instance.toBytes(sample, MsgOutBuffer.create())
