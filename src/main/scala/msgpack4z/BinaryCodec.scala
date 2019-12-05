@@ -28,6 +28,7 @@ final class Binary(val value: Array[Byte]) {
 }
 
 trait BinaryCodec {
+
   /**
    * @see [[https://github.com/msgpack/msgpack/blob/master/spec.md#formats-bin]]
    */
