@@ -18,12 +18,11 @@ object UnionGen {
   val ulongGen: Gen[MsgpackUnion] =
     Gen
       .chooseLong(0, Long.MaxValue)
-      .flatMap(
-        i =>
-          Gen.elements(
-            MsgpackULong(BigInteger.valueOf(i)),
-            MsgpackULong(BigInteger.valueOf(i).add(BigInteger.valueOf(i - 1L)))
-          )
+      .flatMap(i =>
+        Gen.elements(
+          MsgpackULong(BigInteger.valueOf(i)),
+          MsgpackULong(BigInteger.valueOf(i).add(BigInteger.valueOf(i - 1L)))
+        )
       )
 
   val integerGen: Gen[MsgpackUnion] =
