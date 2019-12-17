@@ -5,7 +5,7 @@ import sbtcrossproject.CrossProject
 
 val msgpack4zNativeVersion = "0.3.5"
 val scalapropsVersion = "0.6.2"
-def ScalazVersion = "7.2.29"
+def ScalazVersion = "7.2.30"
 def Scala211 = "2.11.12"
 
 val tagName = Def.setting {
