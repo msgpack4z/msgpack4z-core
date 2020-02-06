@@ -200,7 +200,7 @@ lazy val msgpack4zCore = CrossProject(
       val g = "https://raw.githubusercontent.com/msgpack4z/msgpack4z-core/" + tagOrHash.value
       s"-P:scalajs:mapSourceURI:$a->$g/"
     },
-    scalaJSSemantics ~= { _.withStrictFloats(true) }
+    scalaJSLinkerConfig ~= { _.withSemantics(_.withStrictFloats(true)) },
   )
   .platformsSettings(NativePlatform, JSPlatform)(
     libraryDependencies ++= Seq(
