@@ -3,7 +3,7 @@ import sbtrelease.ReleaseStateTransformations._
 import com.typesafe.sbt.pgp.PgpKeys
 import sbtcrossproject.CrossProject
 
-val msgpack4zNativeVersion = "0.3.5"
+val msgpack4zNativeVersion = "0.3.6"
 val scalapropsVersion = "0.6.3"
 def ScalazVersion = "7.2.30"
 def Scala211 = "2.11.12"
