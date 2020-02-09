@@ -38,12 +38,7 @@ val setMimaVersion: State => State = { st =>
 val commonSettings = Def.settings(
   ReleasePlugin.extraReleaseCommands,
   scalapropsCoreSettings,
-  publishTo := Some(
-    if (isSnapshot.value)
-      Opts.resolver.sonatypeSnapshots
-    else
-      Opts.resolver.sonatypeStaging
-  ),
+  publishTo := sonatypePublishToBundle.value,
   fullResolvers ~= { _.filterNot(_.name == "jcenter") },
   scalaModuleInfo ~= (_.map(_.withOverrideScalaVersion(true))),
   buildInfoKeys := Seq[BuildInfoKey](
@@ -86,10 +81,10 @@ val commonSettings = Def.settings(
     ),
     SetScala211,
     releaseStepCommand(build.msgpack4zCoreName + "Native/publishSigned"),
+    releaseStepCommandAndRemaining("sonatypeBundleRelease"),
     setNextVersion,
     setMimaVersion,
     commitNextVersion,
-    releaseStepCommand("sonatypeReleaseAll"),
     UpdateReadme.updateReadmeProcess,
     pushChanges
   ),
