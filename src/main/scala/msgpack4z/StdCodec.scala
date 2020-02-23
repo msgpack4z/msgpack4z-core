@@ -99,9 +99,7 @@ private[msgpack4z] object AllImpl
   override implicit def vectorCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[Vector[A]] = MsgpackCodec.tryE(
     { (packer, vector) =>
       packer.packArrayHeader(vector.length)
-      vector.foreach { x =>
-        A.pack(packer, x)
-      }
+      vector.foreach { x => A.pack(packer, x) }
       packer.arrayEnd()
     }, { unpacker =>
       val size = unpacker.unpackArrayHeader()

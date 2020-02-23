@@ -45,9 +45,7 @@ ${signature(name)}
     ($packer, $value) => {
       $packer.packMapHeader($n)
       val $t = $unapply($value).get
-      ${(0 until n).map { i =>
-        s"""$K.pack($packer, ${params0(i)}); ${tparams0(i)}.pack($packer, $t._${i + 1})"""
-      }.mkString("; ")}
+      ${(0 until n).map { i => s"""$K.pack($packer, ${params0(i)}); ${tparams0(i)}.pack($packer, $t._${i + 1})""" }.mkString("; ")}
       $packer.mapEnd()
     },
     $unpacker => $mapCodec.unpack($unpacker) match {
@@ -119,9 +117,7 @@ class CaseMapCodec[$K]($factory: PackerUnpackerFactory)(implicit K: $c[K]) {
   private[this] val $mapCodec =
     msgpack4z.CodecInstances.std.mapCodec[K, MsgpackUnion]
 ${codec1}
-${(2 to 22).map { n =>
-      new Method(n).methods
-    }.mkString("\n")}
+${(2 to 22).map { n => new Method(n).methods }.mkString("\n")}
 }
 """
   }
