@@ -149,9 +149,7 @@ val commonSettings = Def.settings(
       override def transform(n: Node) =
         if (f(n)) NodeSeq.Empty else n
     }
-    val stripTestScope = stripIf { n =>
-      n.label == "dependency" && (n \ "scope").text == "test"
-    }
+    val stripTestScope = stripIf { n => n.label == "dependency" && (n \ "scope").text == "test" }
     new RuleTransformer(stripTestScope).transform(node)(0)
   }
 ) ++ Seq(Compile, Test).flatMap(c => scalacOptions in (c, console) --= unusedWarnings)
