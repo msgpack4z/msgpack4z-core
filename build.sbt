@@ -3,8 +3,8 @@ import sbtrelease.ReleaseStateTransformations._
 import sbtcrossproject.CrossProject
 
 val msgpack4zNativeVersion = "0.3.6"
-val scalapropsVersion = "0.6.3"
-def ScalazVersion = "7.2.30"
+val scalapropsVersion = "0.8.0"
+def ScalazVersion = "7.3.0"
 def Scala211 = "2.11.12"
 
 val tagName = Def.setting {
@@ -169,7 +169,7 @@ lazy val msgpack4zCore = CrossProject(
     name := msgpack4zCoreName,
     libraryDependencies ++= Seq(
       "org.scalaz" %%% "scalaz-core" % ScalazVersion,
-      "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.2.3" % "provided",
+      "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.0" % "provided",
       "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
       "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
     )

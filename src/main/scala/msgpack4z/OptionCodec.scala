@@ -1,9 +1,9 @@
 package msgpack4z
 
-import scalaz.{-\/, \/-}
+import scalaz.{-\/, \/, \/-}
 
 object OptionCodec {
-  private[this] val RightNone = \/-(None)
+  private[this] val RightNone: UnpackError \/- Option[Nothing] = new \/-(None)
 
   final def optionCodec[A, B](SomeKey: B, NoneKey: B)(implicit A: MsgpackCodec[A], B: MsgpackCodec[B]): MsgpackCodec[Option[A]] = {
     val HeaderSize = 1
@@ -23,12 +23,12 @@ object OptionCodec {
       unpacker => {
         val size = unpacker.unpackMapHeader()
         if (size == HeaderSize) {
-          val result = B.unpack(unpacker).flatMap {
+          val result = B.unpack(unpacker).flatMap[Option[A]] {
             case SomeKey =>
               A.unpack(unpacker).map(Some(_))
             case NoneKey =>
               unpacker.unpackNil()
-              RightNone
+              RightNone.asInstanceOf[UnpackError \/ Option[A]]
             case _ =>
               -\/(MapKeyNotFound(SomeKey.toString, NoneKey.toString))
           }

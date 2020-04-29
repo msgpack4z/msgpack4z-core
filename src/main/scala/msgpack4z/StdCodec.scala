@@ -1,7 +1,7 @@
 package msgpack4z
 
 import msgpack4z.MsgpackCodec.tryConst
-import scalaz.{-\/, \/-}
+import scalaz.{-\/, \/, \/-}
 
 trait StdCodec {
   implicit def listCodec[A: MsgpackCodec]: MsgpackCodec[List[A]]
@@ -35,13 +35,13 @@ private[msgpack4z] object AllImpl
       val size = unpacker.unpackArrayHeader()
       var list: List[A] = Nil
       var i = 0
-      var error: -\/[UnpackError] = null
+      var error: UnpackError \/ List[A] = null
       while (i < size && error == null) {
         A.unpack(unpacker) match {
           case \/-(a) =>
             list ::= a
           case e @ -\/(_) =>
-            error = e
+            error = e.coerceRight
         }
         i += 1
       }
@@ -67,7 +67,7 @@ private[msgpack4z] object AllImpl
         val size = unpacker.unpackMapHeader()
         var i = 0
         val builder = Map.newBuilder[A, B]
-        var error: -\/[UnpackError] = null
+        var error: UnpackError \/ Map[A, B] = null
         while (i < size && error == null) {
           A.unpack(unpacker) match {
             case \/-(k) =>
@@ -75,10 +75,10 @@ private[msgpack4z] object AllImpl
                 case \/-(v) =>
                   builder += (k -> v)
                 case e @ -\/(_) =>
-                  error = e
+                  error = e.coerceRight
               }
             case e @ -\/(_) =>
-              error = e
+              error = e.coerceRight
           }
           i += 1
         }
@@ -105,13 +105,13 @@ private[msgpack4z] object AllImpl
       val size = unpacker.unpackArrayHeader()
       val builder = Vector.newBuilder[A]
       var i = 0
-      var error: -\/[UnpackError] = null
+      var error: UnpackError \/ Vector[A] = null
       while (i < size && error == null) {
         A.unpack(unpacker) match {
           case \/-(a) =>
             builder += a
           case e @ -\/(_) =>
-            error = e
+            error = e.coerceRight
         }
         i += 1
       }

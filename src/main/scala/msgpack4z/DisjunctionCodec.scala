@@ -42,11 +42,11 @@ object DisjunctionCodec {
             value <- X.unpack(unpacker)
             result <- value match {
               case LeftKey =>
-                A.unpack(unpacker).map(\/.left)
+                A.unpack(unpacker).map(\/.left[A, B])
               case RightKey =>
-                B.unpack(unpacker).map(\/.right)
+                B.unpack(unpacker).map(\/.right[A, B])
               case other =>
-                -\/(new UnexpectedEitherKey(left = LeftKey, right = RightKey, other))
+                -\/[UnpackError, A \/ B](new UnexpectedEitherKey(left = LeftKey, right = RightKey, other))
             }
           } yield {
             unpacker.mapEnd()

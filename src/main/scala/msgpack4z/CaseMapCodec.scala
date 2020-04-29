@@ -37,7 +37,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
           case _ =>
             b1.get.as[A1](factory)(A1).map(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -67,7 +67,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -98,7 +98,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -130,7 +130,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -163,7 +163,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -197,7 +197,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -232,7 +232,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -268,7 +268,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -305,7 +305,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -343,7 +343,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -382,7 +382,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -422,7 +422,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -463,7 +463,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -505,7 +505,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -548,7 +548,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -592,7 +592,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -637,7 +637,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -683,7 +683,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -730,7 +730,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18), b19.get.as[A19](factory)(A19)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -778,7 +778,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18), b19.get.as[A19](factory)(A19), b20.get.as[A20](factory)(A20)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -827,7 +827,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18), b19.get.as[A19](factory)(A19), b20.get.as[A20](factory)(A20), b21.get.as[A21](factory)(A21)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 
@@ -877,7 +877,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
               b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18), b19.get.as[A19](factory)(A19), b20.get.as[A20](factory)(A20), b21.get.as[A21](factory)(A21), b22.get.as[A22](factory)(A22)
             )(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 

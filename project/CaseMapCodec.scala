@@ -62,7 +62,7 @@ ${signature(name)}
               ${(0 until n).map(i => s"b${i + 1}.get.as[${tparams0(i)}]($factory)(${tparams0(i)})").mkString(", ")}
             )($apply)
         }
-      case e @ $left(_) => e
+      case e @ $left(_) => e.coerceRight
     }
   )
 """
@@ -91,7 +91,7 @@ ${signature(name)}
           case _ =>
             b1.get.as[A1](factory)(A1).map(apply)
         }
-      case e @ -\/(_) => e
+      case e @ -\/(_) => e.coerceRight
     }
   )
 

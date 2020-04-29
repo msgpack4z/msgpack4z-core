@@ -24,7 +24,7 @@ object MaybeCodec {
       unpacker => {
         val size = unpacker.unpackMapHeader()
         if (size == HeaderSize) {
-          val result = B.unpack(unpacker).flatMap {
+          val result = B.unpack(unpacker).flatMap[Maybe[A]] {
             case JustKey =>
               A.unpack(unpacker).map(Maybe.Just(_))
             case EmptyKey =>

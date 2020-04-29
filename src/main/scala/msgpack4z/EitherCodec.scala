@@ -1,6 +1,6 @@
 package msgpack4z
 
-import scalaz.-\/
+import scalaz.{-\/, \/}
 
 object EitherCodec {
   private[this] final val headerSize = 1
@@ -42,11 +42,11 @@ object EitherCodec {
             value <- X.unpack(unpacker)
             result <- value match {
               case LeftKey =>
-                A.unpack(unpacker).map(Left(_))
+                A.unpack(unpacker).map(Left[A, B](_)): UnpackError \/ Either[A, B]
               case RightKey =>
-                B.unpack(unpacker).map(Right(_))
+                B.unpack(unpacker).map(Right[A, B](_)): UnpackError \/ Either[A, B]
               case other =>
-                -\/(new UnexpectedEitherKey(left = LeftKey, right = RightKey, other))
+                -\/[UnpackError, Either[A, B]](new UnexpectedEitherKey(left = LeftKey, right = RightKey, other))
             }
           } yield {
             unpacker.mapEnd()

@@ -28,13 +28,13 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
       val size = unpacker.unpackArrayHeader()
       var list: IList[A] = INil()
       var i = 0
-      var error: -\/[UnpackError] = null
+      var error: UnpackError \/ IList[A] = null
       while (i < size && error == null) {
         A.unpack(unpacker) match {
           case \/-(a) =>
             list ::= a
           case e @ -\/(_) =>
-            error = e
+            error = e.coerceRight
         }
         i += 1
       }
@@ -56,13 +56,13 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
       val size = unpacker.unpackArrayHeader()
       var set = ISet.empty[A]
       var i = 0
-      var error: -\/[UnpackError] = null
+      var error: UnpackError \/ ISet[A] = null
       while (i < size && error == null) {
         A.unpack(unpacker) match {
           case \/-(a) =>
             set = set.insert(a)
           case e @ -\/(_) =>
-            error = e
+            error = e.coerceRight
         }
         i += 1
       }
@@ -87,7 +87,7 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
       unpacker => {
         val size = unpacker.unpackMapHeader()
         var i = 0
-        var error: -\/[UnpackError] = null
+        var error: UnpackError \/ (A ==>> B) = null
         var imap: A ==>> B = ==>>.empty
         while (i < size && error == null) {
           A.unpack(unpacker) match {
@@ -96,10 +96,10 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
                 case \/-(v) =>
                   imap = imap.insert(k, v)
                 case e @ -\/(_) =>
-                  error = e
+                  error = e.coerceRight
               }
             case e @ -\/(_) =>
-              error = e
+              error = e.coerceRight
           }
           i += 1
         }
@@ -133,13 +133,13 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
           case \/-(h) =>
             var list: IList[A] = IList.empty
             var i = 1
-            var error: -\/[UnpackError] = null
+            var error: UnpackError \/ NonEmptyList[A] = null
             while (i < size && error == null) {
               A.unpack(unpacker) match {
                 case \/-(a) =>
                   list ::= a
                 case e @ -\/(_) =>
-                  error = e
+                  error = e.coerceRight
               }
               i += 1
             }
@@ -149,7 +149,7 @@ private[msgpack4z] trait ScalazCodecImpl extends ScalazCodec {
             else
               error
           case e @ -\/(_) =>
-            e
+            e.coerceRight
         }
       } else {
         -\/(NotEnoughArraySize(1, 0))

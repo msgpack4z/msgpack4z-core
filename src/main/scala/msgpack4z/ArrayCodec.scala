@@ -1,7 +1,7 @@
 package msgpack4z
 
 import scala.reflect.ClassTag
-import scalaz.{-\/, \/-}
+import scalaz.{-\/, \/, \/-}
 
 trait ArrayCodec {
   implicit def arrayCodec[A](implicit A: MsgpackCodec[A], C: ClassTag[A]): MsgpackCodec[Array[A]]
@@ -43,13 +43,13 @@ object ArrayCodecImpl extends ArrayCodec {
       val size = unpacker.unpackArrayHeader()
       val array = new Array[A](size)
       var i = 0
-      var error: -\/[UnpackError] = null
+      var error: UnpackError \/ Array[A] = null
       while (i < size && error == null) {
         A.unpack(unpacker) match {
           case \/-(a) =>
             array(i) = a
           case e @ -\/(_) =>
-            error = e
+            error = e.coerceRight
         }
         i += 1
       }
