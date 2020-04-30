@@ -164,7 +164,6 @@ lazy val msgpack4zCore = CrossProject(
     CustomCrossType
   )
   .settings(
-    MimaPlugin.mimaDefaultSettings,
     commonSettings,
     Generator.settings,
     name := msgpack4zCoreName,
@@ -176,6 +175,7 @@ lazy val msgpack4zCore = CrossProject(
     )
   )
   .enablePlugins(
+    MimaPlugin,
     sbtbuildinfo.BuildInfoPlugin
   )
   .jvmSettings(
