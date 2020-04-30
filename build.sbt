@@ -1,6 +1,5 @@
 import build._
 import sbtrelease.ReleaseStateTransformations._
-import com.typesafe.sbt.pgp.PgpKeys
 import sbtcrossproject.CrossProject
 
 val msgpack4zNativeVersion = "0.3.6"
