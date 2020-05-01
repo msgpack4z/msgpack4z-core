@@ -94,16 +94,17 @@ object MsgpackCodec {
       u => \/-(unpackF(u))
     )
 
-  private[msgpack4z] def tryE[A](packF: Packer[A], unpackF: MsgUnpacker => UnpackResult[A]): MsgpackCodec[A] = codec[A](
-    packF,
-    u =>
-      try {
-        unpackF(u)
-      } catch {
-        case NonFatal(e) =>
-          -\/(Err(e))
-      }
-  )
+  private[msgpack4z] def tryE[A](packF: Packer[A], unpackF: MsgUnpacker => UnpackResult[A]): MsgpackCodec[A] =
+    codec[A](
+      packF,
+      u =>
+        try {
+          unpackF(u)
+        } catch {
+          case NonFatal(e) =>
+            -\/(Err(e))
+        }
+    )
 
   private[msgpack4z] def tryConst[A](packF: Packer[A], unpackF: MsgUnpacker => A): MsgpackCodec[A] =
     tryConstE(packF, u => \/-(unpackF(u)))

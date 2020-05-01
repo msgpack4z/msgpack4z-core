@@ -22,36 +22,38 @@ private[msgpack4z] object AllImpl
   with StdCodec
   with BinaryCodecImpl
   with ScalazCodecImpl {
-  override implicit def listCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[List[A]] = MsgpackCodec.tryE(
-    { (packer, list) =>
-      packer.packArrayHeader(list.length)
-      var x: List[A] = list
-      while (x ne Nil) {
-        A.pack(packer, x.head)
-        x = x.tail
-      }
-      packer.arrayEnd()
-    }, { unpacker =>
-      val size = unpacker.unpackArrayHeader()
-      var list: List[A] = Nil
-      var i = 0
-      var error: UnpackError \/ List[A] = null
-      while (i < size && error == null) {
-        A.unpack(unpacker) match {
-          case \/-(a) =>
-            list ::= a
-          case e @ -\/(_) =>
-            error = e.coerceRight
+  override implicit def listCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[List[A]] =
+    MsgpackCodec.tryE(
+      { (packer, list) =>
+        packer.packArrayHeader(list.length)
+        var x: List[A] = list
+        while (x ne Nil) {
+          A.pack(packer, x.head)
+          x = x.tail
         }
-        i += 1
+        packer.arrayEnd()
+      },
+      { unpacker =>
+        val size = unpacker.unpackArrayHeader()
+        var list: List[A] = Nil
+        var i = 0
+        var error: UnpackError \/ List[A] = null
+        while (i < size && error == null) {
+          A.unpack(unpacker) match {
+            case \/-(a) =>
+              list ::= a
+            case e @ -\/(_) =>
+              error = e.coerceRight
+          }
+          i += 1
+        }
+        unpacker.arrayEnd()
+        if (error == null)
+          \/-(list.reverse)
+        else
+          error
       }
-      unpacker.arrayEnd()
-      if (error == null)
-        \/-(list.reverse)
-      else
-        error
-    }
-  )
+    )
 
   override implicit def mapCodec[A, B](implicit A: MsgpackCodec[A], B: MsgpackCodec[B]): MsgpackCodec[Map[A, B]] =
     MsgpackCodec.tryE(
@@ -96,32 +98,34 @@ private[msgpack4z] object AllImpl
   override implicit val symbolCodec: MsgpackCodec[Symbol] =
     tryConst(_ packString _.name, x => Symbol(x.unpackString))
 
-  override implicit def vectorCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[Vector[A]] = MsgpackCodec.tryE(
-    { (packer, vector) =>
-      packer.packArrayHeader(vector.length)
-      vector.foreach { x => A.pack(packer, x) }
-      packer.arrayEnd()
-    }, { unpacker =>
-      val size = unpacker.unpackArrayHeader()
-      val builder = Vector.newBuilder[A]
-      var i = 0
-      var error: UnpackError \/ Vector[A] = null
-      while (i < size && error == null) {
-        A.unpack(unpacker) match {
-          case \/-(a) =>
-            builder += a
-          case e @ -\/(_) =>
-            error = e.coerceRight
+  override implicit def vectorCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[Vector[A]] =
+    MsgpackCodec.tryE(
+      { (packer, vector) =>
+        packer.packArrayHeader(vector.length)
+        vector.foreach { x => A.pack(packer, x) }
+        packer.arrayEnd()
+      },
+      { unpacker =>
+        val size = unpacker.unpackArrayHeader()
+        val builder = Vector.newBuilder[A]
+        var i = 0
+        var error: UnpackError \/ Vector[A] = null
+        while (i < size && error == null) {
+          A.unpack(unpacker) match {
+            case \/-(a) =>
+              builder += a
+            case e @ -\/(_) =>
+              error = e.coerceRight
+          }
+          i += 1
         }
-        i += 1
+        unpacker.arrayEnd()
+        if (error == null)
+          \/-(builder.result())
+        else
+          error
       }
-      unpacker.arrayEnd()
-      if (error == null)
-        \/-(builder.result())
-      else
-        error
-    }
-  )
+    )
 
   override implicit def optionCodec[A: MsgpackCodec]: MsgpackCodec[Option[A]] =
     OptionCodec.optionCompactCodec[A]

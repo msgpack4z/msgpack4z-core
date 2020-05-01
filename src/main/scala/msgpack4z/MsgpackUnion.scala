@@ -111,30 +111,31 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
     bool: Boolean => A,
     ext: (Byte, Array[Byte]) => A,
     nil: => A
-  ): A = this match {
-    case MsgpackLong(value) =>
-      long(value)
-    case MsgpackString(value) =>
-      string(value)
-    case MsgpackTrue =>
-      bool(true)
-    case MsgpackFalse =>
-      bool(false)
-    case MsgpackNil =>
-      nil
-    case MsgpackArray(value) =>
-      array(value)
-    case MsgpackMap(value) =>
-      map(value)
-    case MsgpackBinary(value) =>
-      binary(value)
-    case MsgpackULong(value) =>
-      ulong(value)
-    case MsgpackDouble(value) =>
-      double(value)
-    case MsgpackExt(tpe, value) =>
-      ext(tpe, value)
-  }
+  ): A =
+    this match {
+      case MsgpackLong(value) =>
+        long(value)
+      case MsgpackString(value) =>
+        string(value)
+      case MsgpackTrue =>
+        bool(true)
+      case MsgpackFalse =>
+        bool(false)
+      case MsgpackNil =>
+        nil
+      case MsgpackArray(value) =>
+        array(value)
+      case MsgpackMap(value) =>
+        map(value)
+      case MsgpackBinary(value) =>
+        binary(value)
+      case MsgpackULong(value) =>
+        ulong(value)
+      case MsgpackDouble(value) =>
+        double(value)
+      case MsgpackExt(tpe, value) =>
+        ext(tpe, value)
+    }
 
   final def foldOpt[A](
     string: String => Option[A] = constNone,
@@ -147,18 +148,19 @@ sealed abstract class MsgpackUnion extends Product with Serializable {
     bool: Boolean => Option[A] = constNone,
     ext: (Byte, Array[Byte]) => Option[A] = (_: Byte, _: Array[Byte]) => None,
     nil: Option[A] = None
-  ): Option[A] = fold[Option[A]](
-    string,
-    binary,
-    long,
-    ulong,
-    double,
-    array,
-    map,
-    bool,
-    ext,
-    nil
-  )
+  ): Option[A] =
+    fold[Option[A]](
+      string,
+      binary,
+      long,
+      ulong,
+      double,
+      array,
+      map,
+      bool,
+      ext,
+      nil
+    )
 
   protected[msgpack4z] def pack(packer: MsgPacker): Unit
 
@@ -348,16 +350,17 @@ final case class MsgpackLong private[msgpack4z] (value: Long) extends MsgpackUni
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packLong(value)
 
-  override def equals(other: Any): Boolean = other match {
-    case that: AnyRef if this eq that =>
-      true
-    case that: MsgpackLong =>
-      value == that.value
-    case that: MsgpackULong =>
-      that.value == bigInteger
-    case _ =>
-      false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: AnyRef if this eq that =>
+        true
+      case that: MsgpackLong =>
+        value == that.value
+      case that: MsgpackULong =>
+        that.value == bigInteger
+      case _ =>
+        false
+    }
 
   override def hashCode = BigInteger.valueOf(value).hashCode
 
@@ -372,27 +375,29 @@ final case class MsgpackULong private[msgpack4z] (value: BigInteger) extends Msg
 
   override def hashCode = value.hashCode
 
-  override def equals(other: Any): Boolean = other match {
-    case that: AnyRef if this eq that =>
-      true
-    case that: MsgpackLong =>
-      value == that.bigInteger
-    case that: MsgpackULong =>
-      that.value == value
-    case _ =>
-      false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: AnyRef if this eq that =>
+        true
+      case that: MsgpackLong =>
+        value == that.bigInteger
+      case that: MsgpackULong =>
+        that.value == value
+      case _ =>
+        false
+    }
 }
 
 final case class MsgpackDouble private[msgpack4z] (value: Double) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packDouble(value)
-  override def equals(other: Any): Boolean = other match {
-    case that: MsgpackDouble =>
-      java.lang.Double.doubleToLongBits(this.value) == java.lang.Double.doubleToLongBits(that.value)
-    case _ =>
-      false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: MsgpackDouble =>
+        java.lang.Double.doubleToLongBits(this.value) == java.lang.Double.doubleToLongBits(that.value)
+      case _ =>
+        false
+    }
   override final def hashCode = scala.runtime.Statics.doubleHash(value)
 }
 
@@ -438,14 +443,15 @@ final case class MsgpackExt private[msgpack4z] (tpe: Byte, data: Array[Byte]) ex
 
   override def hashCode = (tpe * 31) + java.util.Arrays.hashCode(data)
 
-  override def equals(other: Any): Boolean = other match {
-    case that: MsgpackExt =>
-      (this eq that) || (
-        (this.tpe == that.tpe) && java.util.Arrays.equals(this.data, that.data)
-      )
-    case _ =>
-      false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: MsgpackExt =>
+        (this eq that) || (
+          (this.tpe == that.tpe) && java.util.Arrays.equals(this.data, that.data)
+        )
+      case _ =>
+        false
+    }
 }
 
 case object MsgpackTrue extends MsgpackUnion {
