@@ -17,12 +17,13 @@ final class Binary(val value: Array[Byte]) {
       Arrays.equals(this.value, that.value)
   }
 
-  override def equals(other: Any): Boolean = other match {
-    case that: Binary =>
-      this.===(that)
-    case _ =>
-      false
-  }
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: Binary =>
+        this.===(that)
+      case _ =>
+        false
+    }
 
   override def hashCode: Int = Arrays.hashCode(value)
 }

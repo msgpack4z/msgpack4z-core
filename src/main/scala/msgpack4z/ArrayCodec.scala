@@ -29,35 +29,36 @@ object ArrayCodecImpl extends ArrayCodec {
         arrayCodecNative[A]
     }).asInstanceOf[MsgpackCodec[Array[A]]]
 
-  override final def arrayCodecNative[A](implicit A: MsgpackCodec[A], C: ClassTag[A]): MsgpackCodec[Array[A]] = MsgpackCodec.tryE(
-    (packer, array) => {
-      packer.packArrayHeader(array.length)
-      var i = 0
-      while (i < array.length) {
-        A.pack(packer, array(i))
-        i += 1
-      }
-      packer.arrayEnd()
-    },
-    unpacker => {
-      val size = unpacker.unpackArrayHeader()
-      val array = new Array[A](size)
-      var i = 0
-      var error: UnpackError \/ Array[A] = null
-      while (i < size && error == null) {
-        A.unpack(unpacker) match {
-          case \/-(a) =>
-            array(i) = a
-          case e @ -\/(_) =>
-            error = e.coerceRight
+  override final def arrayCodecNative[A](implicit A: MsgpackCodec[A], C: ClassTag[A]): MsgpackCodec[Array[A]] =
+    MsgpackCodec.tryE(
+      (packer, array) => {
+        packer.packArrayHeader(array.length)
+        var i = 0
+        while (i < array.length) {
+          A.pack(packer, array(i))
+          i += 1
         }
-        i += 1
+        packer.arrayEnd()
+      },
+      unpacker => {
+        val size = unpacker.unpackArrayHeader()
+        val array = new Array[A](size)
+        var i = 0
+        var error: UnpackError \/ Array[A] = null
+        while (i < size && error == null) {
+          A.unpack(unpacker) match {
+            case \/-(a) =>
+              array(i) = a
+            case e @ -\/(_) =>
+              error = e.coerceRight
+          }
+          i += 1
+        }
+        unpacker.arrayEnd()
+        if (error == null)
+          \/-(array)
+        else
+          error
       }
-      unpacker.arrayEnd()
-      if (error == null)
-        \/-(array)
-      else
-        error
-    }
-  )
+    )
 }
