@@ -162,44 +162,39 @@ lazy val msgpack4zCore = CrossProject(
   JVMPlatform,
   NativePlatform
 ).crossType(
-    CustomCrossType
+  CustomCrossType
+).settings(
+  commonSettings,
+  Generator.settings,
+  name := msgpack4zCoreName,
+  libraryDependencies ++= Seq(
+    "org.scalaz" %%% "scalaz-core" % ScalazVersion,
+    "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.0" % "provided",
+    "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
+    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
   )
-  .settings(
-    commonSettings,
-    Generator.settings,
-    name := msgpack4zCoreName,
-    libraryDependencies ++= Seq(
-      "org.scalaz" %%% "scalaz-core" % ScalazVersion,
-      "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.0" % "provided",
-      "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
-      "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
-    )
+).enablePlugins(
+  MimaPlugin,
+  sbtbuildinfo.BuildInfoPlugin
+).jvmSettings(
+  Sxr.settings,
+  libraryDependencies ++= Seq(
+    "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
+    "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",
+    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test",
   )
-  .enablePlugins(
-    MimaPlugin,
-    sbtbuildinfo.BuildInfoPlugin
+).jsSettings(
+  scalacOptions += {
+    val a = (baseDirectory in LocalRootProject).value.toURI.toString
+    val g = "https://raw.githubusercontent.com/msgpack4z/msgpack4z-core/" + tagOrHash.value
+    s"-P:scalajs:mapSourceURI:$a->$g/"
+  },
+  scalaJSLinkerConfig ~= { _.withSemantics(_.withStrictFloats(true)) },
+).platformsSettings(NativePlatform, JSPlatform)(
+  libraryDependencies ++= Seq(
+    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
   )
-  .jvmSettings(
-    Sxr.settings,
-    libraryDependencies ++= Seq(
-      "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
-      "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",
-      "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test",
-    )
-  )
-  .jsSettings(
-    scalacOptions += {
-      val a = (baseDirectory in LocalRootProject).value.toURI.toString
-      val g = "https://raw.githubusercontent.com/msgpack4z/msgpack4z-core/" + tagOrHash.value
-      s"-P:scalajs:mapSourceURI:$a->$g/"
-    },
-    scalaJSLinkerConfig ~= { _.withSemantics(_.withStrictFloats(true)) },
-  )
-  .platformsSettings(NativePlatform, JSPlatform)(
-    libraryDependencies ++= Seq(
-      "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
-    )
-  )
+)
 
 lazy val noPublish = Seq(
   mimaPreviousArtifacts := Set.empty,
