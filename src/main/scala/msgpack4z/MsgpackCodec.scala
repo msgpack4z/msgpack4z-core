@@ -11,7 +11,7 @@ trait MsgpackCodec[A] {
 
   final def toBytes(a: A, packer: MsgPacker): Array[Byte] = {
     pack(packer, a)
-    packer.result
+    packer.result()
   }
 
   final def unpackAndClose(unpacker: MsgUnpacker): UnpackResult[A] =

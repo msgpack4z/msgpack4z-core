@@ -29,7 +29,7 @@ private[msgpack4z] trait AnyValArrayCodecImpl extends AnyValArrayCodec {
       val array = new Array[Boolean](size)
       var i = 0
       while(i < size){
-        array(i) = unpacker.unpackBoolean
+        array(i) = unpacker.unpackBoolean()
         i += 1
       }
       unpacker.arrayEnd()
@@ -53,7 +53,7 @@ private[msgpack4z] trait AnyValArrayCodecImpl extends AnyValArrayCodec {
       val array = new Array[Byte](size)
       var i = 0
       while(i < size){
-        array(i) = unpacker.unpackByte
+        array(i) = unpacker.unpackByte()
         i += 1
       }
       unpacker.arrayEnd()
@@ -77,7 +77,7 @@ private[msgpack4z] trait AnyValArrayCodecImpl extends AnyValArrayCodec {
       val array = new Array[Short](size)
       var i = 0
       while(i < size){
-        array(i) = unpacker.unpackShort
+        array(i) = unpacker.unpackShort()
         i += 1
       }
       unpacker.arrayEnd()
@@ -101,7 +101,7 @@ private[msgpack4z] trait AnyValArrayCodecImpl extends AnyValArrayCodec {
       val array = new Array[Int](size)
       var i = 0
       while(i < size){
-        array(i) = unpacker.unpackInt
+        array(i) = unpacker.unpackInt()
         i += 1
       }
       unpacker.arrayEnd()
@@ -125,7 +125,7 @@ private[msgpack4z] trait AnyValArrayCodecImpl extends AnyValArrayCodec {
       val array = new Array[Long](size)
       var i = 0
       while(i < size){
-        array(i) = unpacker.unpackLong
+        array(i) = unpacker.unpackLong()
         i += 1
       }
       unpacker.arrayEnd()
@@ -149,7 +149,7 @@ private[msgpack4z] trait AnyValArrayCodecImpl extends AnyValArrayCodec {
       val array = new Array[Float](size)
       var i = 0
       while(i < size){
-        array(i) = unpacker.unpackFloat
+        array(i) = unpacker.unpackFloat()
         i += 1
       }
       unpacker.arrayEnd()
@@ -173,7 +173,7 @@ private[msgpack4z] trait AnyValArrayCodecImpl extends AnyValArrayCodec {
       val array = new Array[Double](size)
       var i = 0
       while(i < size){
-        array(i) = unpacker.unpackDouble
+        array(i) = unpacker.unpackDouble()
         i += 1
       }
       unpacker.arrayEnd()

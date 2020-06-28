@@ -14,7 +14,7 @@ object CaseCodec {
       }
       ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 1) {
           A1.unpack(unpacker).map(construct)
         }else{
@@ -38,7 +38,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 2) {
           val result = zeroapply.DisjunctionApply.apply2(
             A1.unpack(unpacker), A2.unpack(unpacker)
@@ -65,7 +65,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 3) {
           val result = zeroapply.DisjunctionApply.apply3(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker)
@@ -92,7 +92,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 4) {
           val result = zeroapply.DisjunctionApply.apply4(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker)
@@ -119,7 +119,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 5) {
           val result = zeroapply.DisjunctionApply.apply5(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker)
@@ -146,7 +146,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 6) {
           val result = zeroapply.DisjunctionApply.apply6(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker)
@@ -173,7 +173,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 7) {
           val result = zeroapply.DisjunctionApply.apply7(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker)
@@ -200,7 +200,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 8) {
           val result = zeroapply.DisjunctionApply.apply8(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker)
@@ -227,7 +227,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 9) {
           val result = zeroapply.DisjunctionApply.apply9(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker)
@@ -254,7 +254,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 10) {
           val result = zeroapply.DisjunctionApply.apply10(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker)
@@ -281,7 +281,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 11) {
           val result = zeroapply.DisjunctionApply.apply11(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker)
@@ -308,7 +308,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 12) {
           val result = zeroapply.DisjunctionApply.apply12(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker)
@@ -335,7 +335,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 13) {
           val result = zeroapply.DisjunctionApply.apply13(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker)
@@ -362,7 +362,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 14) {
           val result = zeroapply.DisjunctionApply.apply14(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker)
@@ -389,7 +389,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 15) {
           val result = zeroapply.DisjunctionApply.apply15(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker), A15.unpack(unpacker)
@@ -416,7 +416,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 16) {
           val result = zeroapply.DisjunctionApply.apply16(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker), A15.unpack(unpacker), A16.unpack(unpacker)
@@ -443,7 +443,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 17) {
           val result = zeroapply.DisjunctionApply.apply17(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker), A15.unpack(unpacker), A16.unpack(unpacker), A17.unpack(unpacker)
@@ -470,7 +470,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 18) {
           val result = zeroapply.DisjunctionApply.apply18(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker), A15.unpack(unpacker), A16.unpack(unpacker), A17.unpack(unpacker), A18.unpack(unpacker)
@@ -497,7 +497,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 19) {
           val result = zeroapply.DisjunctionApply.apply19(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker), A15.unpack(unpacker), A16.unpack(unpacker), A17.unpack(unpacker), A18.unpack(unpacker), A19.unpack(unpacker)
@@ -524,7 +524,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 20) {
           val result = zeroapply.DisjunctionApply.apply20(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker), A15.unpack(unpacker), A16.unpack(unpacker), A17.unpack(unpacker), A18.unpack(unpacker), A19.unpack(unpacker), A20.unpack(unpacker)
@@ -551,7 +551,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 21) {
           val result = zeroapply.DisjunctionApply.apply21(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker), A15.unpack(unpacker), A16.unpack(unpacker), A17.unpack(unpacker), A18.unpack(unpacker), A19.unpack(unpacker), A20.unpack(unpacker), A21.unpack(unpacker)
@@ -578,7 +578,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 22) {
           val result = zeroapply.DisjunctionApply.apply22(
             A1.unpack(unpacker), A2.unpack(unpacker), A3.unpack(unpacker), A4.unpack(unpacker), A5.unpack(unpacker), A6.unpack(unpacker), A7.unpack(unpacker), A8.unpack(unpacker), A9.unpack(unpacker), A10.unpack(unpacker), A11.unpack(unpacker), A12.unpack(unpacker), A13.unpack(unpacker), A14.unpack(unpacker), A15.unpack(unpacker), A16.unpack(unpacker), A17.unpack(unpacker), A18.unpack(unpacker), A19.unpack(unpacker), A20.unpack(unpacker), A21.unpack(unpacker), A22.unpack(unpacker)

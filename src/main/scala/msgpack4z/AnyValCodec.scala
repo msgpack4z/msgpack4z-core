@@ -14,24 +14,24 @@ trait AnyValCodec {
 private[msgpack4z] trait AnyValCodecImpl extends AnyValCodec {
 
   override final def booleanCodec: MsgpackCodec[Boolean] =
-    MsgpackCodec.tryConst(_ packBoolean _, _.unpackBoolean)
+    MsgpackCodec.tryConst(_ packBoolean _, _.unpackBoolean())
 
   override final def byteCodec: MsgpackCodec[Byte] =
-    MsgpackCodec.tryConst(_ packByte _, _.unpackByte)
+    MsgpackCodec.tryConst(_ packByte _, _.unpackByte())
 
   override final def shortCodec: MsgpackCodec[Short] =
-    MsgpackCodec.tryConst(_ packShort _, _.unpackShort)
+    MsgpackCodec.tryConst(_ packShort _, _.unpackShort())
 
   override final def intCodec: MsgpackCodec[Int] =
-    MsgpackCodec.tryConst(_ packInt _, _.unpackInt)
+    MsgpackCodec.tryConst(_ packInt _, _.unpackInt())
 
   override final def longCodec: MsgpackCodec[Long] =
-    MsgpackCodec.tryConst(_ packLong _, _.unpackLong)
+    MsgpackCodec.tryConst(_ packLong _, _.unpackLong())
 
   override final def floatCodec: MsgpackCodec[Float] =
-    MsgpackCodec.tryConst(_ packFloat _, _.unpackFloat)
+    MsgpackCodec.tryConst(_ packFloat _, _.unpackFloat())
 
   override final def doubleCodec: MsgpackCodec[Double] =
-    MsgpackCodec.tryConst(_ packDouble _, _.unpackDouble)
+    MsgpackCodec.tryConst(_ packDouble _, _.unpackDouble())
 
 }

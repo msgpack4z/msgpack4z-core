@@ -25,7 +25,7 @@ object ArrayCodec {
       val array = new Array[$t](size)
       var i = 0
       while(i < size){
-        array(i) = unpacker.unpack$t
+        array(i) = unpacker.unpack$t()
         i += 1
       }
       unpacker.arrayEnd()

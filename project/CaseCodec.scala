@@ -28,7 +28,7 @@ object CaseCodec {
       }
     ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == $i) {
           val result = zeroapply.DisjunctionApply.apply$i(
             $unpack
@@ -62,7 +62,7 @@ object CaseCodec {
       }
       ,
       unpacker => {
-        val size = unpacker.unpackArrayHeader
+        val size = unpacker.unpackArrayHeader()
         if(size == 1) {
           A1.unpack(unpacker).map($construct)
         }else{

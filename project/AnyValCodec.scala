@@ -8,7 +8,7 @@ object AnyValCodec {
   private[this] val impl = types.map { tpe =>
     s"""
   override final def ${tpe.toLowerCase(Locale.ENGLISH)}Codec: MsgpackCodec[$tpe] =
-    MsgpackCodec.tryConst(_ pack$tpe _, _.unpack$tpe)"""
+    MsgpackCodec.tryConst(_ pack$tpe _, _.unpack$tpe())"""
   }.mkString("\n")
 
   def generate(pack: String): String = {
