@@ -31,7 +31,7 @@ object UnionGen {
   implicit val scalaDoubleGen: Gen[Double] =
     Gen[Long].map { n =>
       java.lang.Double.longBitsToDouble(n) match {
-        case x if x.isNaN => n
+        case x if x.isNaN => n.toDouble
         case x => x
       }
     }
@@ -39,7 +39,7 @@ object UnionGen {
   implicit val scalaFloatGen: Gen[Float] =
     Gen[Int].map { n =>
       java.lang.Float.intBitsToFloat(n) match {
-        case x if x.isNaN => n
+        case x if x.isNaN => n.toFloat
         case x => x
       }
     }

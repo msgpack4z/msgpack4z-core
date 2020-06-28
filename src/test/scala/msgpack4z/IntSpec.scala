@@ -20,7 +20,7 @@ abstract class IntSpec extends SpecBase {
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndShort(Code.INT16, x)
-      unpacker(buf.result)
+      unpacker(buf.result())
     }
     if (Byte.MinValue <= x && x <= Byte.MaxValue) {
       assert(u.unpackByte() == x)
@@ -41,7 +41,7 @@ abstract class IntSpec extends SpecBase {
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndInt(Code.INT32, x)
-      unpacker(buf.result)
+      unpacker(buf.result())
     }
     if (Byte.MinValue <= x && x <= Byte.MaxValue) {
       assert(u.unpackByte() == x, "byte")
@@ -68,7 +68,7 @@ abstract class IntSpec extends SpecBase {
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndLong(Code.INT64, x)
-      unpacker(buf.result)
+      unpacker(buf.result())
     }
     if (Byte.MinValue <= x && x <= Byte.MaxValue) {
       assert(u.unpackByte() == x, "byte")

@@ -51,7 +51,7 @@ abstract class UIntSpec extends SpecBase {
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndShort(Code.UINT16, x.toShort)
-      unpacker(buf.result)
+      unpacker(buf.result())
     }
     if (x <= Byte.MaxValue) {
       assert(u.unpackByte() == x)
@@ -87,7 +87,7 @@ abstract class UIntSpec extends SpecBase {
       def u = {
         val buf = MsgOutBuffer.create()
         buf.writeByteAndInt(Code.UINT32, x.intValue())
-        unpacker(buf.result)
+        unpacker(buf.result())
       }
       if (x <= Byte.MaxValue) {
         assert(u.unpackByte() == x, "byte")
@@ -135,20 +135,20 @@ abstract class UIntSpec extends SpecBase {
       def u = {
         val buf = MsgOutBuffer.create()
         buf.writeByteAndLong(Code.UINT64, x.longValue)
-        unpacker(buf.result)
+        unpacker(buf.result())
       }
       if (x <= Byte.MaxValue) {
         assert(u.unpackByte() == x, "byte")
       } else {
         expectException {
-          u.unpackByte
+          u.unpackByte()
         }
       }
       if (x <= Short.MaxValue) {
         assert(u.unpackShort() == x, "short")
       } else {
         expectException {
-          u.unpackShort
+          u.unpackShort()
         }
       }
       if (x <= Int.MaxValue) {

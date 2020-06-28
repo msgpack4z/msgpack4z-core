@@ -75,7 +75,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
   val ext16 = Property.forAll {
     if (supportExtType) {
       val size = 1 << 10
-      val e = MsgpackUnion.ext((Random.nextInt.toByte, Array.fill[Byte](size)(Random.nextInt.toByte)))
+      val e = MsgpackUnion.ext((Random.nextInt().toByte, Array.fill[Byte](size)(Random.nextInt().toByte)))
       val bytes = MsgpackCodec[MsgpackUnion].toBytes(e, packer())
       assert(bytes.length == (size + 4)) // header(1) + size(2) + type(1) + data(n)
       assert(bytes(0) == 0xc8.toByte)
@@ -92,7 +92,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
   val ext32 = Property.forAll {
     if (supportExtType) {
       val size = 1 << 17
-      val e = MsgpackUnion.ext((Random.nextInt.toByte, Array.fill[Byte](size)(Random.nextInt.toByte)))
+      val e = MsgpackUnion.ext((Random.nextInt().toByte, Array.fill[Byte](size)(Random.nextInt().toByte)))
       val bytes = MsgpackCodec[MsgpackUnion].toBytes(e, packer())
       assert(bytes.length == (size + 6)) // header(1) + size(4) + type(1) + data(n)
       assert(bytes(0) == 0xc9.toByte)
