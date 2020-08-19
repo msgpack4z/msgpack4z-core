@@ -21,7 +21,7 @@ scala:
 script:
   - git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
   - git show --oneline --check
-  - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
+  - wget https://raw.githubusercontent.com/paulp/sbt-extras/4d558c88ae6ae240e7a5eedc0cf33cc9e7bd0e58/sbt && chmod +x ./sbt
   - ./sbt "++${TRAVIS_SCALA_VERSION}!" scalafmtCheck test:scalafmtCheck scalafmtSbtCheck checkGenerateCodeError compile test:compile testSequential publishLocal
   - find $HOME/.ivy2/cache -name "ivydata-*.properties" | xargs rm
   - find $HOME/.ivy2/cache -name "*SNAPSHOT*" | xargs rm -rf
@@ -36,7 +36,7 @@ matrix:
       env: SCALA_NATIVE=true
       before_install:
       - curl https://raw.githubusercontent.com/scala-native/scala-native/master/scripts/travis_setup.sh | bash -x
-      - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
+      - wget https://raw.githubusercontent.com/paulp/sbt-extras/4d558c88ae6ae240e7a5eedc0cf33cc9e7bd0e58/sbt && chmod +x ./sbt
       script:
       - ./sbt ++$TRAVIS_SCALA_VERSION msgpack4z-coreNative/test
     - os: windows
@@ -45,6 +45,6 @@ matrix:
       before_script:
       - wget https://raw.githubusercontent.com/DanySK/Gravis-CI/c8f400623d8f756ef7c/.install-jdk-travis.sh
       - source .install-jdk-travis.sh
-      - wget https://raw.githubusercontent.com/paulp/sbt-extras/3c8fcadc3376edf/sbt && chmod +x ./sbt
+      - wget https://raw.githubusercontent.com/paulp/sbt-extras/4d558c88ae6ae240e7a5eedc0cf33cc9e7bd0e58/sbt && chmod +x ./sbt
       script:
       - ./sbt "++ 2.13.3" msgpack4z-coreJVM/test testJava07/test testJavaLatest/test
