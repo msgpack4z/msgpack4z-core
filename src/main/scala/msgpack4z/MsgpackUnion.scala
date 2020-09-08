@@ -418,10 +418,9 @@ final case class MsgpackArray private[msgpack4z] (value: List[MsgpackUnion]) ext
 final case class MsgpackMap private[msgpack4z] (value: Map[MsgpackUnion, MsgpackUnion]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {
     packer.packMapHeader(value.size)
-    value.foreach {
-      case (k, v) =>
-        k.pack(packer)
-        v.pack(packer)
+    value.foreach { case (k, v) =>
+      k.pack(packer)
+      v.pack(packer)
     }
     packer.mapEnd()
   }
