@@ -211,17 +211,22 @@ lazy val msgpack4zCoreNative = msgpack4zCore.native.settings(
   scalapropsNativeSettings
 )
 
+val subProjects = List(
+  msgpack4zCoreJVM,
+  msgpack4zCoreJS,
+  testJava07,
+  testJavaLatest
+)
+
 lazy val root = Project("root", file("."))
   .settings(
     commonSettings,
     noPublish,
     commands += Command.command("testSequential") {
-      List(
-        msgpack4zCoreJVM,
-        msgpack4zCoreJS,
-        testJava07,
-        testJavaLatest
-      ).map(_.id).map(_ + "/test").sorted ::: _
+      subProjects.map(_.id).map(_ + "/test").sorted ::: _
+    },
+    commands += Command.command("testSequentialCross") {
+      subProjects.map(_.id).map("+ " + _ + "/test").sorted ::: _
     },
     scalaSource in Compile := file("duumy"),
     scalaSource in Test := file("duumy")
