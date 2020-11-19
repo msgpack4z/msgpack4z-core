@@ -25,12 +25,12 @@ jobs:
     - run:  |
         case ${{ matrix.name }} in
           "jvm-js")
-            sbt -v
-            scalafmtCheckAll
-            scalafmtSbtCheck
-            checkGenerateCodeError
-            "+ test:compile"
-            testSequentialCross
+            sbt -v \
+            scalafmtCheckAll \
+            scalafmtSbtCheck \
+            checkGenerateCodeError \
+            "+ test:compile" \
+            testSequentialCross \
             "+ publishLocal"
             ;;
           "scala-native")
