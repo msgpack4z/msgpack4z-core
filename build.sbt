@@ -39,7 +39,6 @@ val commonSettings = Def.settings(
   scalapropsCoreSettings,
   publishTo := sonatypePublishToBundle.value,
   fullResolvers ~= { _.filterNot(_.name == "jcenter") },
-  scalaModuleInfo ~= (_.map(_.withOverrideScalaVersion(true))),
   buildInfoKeys := Seq[BuildInfoKey](
     organization,
     name,
