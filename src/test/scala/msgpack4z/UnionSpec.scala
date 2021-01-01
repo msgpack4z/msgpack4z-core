@@ -5,13 +5,13 @@ import scalaprops._
 import scalaz._
 
 abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) extends SpecBase {
-  private implicit def unionGen = unionGen0
+  private implicit def unionGen: Gen[MsgpackUnion] = unionGen0
 
   private def supportExtType: Boolean = unionGen == UnionGen.unionGen
 
   val union = checkLaw(MsgpackUnion.codecInstance, unionGen)
 
-  val `equals hashCode` = Property.forAll { a: MsgpackUnion =>
+  val `equals hashCode` = Property.forAll { (a: MsgpackUnion) =>
     val M = MsgpackCodec[MsgpackUnion]
     val bytes = M.toBytes(a, packer())
     M.unpackAndClose(unpacker(bytes)) match {
@@ -23,13 +23,13 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     }
   }.toProperties((), Param.minSuccessful(10000))
 
-  val `MsgpackLong and MsgpackULong` = Property.forAll { a: Long =>
+  val `MsgpackLong and MsgpackULong` = Property.forAll { (a: Long) =>
     val x = MsgpackLong(a)
     val y = MsgpackULong(java.math.BigInteger.valueOf(a))
     (y == x) && (x == y) && (x.hashCode == y.hashCode)
   }
 
-  val `MsgpackLong pack/unpack MsgpackLong` = Property.forAll { a: Long =>
+  val `MsgpackLong pack/unpack MsgpackLong` = Property.forAll { (a: Long) =>
     val M = MsgpackCodec[MsgpackUnion]
     val b = MsgpackLong(a)
     val c = M.toBytes(b, packer())
@@ -41,7 +41,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     }
   }
 
-  val extEqualsHashcode = Property.forAllG(UnionGen.extGen) { e1: MsgpackExt =>
+  val extEqualsHashcode = Property.forAllG(UnionGen.extGen) { (e1: MsgpackExt) =>
     val e2 = e1.copy()
     (e1 ne e2) && (e1 == e2) && (e1.## == e2.##)
   }
@@ -106,7 +106,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     } else true
   }
 
-  val `map imap` = Property.forAll { a: Map[MsgpackUnion, MsgpackUnion] =>
+  val `map imap` = Property.forAll { (a: Map[MsgpackUnion, MsgpackUnion]) =>
     val b = MsgpackUnion.map(a)
     val c = IMap.fromList(a.toList)
     val d = MsgpackUnion.imap(c)

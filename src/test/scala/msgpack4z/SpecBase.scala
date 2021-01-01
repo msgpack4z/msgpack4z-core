@@ -25,7 +25,7 @@ abstract class SpecBase extends Scalaprops {
     Gen.alphaNumString
 
   final def checkRoundTripBytes[A](checkHashCode: Boolean)(implicit A: MsgpackCodec[A], G: Gen[A], E: Equal[A]): Property =
-    Property.forAll { a: A =>
+    Property.forAll { (a: A) =>
       try {
         A.roundtripz(a, packer(), unpacker _) match {
           case None =>

@@ -5,7 +5,7 @@ import scalaprops.Property.forAll
 abstract class IntSpec extends SpecBase {
   override def param = super.param.copy(minSuccessful = 200)
 
-  val int8 = forAll { x: Byte =>
+  val int8 = forAll { (x: Byte) =>
     def u = unpacker(Array[Byte](msgpack4z.Code.INT8, x))
     assert(u.unpackByte() == x)
     assert(u.unpackShort() == x)
@@ -16,7 +16,7 @@ abstract class IntSpec extends SpecBase {
     true
   }
 
-  val int16 = forAll { x: Short =>
+  val int16 = forAll { (x: Short) =>
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndShort(Code.INT16, x)
@@ -37,7 +37,7 @@ abstract class IntSpec extends SpecBase {
     true
   }
 
-  val int32 = forAll { x: Int =>
+  val int32 = forAll { (x: Int) =>
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndInt(Code.INT32, x)
@@ -64,7 +64,7 @@ abstract class IntSpec extends SpecBase {
     true
   }
 
-  val int64 = forAll { x: Long =>
+  val int64 = forAll { (x: Long) =>
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndLong(Code.INT64, x)
