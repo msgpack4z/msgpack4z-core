@@ -35,6 +35,14 @@ val setMimaVersion: State => State = { st =>
 }
 
 val commonSettings = Def.settings(
+  Test / sources := {
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, _)) =>
+        (Test / sources).value
+      case _ =>
+        Nil // TODO https://github.com/msgpack4z/msgpack4z-core/issues/134
+    }
+  },
   ReleasePlugin.extraReleaseCommands,
   scalapropsCoreSettings,
   publishTo := sonatypePublishToBundle.value,
@@ -115,7 +123,7 @@ val commonSettings = Def.settings(
     .toList
     .flatten,
   scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.13" :: "2.13.4" :: Nil,
+  crossScalaVersions := Scala211 :: "2.12.13" :: "2.13.4" :: "3.0.0-M3" :: Nil,
   scalacOptions in (Compile, doc) ++= {
     val tag = tagOrHash.value
     Seq(
@@ -166,11 +174,19 @@ lazy val msgpack4zCore = CrossProject(
   Generator.settings,
   name := msgpack4zCoreName,
   libraryDependencies ++= Seq(
-    "org.scalaz" %%% "scalaz-core" % ScalazVersion,
-    "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.1" % "provided",
-    "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
-    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
-  )
+    "org.scalaz" %%% "scalaz-core" % ScalazVersion withDottyCompat scalaVersion.value,
+    "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test" withDottyCompat scalaVersion.value,
+    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test" withDottyCompat scalaVersion.value,
+  ),
+  libraryDependencies += {
+    val x = "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.1"
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, _)) =>
+        x % "provided"
+      case _ =>
+        x // https://github.com/xuwei-k/zeroapply/issues/104
+    }
+  }
 ).enablePlugins(
   MimaPlugin,
   sbtbuildinfo.BuildInfoPlugin
@@ -179,7 +195,7 @@ lazy val msgpack4zCore = CrossProject(
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
     "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",
-    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test",
+    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test" withDottyCompat scalaVersion.value,
   )
 ).jsSettings(
   scalacOptions += {
@@ -195,7 +211,7 @@ lazy val msgpack4zCore = CrossProject(
   scalaJSLinkerConfig ~= { _.withSemantics(_.withStrictFloats(true)) },
 ).platformsSettings(NativePlatform, JSPlatform)(
   libraryDependencies ++= Seq(
-    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
+    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion withDottyCompat scalaVersion.value,
   )
 )
 
@@ -212,7 +228,8 @@ lazy val noPublish = Seq(
 lazy val msgpack4zCoreJVM = msgpack4zCore.jvm
 lazy val msgpack4zCoreJS = msgpack4zCore.js
 lazy val msgpack4zCoreNative = msgpack4zCore.native.settings(
-  scalapropsNativeSettings
+  scalapropsNativeSettings,
+  crossScalaVersions ~= (_.filter(_ startsWith "2.1"))
 )
 
 val subProjects = List(
