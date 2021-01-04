@@ -2,42 +2,34 @@ name: CI
 on:
   pull_request:
   push:
-  schedule:
-  - cron: '0 17 * * 1'
 jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 50
     strategy:
       fail-fast: false
-      matrix:
-        include:
-          - name: jvm-js
-          - name: scala-native
     steps:
-    - uses: actions/checkout@v2.3.4
-    - uses: olafurpg/setup-scala@v10
-      with:
-        java-version: "adopt@1.8"
-    - uses: coursier/cache-action@v5
-    - run: git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
-    - run: git show --oneline --check
-    - run: if [[ "${{ matrix.name }}" == "scala-native" ]] ; then ./.github/scala-native-setup.sh ; fi
-    - run:  |
-        case ${{ matrix.name }} in
-          "jvm-js")
-            sbt -v \
-            scalafmtCheckAll \
-            scalafmtSbtCheck \
-            checkGenerateCodeError \
-            "+ test:compile" \
-            testSequentialCross \
-            "+ publishLocal"
-            ;;
-          "scala-native")
-            sbt -v msgpack4z-coreNative/test
-            ;;
-          *)
-            echo "unknown job-name"
-            exit 1
-        esac
+      - name: Dump GitHub context
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Dump job context
+        env:
+          JOB_CONTEXT: ${{ toJson(job) }}
+        run: echo "$JOB_CONTEXT"
+      - name: Dump steps context
+        env:
+          STEPS_CONTEXT: ${{ toJson(steps) }}
+        run: echo "$STEPS_CONTEXT"
+      - name: Dump runner context
+        env:
+          RUNNER_CONTEXT: ${{ toJson(runner) }}
+        run: echo "$RUNNER_CONTEXT"
+      - name: Dump strategy context
+        env:
+          STRATEGY_CONTEXT: ${{ toJson(strategy) }}
+        run: echo "$STRATEGY_CONTEXT"
+      - name: Dump matrix context
+        env:
+          MATRIX_CONTEXT: ${{ toJson(matrix) }}
+        run: echo "$MATRIX_CONTEXT"
