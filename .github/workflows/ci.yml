@@ -9,6 +9,8 @@ jobs:
     strategy:
       fail-fast: false
     steps:
+      - if: ${{ github.event.pull_request && !github.event.pull_request.head.repo.fork }}
+        run: echo aaa
       - name: Dump GitHub context
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
