@@ -185,7 +185,12 @@ lazy val msgpack4zCore = CrossProject(
   scalacOptions += {
     val a = (baseDirectory in LocalRootProject).value.toURI.toString
     val g = "https://raw.githubusercontent.com/msgpack4z/msgpack4z-core/" + tagOrHash.value
-    s"-P:scalajs:mapSourceURI:$a->$g/"
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, _)) =>
+        s"-P:scalajs:mapSourceURI:$a->$g/"
+      case _ =>
+        s"-scalajs-mapSourceURI:$a->$g/"
+    }
   },
   scalaJSLinkerConfig ~= { _.withSemantics(_.withStrictFloats(true)) },
 ).platformsSettings(NativePlatform, JSPlatform)(
