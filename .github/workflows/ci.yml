@@ -22,7 +22,6 @@ jobs:
     - uses: coursier/cache-action@v5
     - run: git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
     - run: git show --oneline --check
-    - run: if [[ "${{ matrix.name }}" == "scala-native" ]] ; then ./.github/scala-native-setup.sh ; fi
     - run:  |
         case ${{ matrix.name }} in
           "jvm-js")
