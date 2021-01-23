@@ -34,7 +34,7 @@ jobs:
             "+ publishLocal"
             ;;
           "scala-native")
-            sbt -v msgpack4z-coreNative/test
+            sbt -v "+ msgpack4z-coreNative/test"
             ;;
           *)
             echo "unknown job-name"
