@@ -329,7 +329,7 @@ final case class MsgpackString(value: String) extends MsgpackUnion {
 
 object MsgpackString extends (String => MsgpackUnion)
 
-final case class MsgpackBinary private[msgpack4z] (value: Array[Byte]) extends MsgpackUnion {
+final case class MsgpackBinary(value: Array[Byte]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packBinary(value)
   override def equals(other: Any): Boolean = {
@@ -346,7 +346,7 @@ final case class MsgpackBinary private[msgpack4z] (value: Array[Byte]) extends M
 
 object MsgpackBinary extends (Array[Byte] => MsgpackUnion)
 
-final case class MsgpackLong private[msgpack4z] (value: Long) extends MsgpackUnion {
+final case class MsgpackLong(value: Long) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packLong(value)
 
@@ -369,7 +369,7 @@ final case class MsgpackLong private[msgpack4z] (value: Long) extends MsgpackUni
 
 object MsgpackLong extends (Long => MsgpackUnion)
 
-final case class MsgpackULong private[msgpack4z] (value: BigInteger) extends MsgpackUnion {
+final case class MsgpackULong(value: BigInteger) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packBigInteger(value)
 
@@ -388,7 +388,7 @@ final case class MsgpackULong private[msgpack4z] (value: BigInteger) extends Msg
     }
 }
 
-final case class MsgpackDouble private[msgpack4z] (value: Double) extends MsgpackUnion {
+final case class MsgpackDouble(value: Double) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit =
     packer.packDouble(value)
   override def equals(other: Any): Boolean =
@@ -403,7 +403,7 @@ final case class MsgpackDouble private[msgpack4z] (value: Double) extends Msgpac
 
 object MsgpackDouble extends (Double => MsgpackUnion)
 
-final case class MsgpackArray private[msgpack4z] (value: List[MsgpackUnion]) extends MsgpackUnion {
+final case class MsgpackArray(value: List[MsgpackUnion]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {
     packer.packArrayHeader(value.size)
     var list = value
@@ -415,7 +415,7 @@ final case class MsgpackArray private[msgpack4z] (value: List[MsgpackUnion]) ext
   }
 }
 
-final case class MsgpackMap private[msgpack4z] (value: Map[MsgpackUnion, MsgpackUnion]) extends MsgpackUnion {
+final case class MsgpackMap(value: Map[MsgpackUnion, MsgpackUnion]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {
     packer.packMapHeader(value.size)
     value.foreach { case (k, v) =>
@@ -428,7 +428,7 @@ final case class MsgpackMap private[msgpack4z] (value: Map[MsgpackUnion, Msgpack
 
 object MsgpackMap extends (Map[MsgpackUnion, MsgpackUnion] => MsgpackUnion)
 
-final case class MsgpackExt private[msgpack4z] (tpe: Byte, data: Array[Byte]) extends MsgpackUnion {
+final case class MsgpackExt(tpe: Byte, data: Array[Byte]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {
     packer.packExtTypeHeader(tpe, data.length)
     packer.writePayload(data)
