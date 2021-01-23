@@ -23,7 +23,3 @@ libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.5.0"
 ### dependency graph
 
 [![graph](https://msgpack4z.github.io/graph.svg)](https://msgpack4z.github.io/graph.svg)
-
-### for scalaz 7.1.x
-
-<https://github.com/msgpack4z/msgpack4z-core/tree/0.2.x>
