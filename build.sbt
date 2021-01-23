@@ -14,8 +14,6 @@ val tagOrHash = Def.setting {
   if (isSnapshot.value) gitHash() else tagName.value
 }
 
-val SetScala211 = releaseStepCommand("++" + Scala211)
-
 def gitHash(): String =
   sys.process.Process("git rev-parse HEAD").lineStream_!.head
 
@@ -85,8 +83,7 @@ val commonSettings = Def.settings(
       },
       enableCrossBuild = true
     ),
-    SetScala211,
-    releaseStepCommand(build.msgpack4zCoreName + "Native/publishSigned"),
+    releaseStepCommandAndRemaining("+ " + build.msgpack4zCoreName + "Native/publishSigned"),
     releaseStepCommandAndRemaining("sonatypeBundleRelease"),
     setNextVersion,
     setMimaVersion,
