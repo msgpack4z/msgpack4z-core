@@ -23,10 +23,10 @@ object Sxr {
     }
 
   val settings: Seq[Setting[_]] = Defaults.packageTaskSettings(
-    sxr in Compile,
+    Compile / sxr,
     Def.task {
-      val dir = (crossTarget in Compile).value
-      val _ = (compile in Compile).value
+      val dir = (Compile / crossTarget).value
+      val _ = (Compile / compile).value
       Path.allSubpaths(dir / "classes.sxr").toSeq
     }
   ) ++ Seq[Setting[_]](
@@ -48,21 +48,21 @@ object Sxr {
     ),
     ifSxrAvailable(
       packagedArtifacts,
-      Def.task(packagedArtifacts.value ++ Classpaths.packaged(Seq(sxr in Compile)).value)
+      Def.task(packagedArtifacts.value ++ Classpaths.packaged(Seq(Compile / sxr)).value)
     ),
     ifSxrAvailable(
       artifacts,
-      Def.setting(artifacts.value ++ Classpaths.artifactDefs(Seq(sxr in Compile)).value)
+      Def.setting(artifacts.value ++ Classpaths.artifactDefs(Seq(Compile / sxr)).value)
     ),
     ifSxrAvailable(
-      artifactClassifier in sxr,
+      sxr / artifactClassifier,
       Def.setting(Option("sxr"))
     ),
     ifSxrAvailable(
-      scalacOptions in Compile,
+      Compile / scalacOptions,
       Def.task {
-        (scalacOptions in Compile).value :+ (
-          "-P:sxr:base-directory:" + (scalaSource in Compile).value.getAbsolutePath
+        (Compile / scalacOptions).value :+ (
+          "-P:sxr:base-directory:" + (Compile / scalaSource).value.getAbsolutePath
         )
       }
     )
