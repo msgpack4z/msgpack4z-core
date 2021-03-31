@@ -246,8 +246,8 @@ lazy val root = Project("root", file("."))
     commands += Command.command("testSequentialCross") {
       subProjects.map(_.id).map("+ " + _ + "/test").sorted ::: _
     },
-    Compile / scalaSource := file("duumy"),
-    Test / scalaSource := file("duumy")
+    Compile / scalaSource := (ThisBuild / baseDirectory).value / "dummy",
+    Test / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
   )
   .aggregate(
     msgpack4zCoreJVM,
