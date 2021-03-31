@@ -92,7 +92,7 @@ object UnionGen {
       arrayGen,
       mapGen,
       stringGen,
-      extGen.widen,
+      extGen.map(x => x),
       binaryGen
     )
 }
