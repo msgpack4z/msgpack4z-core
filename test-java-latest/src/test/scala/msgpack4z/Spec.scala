@@ -1,6 +1,6 @@
 package msgpack4z
 
-trait JavaSpec { _: SpecBase =>
+trait JavaSpec { self: SpecBase =>
   override protected[this] def packer() = new MsgpackJavaPacker()
   override protected[this] def unpacker(bytes: Array[Byte]) = MsgpackJavaUnpacker.defaultUnpacker(bytes)
 }
