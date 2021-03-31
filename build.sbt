@@ -175,15 +175,7 @@ lazy val msgpack4zCore = CrossProject(
     "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test" withDottyCompat scalaVersion.value,
     "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test" withDottyCompat scalaVersion.value,
   ),
-  libraryDependencies += {
-    val x = "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.1"
-    CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, _)) =>
-        x % "provided"
-      case _ =>
-        x // https://github.com/xuwei-k/zeroapply/issues/104
-    }
-  }
+  libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.2" % "provided"
 ).enablePlugins(
   MimaPlugin,
   sbtbuildinfo.BuildInfoPlugin
