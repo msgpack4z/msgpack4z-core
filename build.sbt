@@ -180,9 +180,9 @@ lazy val msgpack4zCore = CrossProject(
   Generator.settings,
   name := msgpack4zCoreName,
   libraryDependencies ++= Seq(
-    "org.scalaz" %%% "scalaz-core" % ScalazVersion withDottyCompat scalaVersion.value,
-    "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test" withDottyCompat scalaVersion.value,
-    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test" withDottyCompat scalaVersion.value,
+    "org.scalaz" %%% "scalaz-core" % ScalazVersion cross CrossVersion.for3Use2_13,
+    "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test" cross CrossVersion.for3Use2_13,
+    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test" cross CrossVersion.for3Use2_13,
   ),
   libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.2" % "provided"
 ).enablePlugins(
@@ -193,7 +193,7 @@ lazy val msgpack4zCore = CrossProject(
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
     "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",
-    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test" withDottyCompat scalaVersion.value,
+    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test" cross CrossVersion.for3Use2_13,
   )
 ).jsSettings(
   scalacOptions += {
@@ -209,7 +209,7 @@ lazy val msgpack4zCore = CrossProject(
   scalaJSLinkerConfig ~= { _.withSemantics(_.withStrictFloats(true)) },
 ).platformsSettings(NativePlatform, JSPlatform)(
   libraryDependencies ++= Seq(
-    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion withDottyCompat scalaVersion.value,
+    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion cross CrossVersion.for3Use2_13,
   )
 )
 
