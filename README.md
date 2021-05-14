@@ -18,8 +18,6 @@
 libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.5.1"
 ```
 
-- [sxr](https://oss.sonatype.org/service/local/repositories/releases/archive/com/github/xuwei-k/msgpack4z-core_2.11/0.5.1/msgpack4z-core_2.11-0.5.1-sxr.jar/!/index.html)
-
 ### dependency graph
 
 [![graph](https://msgpack4z.github.io/graph.svg)](https://msgpack4z.github.io/graph.svg)
