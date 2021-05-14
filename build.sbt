@@ -2,7 +2,7 @@ import build._
 import sbtrelease.ReleaseStateTransformations._
 import sbtcrossproject.CrossProject
 
-val msgpack4zNativeVersion = "0.3.7"
+val msgpack4zNativeVersion = "0.3.8"
 val scalapropsVersion = "0.8.3"
 def ScalazVersion = "7.3.3"
 def Scala211 = "2.11.12"
@@ -129,7 +129,7 @@ val commonSettings = Def.settings(
     .toList
     .flatten,
   scalaVersion := Scala211,
-  crossScalaVersions := Scala211 :: "2.12.13" :: "2.13.5" :: "3.0.0-RC3" :: Nil,
+  crossScalaVersions := Scala211 :: "2.12.13" :: "2.13.5" :: "3.0.0" :: Nil,
   (Compile / doc / scalacOptions) ++= {
     val tag = tagOrHash.value
     Seq(
@@ -181,10 +181,10 @@ lazy val msgpack4zCore = CrossProject(
   name := msgpack4zCoreName,
   libraryDependencies ++= Seq(
     "org.scalaz" %%% "scalaz-core" % ScalazVersion cross CrossVersion.for3Use2_13,
-    "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test" cross CrossVersion.for3Use2_13,
-    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test" cross CrossVersion.for3Use2_13,
+    "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
+    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
   ),
-  libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.2" % "provided"
+  libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.3" % "provided"
 ).enablePlugins(
   MimaPlugin,
   sbtbuildinfo.BuildInfoPlugin
@@ -192,7 +192,7 @@ lazy val msgpack4zCore = CrossProject(
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
     "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",
-    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test" cross CrossVersion.for3Use2_13,
+    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test",
   )
 ).jsSettings(
   scalacOptions += {
@@ -208,7 +208,7 @@ lazy val msgpack4zCore = CrossProject(
   scalaJSLinkerConfig ~= { _.withSemantics(_.withStrictFloats(true)) },
 ).platformsSettings(NativePlatform, JSPlatform)(
   libraryDependencies ++= Seq(
-    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion cross CrossVersion.for3Use2_13,
+    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
   )
 )
 
