@@ -245,7 +245,7 @@ object MsgpackUnion {
       case MsgType.BINARY =>
         new MsgpackBinary(unpacker.unpackBinary())
       case MsgType.EXTENSION =>
-        val header = unpacker.unpackExtTypeHeader
+        val header = unpacker.unpackExtTypeHeader()
         new MsgpackExt(header.getType, unpacker.readPayload(header.getLength))
     }
   }
