@@ -189,7 +189,6 @@ lazy val msgpack4zCore = CrossProject(
   MimaPlugin,
   sbtbuildinfo.BuildInfoPlugin
 ).jvmSettings(
-  Sxr.settings,
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
     "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",

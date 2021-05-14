@@ -22,12 +22,6 @@ object UpdateReadme {
         def n = modules(modules.indexWhere(line.contains))
         if (line.startsWith("libraryDependencies") && matchReleaseOrSnapshot) {
           s"""libraryDependencies += "${org}" %% "$n" % "$v""""
-        } else if (line.contains(sonatypeURL) && matchReleaseOrSnapshot) {
-          val sxrIndexHtml = "-sxr.jar/!/index.html"
-          val baseURL = s"${sonatypeURL}${snapshotOrRelease}/archive/${org.replace('.', '/')}/${n}_${scalaV}/${v}/${n}_${scalaV}-${v}"
-          if (line.contains(sxrIndexHtml)) {
-            s"- [sxr](${baseURL}${sxrIndexHtml})"
-          } else line
         } else line
       }
       .mkString("", "\n", "\n")
