@@ -3,7 +3,6 @@ package msgpack4z
 import msgpack4z.CodecInstances.all._
 import scalaz._
 import scalaz.std.AllInstances._
-import scalaprops._
 import scalaprops.ScalapropsScalaz._
 
 abstract class ScalazSpec extends SpecBase {
