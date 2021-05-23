@@ -2,8 +2,6 @@ package msgpack4z
 
 import java.math.BigInteger
 import scalaprops._
-import scalaprops.ScalapropsScalaz._
-import scalaz.syntax.functor._
 
 object UnionGen {
   val booleanGen: Gen[MsgpackUnion] =
