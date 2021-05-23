@@ -92,15 +92,22 @@ val commonSettings = Def.settings(
   homepage := Some(url("https://github.com/msgpack4z")),
   licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php")),
   scalacOptions ++= Seq(
-    "-target:jvm-1.8",
     "-deprecation",
     "-unchecked",
-    "-Xlint",
     "-language:existentials",
     "-language:higherKinds",
     "-language:implicitConversions",
   ),
   scalacOptions ++= unusedWarnings,
+  scalacOptions ++= PartialFunction
+    .condOpt(CrossVersion.partialVersion(scalaVersion.value)) { case Some((2, _)) =>
+      Seq(
+        "-Xlint",
+        "-target:jvm-1.8",
+      )
+    }
+    .toList
+    .flatten,
   scalacOptions ++= PartialFunction
     .condOpt(CrossVersion.partialVersion(scalaVersion.value)) {
       case Some((2, v)) if v <= 12 =>
