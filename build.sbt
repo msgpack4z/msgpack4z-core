@@ -87,10 +87,9 @@ val commonSettings = Def.settings(
     "-language:higherKinds",
     "-language:implicitConversions",
   ),
-  scalacOptions ++= unusedWarnings,
   scalacOptions ++= PartialFunction
     .condOpt(CrossVersion.partialVersion(scalaVersion.value)) { case Some((2, _)) =>
-      Seq(
+      unusedWarnings ++ Seq(
         "-Xlint",
         "-target:jvm-1.8",
       )
