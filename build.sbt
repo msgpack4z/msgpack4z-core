@@ -54,17 +54,6 @@ val commonSettings = Def.settings(
   scalapropsCoreSettings,
   publishTo := sonatypePublishToBundle.value,
   fullResolvers ~= { _.filterNot(_.name == "jcenter") },
-  buildInfoKeys := Seq[BuildInfoKey](
-    organization,
-    name,
-    version,
-    scalaVersion,
-    sbtVersion,
-    licenses,
-    "scalazVersion" -> ScalazVersion
-  ),
-  buildInfoPackage := "msgpack4z",
-  buildInfoObject := "BuildInfoMsgpack4zCore",
   commands += Command.command("updateReadme")(UpdateReadme.updateReadmeTask),
   commands += Command.command("setMimaVersion")(setMimaVersion),
   mimaPreviousArtifacts := {
@@ -178,6 +167,17 @@ lazy val msgpack4zCore = CrossProject(
 ).settings(
   commonSettings,
   Generator.settings,
+  buildInfoKeys := Seq[BuildInfoKey](
+    organization,
+    name,
+    version,
+    scalaVersion,
+    sbtVersion,
+    licenses,
+    "scalazVersion" -> ScalazVersion
+  ),
+  buildInfoPackage := "msgpack4z",
+  buildInfoObject := "BuildInfoMsgpack4zCore",
   name := msgpack4zCoreName,
   libraryDependencies ++= Seq(
     "org.scalaz" %%% "scalaz-core" % ScalazVersion cross CrossVersion.for3Use2_13,
