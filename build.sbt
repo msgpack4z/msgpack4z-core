@@ -33,17 +33,6 @@ val setMimaVersion: State => State = { st =>
 }
 
 val commonSettings = Def.settings(
-  Test / sources := {
-    CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, _)) =>
-        (Test / sources).value
-      case _ =>
-        val exclude = Set(
-          "CaseClassExample",
-        )
-        (Test / sources).value.filterNot(x => exclude(x.getName.dropRight(".scala".length)))
-    }
-  },
   ReleasePlugin.extraReleaseCommands,
   scalapropsCoreSettings,
   publishTo := sonatypePublishToBundle.value,
