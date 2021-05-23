@@ -1,5 +1,6 @@
 package msgpack4z
 
+import msgpack4z.AsTuple._
 import msgpack4z.CodecInstances.all._
 import scalaprops.Property.forAll
 import scalaprops._
@@ -18,7 +19,7 @@ object CaseClassExample extends Scalaprops {
 
     val mapCodec = CaseMapCodec.string(factory)
 
-    val instance = mapCodec.codec(Foo.apply _, Foo.unapply _)("a", "b", "c")
+    val instance = mapCodec.codec(Foo.apply _, (x: Foo) => Some(x.asTuple))("a", "b", "c")
 
     val bytes = instance.toBytes(sample, MsgOutBuffer.create())
     val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgInBuffer(bytes))
@@ -41,7 +42,7 @@ object CaseClassExample extends Scalaprops {
   }
 
   val `case class array example` = forAll {
-    val instance = CaseCodec.codec(Foo.apply _, Foo.unapply _)
+    val instance = CaseCodec.codec(Foo.apply _, (x: Foo) => Some(x.asTuple))
 
     val bytes = instance.toBytes(sample, MsgOutBuffer.create())
     val union = MsgpackCodec[MsgpackUnion].unpackAndClose(MsgInBuffer(bytes))
