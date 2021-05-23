@@ -38,14 +38,8 @@ val commonSettings = Def.settings(
       case Some((2, _)) =>
         (Test / sources).value
       case _ =>
-        // TODO https://github.com/msgpack4z/msgpack4z-core/issues/134
-        // https://github.com/lampepfl/dotty/issues/2335
-        // use `Tuple.fromProductTyped` instead of `unapply`
         val exclude = Set(
           "CaseClassExample",
-          "Java06Spec",
-          "Spec",
-          "StdSpec"
         )
         (Test / sources).value.filterNot(x => exclude(x.getName.dropRight(".scala".length)))
     }
@@ -98,15 +92,22 @@ val commonSettings = Def.settings(
   homepage := Some(url("https://github.com/msgpack4z")),
   licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php")),
   scalacOptions ++= Seq(
-    "-target:jvm-1.8",
     "-deprecation",
     "-unchecked",
-    "-Xlint",
     "-language:existentials",
     "-language:higherKinds",
     "-language:implicitConversions",
   ),
   scalacOptions ++= unusedWarnings,
+  scalacOptions ++= PartialFunction
+    .condOpt(CrossVersion.partialVersion(scalaVersion.value)) { case Some((2, _)) =>
+      Seq(
+        "-Xlint",
+        "-target:jvm-1.8",
+      )
+    }
+    .toList
+    .flatten,
   scalacOptions ++= PartialFunction
     .condOpt(CrossVersion.partialVersion(scalaVersion.value)) {
       case Some((2, v)) if v <= 12 =>
@@ -179,6 +180,22 @@ lazy val msgpack4zCore = CrossProject(
   buildInfoPackage := "msgpack4z",
   buildInfoObject := "BuildInfoMsgpack4zCore",
   name := msgpack4zCoreName,
+  (Test / unmanagedSourceDirectories) ++= {
+    CrossVersion
+      .partialVersion(scalaVersion.value)
+      .map { case (v, _) =>
+        (LocalRootProject / baseDirectory).value / "src" / "test" / s"scala-${v}"
+      }
+      .toList
+  },
+  Test / sourceDirectories ~= (_.distinct),
+  libraryDependencies ++= {
+    if (CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 2)) {
+      Seq("com.chuusai" %%% "shapeless" % "2.3.7" % "test")
+    } else {
+      Nil
+    }
+  },
   libraryDependencies ++= Seq(
     "org.scalaz" %%% "scalaz-core" % ScalazVersion cross CrossVersion.for3Use2_13,
     "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",

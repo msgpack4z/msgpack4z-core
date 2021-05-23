@@ -1,5 +1,6 @@
 package msgpack4z
 
+import msgpack4z.AsTuple._
 import msgpack4z.CodecInstances.all._
 import msgpack4z.UnionGen._
 import scala.util.Random
@@ -52,7 +53,7 @@ abstract class StdSpec extends SpecBase {
   val string = checkLaw[String]
 
   implicit val twentyTwoCodec: MsgpackCodec[TwentyTwo] =
-    CaseCodec.codec22(TwentyTwo.apply, TwentyTwo.unapply)
+    CaseCodec.codec22(TwentyTwo.apply, (x: TwentyTwo) => Some(x.asTuple))
 
   val option = checkLaw[Option[Option[Long]]]
 
