@@ -14,6 +14,8 @@ jobs:
         include:
           - name: jvm-js
             java: 8
+          - name: jvm-js
+            java: 17
           - name: scala-native
             java: 8
     steps:
@@ -31,13 +33,25 @@ jobs:
     - run:  |
         case ${{ matrix.name }} in
           "jvm-js")
-            ./sbt -v \
-            "+ scalafmtCheckAll" \
-            scalafmtSbtCheck \
-            checkGenerateCodeError \
-            "+ Test/compile" \
-            testSequentialCross \
-            "+ publishLocal"
+            case ${{ matrix.java }} in
+              17)
+                ./sbt -v \
+                scalafmtCheckAll \
+                scalafmtSbtCheck \
+                checkGenerateCodeError \
+                Test/compile \
+                testSequential \
+                publishLocal
+                ;;
+              *)
+                ./sbt -v \
+                "+ scalafmtCheckAll" \
+                scalafmtSbtCheck \
+                checkGenerateCodeError \
+                "+ Test/compile" \
+                testSequentialCross \
+                "+ publishLocal"
+            esac
             ;;
           "scala-native")
             ./sbt -v "+ msgpack4z-coreNative/test"
