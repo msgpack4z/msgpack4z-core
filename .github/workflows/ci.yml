@@ -32,7 +32,7 @@ jobs:
         case ${{ matrix.name }} in
           "jvm-js")
             ./sbt -v \
-            scalafmtCheckAll \
+            "+ scalafmtCheckAll" \
             scalafmtSbtCheck \
             checkGenerateCodeError \
             "+ Test/compile" \
