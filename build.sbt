@@ -5,7 +5,7 @@ import sbtcrossproject.CrossProject
 val msgpack4zNativeVersion = "0.3.8"
 val scalapropsVersion = "0.8.3"
 def ScalazVersion = "7.3.5"
-def Scala213 = "2.13.6"
+def Scala213 = "2.13.7"
 
 val tagName = Def.setting {
   s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
