@@ -4,7 +4,7 @@ import sbtcrossproject.CrossProject
 
 val msgpack4zNativeVersion = "0.3.8"
 val scalapropsVersion = "0.8.4"
-def ScalazVersion = "7.3.5"
+def ScalazVersion = "7.4.0-M10"
 def Scala213 = "2.13.7"
 
 val tagName = Def.setting {
@@ -107,7 +107,7 @@ val commonSettings = Def.settings(
     .toList
     .flatten,
   scalaVersion := Scala213,
-  crossScalaVersions := "2.11.12" :: "2.12.15" :: Scala213 :: "3.1.0" :: Nil,
+  crossScalaVersions := Scala213 :: "3.1.0" :: Nil,
   (Compile / doc / scalacOptions) ++= {
     val tag = tagOrHash.value
     Seq(
@@ -185,9 +185,9 @@ lazy val msgpack4zCore = CrossProject(
     }
   },
   libraryDependencies ++= Seq(
-    "org.scalaz" %%% "scalaz-core" % ScalazVersion cross CrossVersion.for3Use2_13,
+    "org.scalaz" %%% "scalaz-core" % ScalazVersion,
     "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
-    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
+//    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
   ),
   libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.3" % "provided"
 ).enablePlugins(
@@ -231,7 +231,6 @@ lazy val msgpack4zCoreJVM = msgpack4zCore.jvm
 lazy val msgpack4zCoreJS = msgpack4zCore.js
 lazy val msgpack4zCoreNative = msgpack4zCore.native.settings(
   scalapropsNativeSettings,
-  crossScalaVersions ~= (_.filter(_ startsWith "2.1"))
 )
 
 val subProjects = List(

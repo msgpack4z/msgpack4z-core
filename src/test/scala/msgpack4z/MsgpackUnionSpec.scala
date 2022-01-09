@@ -9,5 +9,5 @@ object MsgpackUnionSpec extends Scalaprops {
       minSuccessful = 10000
     )
 
-  val orderLaws = scalazlaws.order.all[MsgpackUnion]
+//  val orderLaws = scalazlaws.order.all[MsgpackUnion]
 }

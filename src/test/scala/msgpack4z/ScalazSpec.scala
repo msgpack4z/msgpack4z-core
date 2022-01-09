@@ -3,15 +3,16 @@ package msgpack4z
 import msgpack4z.CodecInstances.all._
 import scalaz._
 import scalaz.std.AllInstances._
-import scalaprops.ScalapropsScalaz._
 
 abstract class ScalazSpec extends SpecBase {
 
+/*
   val iList = checkLawz[IList[Long]]
   val iSet = checkLawz[ISet[Long]]
   val maybe = checkLawz[Maybe[Long]]
   val iMap = checkLawz[String ==>> Maybe[Byte]]
   val nonEmptyList = checkLawz[NonEmptyList[NonEmptyList[Long]]]
+*/
 
   import msgpack4z.EitherCodec.eitherCompactCodec
 
@@ -19,6 +20,7 @@ abstract class ScalazSpec extends SpecBase {
   private type EitherR = Either[Int, String]
   private type EitherTest = EitherL \/ EitherR
 
+/*
   val `disjunction String` = {
     import msgpack4z.DisjunctionCodec.disjunctionStringCodec
     checkLaw[EitherTest]
@@ -28,4 +30,5 @@ abstract class ScalazSpec extends SpecBase {
     import msgpack4z.DisjunctionCodec.disjunctionCompactCodec
     checkLaw[EitherTest]
   }
+*/
 }
