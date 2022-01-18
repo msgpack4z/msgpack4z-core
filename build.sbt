@@ -185,7 +185,7 @@ lazy val msgpack4zCore = CrossProject(
     }
   },
   libraryDependencies ++= Seq(
-    "org.scalaz" %%% "scalaz-core" % ScalazVersion cross CrossVersion.for3Use2_13,
+    "org.scalaz" %%% "scalaz-core" % ScalazVersion,
     "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
     "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
   ),
