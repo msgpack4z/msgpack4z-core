@@ -189,7 +189,7 @@ lazy val msgpack4zCore = CrossProject(
     "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
     "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
   ),
-  libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.3" % "provided"
+  libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.5.0" % "provided"
 ).enablePlugins(
   MimaPlugin,
   sbtbuildinfo.BuildInfoPlugin
