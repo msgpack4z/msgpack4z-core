@@ -3,7 +3,7 @@ import sbtrelease.ReleaseStateTransformations._
 import sbtcrossproject.CrossProject
 
 val msgpack4zNativeVersion = "0.3.8"
-val scalapropsVersion = "0.8.4"
+val scalapropsVersion = "0.9.0"
 def ScalazVersion = "7.3.6"
 def Scala213 = "2.13.8"
 
@@ -185,11 +185,11 @@ lazy val msgpack4zCore = CrossProject(
     }
   },
   libraryDependencies ++= Seq(
-    "org.scalaz" %%% "scalaz-core" % ScalazVersion cross CrossVersion.for3Use2_13,
+    "org.scalaz" %%% "scalaz-core" % ScalazVersion,
     "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
     "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
   ),
-  libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.4.3" % "provided"
+  libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.5.0" % "provided"
 ).enablePlugins(
   MimaPlugin,
   sbtbuildinfo.BuildInfoPlugin
