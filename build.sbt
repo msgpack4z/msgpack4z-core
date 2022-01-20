@@ -193,7 +193,7 @@ lazy val msgpack4zCore = CrossProject(
 ).enablePlugins(
   MimaPlugin,
   sbtbuildinfo.BuildInfoPlugin
-).platformsSettings(
+).platformsSettings(JVMPlatform, JSPlatform)(
   crossScalaVersions += "3.1.1",
 ).jvmSettings(
   libraryDependencies ++= Seq(
