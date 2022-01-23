@@ -107,7 +107,7 @@ val commonSettings = Def.settings(
     .toList
     .flatten,
   scalaVersion := Scala213,
-  crossScalaVersions := "2.11.12" :: "2.12.15" :: Scala213 :: Nil,
+  crossScalaVersions := "2.11.12" :: "2.12.15" :: Scala213 :: "3.1.1" :: Nil,
   (Compile / doc / scalacOptions) ++= {
     val tag = tagOrHash.value
     Seq(
@@ -193,8 +193,6 @@ lazy val msgpack4zCore = CrossProject(
 ).enablePlugins(
   MimaPlugin,
   sbtbuildinfo.BuildInfoPlugin
-).platformsSettings(JVMPlatform, JSPlatform)(
-  crossScalaVersions += "3.1.1",
 ).jvmSettings(
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
@@ -218,7 +216,6 @@ lazy val msgpack4zCore = CrossProject(
     "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
   )
 ).nativeSettings(
-  crossScalaVersions += "3.1.0",
   Compile / doc / scalacOptions --= {
     // TODO remove this workaround
     // https://github.com/scala-native/scala-native/issues/2503
