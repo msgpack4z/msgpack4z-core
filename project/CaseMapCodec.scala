@@ -23,8 +23,8 @@ object CaseMapCodec {
     private def signature(name: String) = {
       val implicits = tparams0.map(a => s"$a: $c[$a]").mkString("implicit ", ", ", "")
       s"""  def $name[$tparams1, $Z]($apply: ($tparams1) => $Z, $unapply: $Z => Option[($tparams1)])(${params0
-        .map(_ + ": " + K)
-        .mkString(", ")})($implicits): $c[$Z] ="""
+          .map(_ + ": " + K)
+          .mkString(", ")})($implicits): $c[$Z] ="""
     }
 
     private def overload(name: String) = {

@@ -3,8 +3,8 @@ object TupleCodec {
   private def ts(i: Int) = tparams(i).mkString(", ")
   private val defdef: Int => String = { i =>
     s"""implicit def tuple${i}Codec[${ts(i)}](implicit ${tparams(i)
-      .map(x => x + ": MsgpackCodec[" + x + "]")
-      .mkString(", ")}): MsgpackCodec[Tuple$i[${ts(i)}]]"""
+        .map(x => x + ": MsgpackCodec[" + x + "]")
+        .mkString(", ")}): MsgpackCodec[Tuple$i[${ts(i)}]]"""
   }
 
   private val f: Int => String = { i =>
