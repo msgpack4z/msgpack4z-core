@@ -210,7 +210,6 @@ lazy val msgpack4zCore = CrossProject(
         s"-scalajs-mapSourceURI:$a->$g/"
     }
   },
-  scalaJSLinkerConfig ~= { _.withSemantics(_.withStrictFloats(true)) },
 ).platformsSettings(NativePlatform, JSPlatform)(
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
