@@ -15,7 +15,7 @@
 ### latest stable version
 
 ```scala
-libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.6.0"
+libraryDependencies += "com.github.xuwei-k" %% "msgpack4z-core" % "0.6.1"
 ```
 
 ### dependency graph
