@@ -214,16 +214,6 @@ lazy val msgpack4zCore = CrossProject(
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
   )
-).nativeSettings(
-  Compile / doc / scalacOptions --= {
-    // TODO remove this workaround
-    // https://github.com/scala-native/scala-native/issues/2503
-    if (scalaBinaryVersion.value == "3") {
-      (Compile / doc / scalacOptions).value.filter(_.contains("-Xplugin"))
-    } else {
-      Nil
-    }
-  },
 )
 
 lazy val noPublish = Seq(
