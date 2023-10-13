@@ -15,7 +15,7 @@ jobs:
           - name: jvm-js
             java: 8
           - name: jvm-js
-            java: 17
+            java: 21
           - name: scala-native
             java: 8
     steps:
@@ -34,7 +34,7 @@ jobs:
         case ${{ matrix.name }} in
           "jvm-js")
             case ${{ matrix.java }} in
-              17)
+              21)
                 ./sbt -v \
                 scalafmtCheckAll \
                 scalafmtSbtCheck \
