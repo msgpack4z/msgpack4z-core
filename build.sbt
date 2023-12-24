@@ -91,7 +91,6 @@ val commonSettings = Def.settings(
     .condOpt(CrossVersion.partialVersion(scalaVersion.value)) { case Some((2, _)) =>
       unusedWarnings ++ Seq(
         "-Xlint",
-        "-target:jvm-1.8",
       )
     }
     .toList
