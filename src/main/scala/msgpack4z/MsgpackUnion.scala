@@ -253,7 +253,7 @@ object MsgpackUnion {
   val string: Extractor[String] = new Extractor[String] {
     override def unapply(value: MsgpackUnion) =
       value.string
-    override def apply(value: String) =
+    override def apply(value: String): MsgpackUnion =
       new MsgpackString(value)
   }
   val binary: Extractor[Array[Byte]] = new Extractor[Array[Byte]] {
@@ -289,13 +289,13 @@ object MsgpackUnion {
   val map: Extractor[Map[MsgpackUnion, MsgpackUnion]] = new Extractor[Map[MsgpackUnion, MsgpackUnion]] {
     override def unapply(value: MsgpackUnion) =
       value.map
-    override def apply(value: Map[MsgpackUnion, MsgpackUnion]) =
+    override def apply(value: Map[MsgpackUnion, MsgpackUnion]): MsgpackUnion =
       new MsgpackMap(value)
   }
   val imap: Extractor[IMap[MsgpackUnion, MsgpackUnion]] = new Extractor[IMap[MsgpackUnion, MsgpackUnion]] {
     override def unapply(value: MsgpackUnion) =
       value.imap
-    override def apply(value: IMap[MsgpackUnion, MsgpackUnion]) = {
+    override def apply(value: IMap[MsgpackUnion, MsgpackUnion]): MsgpackUnion = {
       val builder = Map.newBuilder[MsgpackUnion, MsgpackUnion]
       value.foldlWithKey(())((_, k, v) => builder += ((k, v)))
       new MsgpackMap(builder.result())
@@ -306,7 +306,7 @@ object MsgpackUnion {
   val ext: Extractor[(Byte, Array[Byte])] = new Extractor[(Byte, Array[Byte])] {
     override def unapply(value: MsgpackUnion) =
       value.ext
-    override def apply(t: (Byte, Array[Byte])) =
+    override def apply(t: (Byte, Array[Byte])): MsgpackUnion =
       new MsgpackExt(t._1, t._2)
   }
   val bool: Boolean => MsgpackUnion = { value =>

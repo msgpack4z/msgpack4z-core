@@ -13,8 +13,8 @@ object CaseClassExample extends Scalaprops {
 
   val `case class map example` = forAll {
     val factory = new PackerUnpackerFactory {
-      def packer = MsgOutBuffer.create()
-      def unpacker(bytes: Array[Byte]) = MsgInBuffer(bytes)
+      def packer: MsgPacker = MsgOutBuffer.create()
+      def unpacker(bytes: Array[Byte]): MsgUnpacker = MsgInBuffer(bytes)
     }
 
     val mapCodec = CaseMapCodec.string(factory)
