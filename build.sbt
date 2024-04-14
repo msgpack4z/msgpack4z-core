@@ -2,7 +2,7 @@ import build._
 import sbtrelease.ReleaseStateTransformations._
 import sbtcrossproject.CrossProject
 
-val msgpack4zNativeVersion = "0.3.9"
+val msgpack4zNativeVersion = "0.4.0"
 val scalapropsVersion = "0.9.1"
 def ScalazVersion = "7.3.8"
 def Scala213 = "2.13.13"
@@ -64,7 +64,6 @@ val commonSettings = Def.settings(
       },
       enableCrossBuild = true
     ),
-    releaseStepCommandAndRemaining("+ " + build.msgpack4zCoreName + "Native/publishSigned"),
     releaseStepCommandAndRemaining("sonatypeBundleRelease"),
     setNextVersion,
     setMimaVersion,
@@ -178,13 +177,6 @@ lazy val msgpack4zCore = CrossProject(
       .toList
   },
   Test / sourceDirectories ~= (_.distinct),
-  libraryDependencies ++= {
-    if (CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 2)) {
-      Seq("com.chuusai" %%% "shapeless" % "2.3.10" % "test")
-    } else {
-      Nil
-    }
-  },
   libraryDependencies ++= Seq(
     "org.scalaz" %%% "scalaz-core" % ScalazVersion,
     "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
@@ -211,6 +203,29 @@ lazy val msgpack4zCore = CrossProject(
         s"-scalajs-mapSourceURI:$a->$g/"
     }
   },
+).platformsSettings(JVMPlatform, JSPlatform)(
+  libraryDependencies ++= {
+    if (CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 2)) {
+      Seq("com.chuusai" %%% "shapeless" % "2.3.10" % "test")
+    } else {
+      Nil
+    }
+  }
+).nativeSettings(
+  Test / sources := {
+    // TODO re-enable all tests if shapeless for scala-native 0.5.x released
+    if (scalaBinaryVersion.value == "3") {
+      (Test / sources).value
+    } else {
+      val exclude = Set(
+        "AsTuple",
+        "CaseClassExample",
+        "StdSpec",
+        "Spec"
+      ).map(_ + ".scala")
+      (Test / sources).value.filterNot(f => exclude.apply(f.getName))
+    }
+  }
 ).platformsSettings(NativePlatform, JSPlatform)(
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
@@ -240,25 +255,16 @@ val subProjects = List(
   testJavaLatest
 )
 
-lazy val root = Project("root", file("."))
-  .settings(
-    commonSettings,
-    noPublish,
-    commands += Command.command("testSequential") {
-      subProjects.map(_.id).map(_ + "/test").sorted ::: _
-    },
-    commands += Command.command("testSequentialCross") {
-      subProjects.map(_.id).map("+ " + _ + "/test").sorted ::: _
-    },
-    Compile / scalaSource := (ThisBuild / baseDirectory).value / "dummy",
-    Test / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
-  )
-  .aggregate(
-    msgpack4zCoreJVM,
-    msgpack4zCoreJS,
-    testJava07,
-    testJavaLatest,
-  )
+commonSettings
+noPublish
+commands += Command.command("testSequential") {
+  subProjects.map(_.id).map(_ + "/test").sorted ::: _
+}
+commands += Command.command("testSequentialCross") {
+  subProjects.map(_.id).map("+ " + _ + "/test").sorted ::: _
+}
+Compile / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
+Test / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
 
 lazy val testJava07 = Project("testJava07", file("test-java07"))
   .settings(
