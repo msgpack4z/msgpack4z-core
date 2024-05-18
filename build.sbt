@@ -203,29 +203,14 @@ lazy val msgpack4zCore = CrossProject(
         s"-scalajs-mapSourceURI:$a->$g/"
     }
   },
-).platformsSettings(JVMPlatform, JSPlatform)(
+).settings(
   libraryDependencies ++= {
     if (CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 2)) {
       Seq("com.chuusai" %%% "shapeless" % "2.3.12" % "test")
     } else {
       Nil
     }
-  }
-).nativeSettings(
-  Test / sources := {
-    // TODO re-enable all tests if shapeless for scala-native 0.5.x released
-    if (scalaBinaryVersion.value == "3") {
-      (Test / sources).value
-    } else {
-      val exclude = Set(
-        "AsTuple",
-        "CaseClassExample",
-        "StdSpec",
-        "Spec"
-      ).map(_ + ".scala")
-      (Test / sources).value.filterNot(f => exclude.apply(f.getName))
-    }
-  }
+  },
 ).platformsSettings(NativePlatform, JSPlatform)(
   libraryDependencies ++= Seq(
     "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
