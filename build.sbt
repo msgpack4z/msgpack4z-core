@@ -89,10 +89,21 @@ val commonSettings = Def.settings(
   scalacOptions ++= PartialFunction
     .condOpt(CrossVersion.partialVersion(scalaVersion.value)) { case Some((2, _)) =>
       unusedWarnings ++ Seq(
-        "-Wconf:cat=scala3-migration&msg=constructor modifiers are assumed by synthetic:info",
-        "-Xsource:3",
         "-Xlint",
       )
+    }
+    .toList
+    .flatten,
+  scalacOptions ++= PartialFunction
+    .condOpt(CrossVersion.partialVersion(scalaVersion.value)) {
+      case Some((2, 13)) =>
+        Seq(
+          "-Xsource:3-cross",
+        )
+      case Some((2, 12)) =>
+        Seq(
+          "-Xsource:3",
+        )
     }
     .toList
     .flatten,
