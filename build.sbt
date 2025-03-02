@@ -217,7 +217,7 @@ lazy val msgpack4zCore = CrossProject(
 ).settings(
   libraryDependencies ++= {
     if (CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 2)) {
-      Seq("com.chuusai" %%% "shapeless" % "2.3.12" % "test")
+      Seq("com.chuusai" %%% "shapeless" % "2.3.13" % "test")
     } else {
       Nil
     }
