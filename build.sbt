@@ -35,7 +35,7 @@ val setMimaVersion: State => State = { st =>
 val commonSettings = Def.settings(
   ReleasePlugin.extraReleaseCommands,
   scalapropsCoreSettings,
-  publishTo := sonatypePublishToBundle.value,
+  publishTo := (if (isSnapshot.value) None else localStaging.value),
   fullResolvers ~= { _.filterNot(_.name == "jcenter") },
   commands += Command.command("updateReadme")(UpdateReadme.updateReadmeTask),
   commands += Command.command("setMimaVersion")(setMimaVersion),
@@ -64,18 +64,13 @@ val commonSettings = Def.settings(
       },
       enableCrossBuild = true
     ),
-    releaseStepCommandAndRemaining("sonatypeBundleRelease"),
+    releaseStepCommandAndRemaining("sonaRelease"),
     setNextVersion,
     setMimaVersion,
     commitNextVersion,
     UpdateReadme.updateReadmeProcess,
     pushChanges
   ),
-  credentials ++= PartialFunction
-    .condOpt(sys.env.get("SONATYPE_USER") -> sys.env.get("SONATYPE_PASS")) { case (Some(user), Some(pass)) =>
-      Credentials("Sonatype Nexus Repository Manager", "oss.sonatype.org", user, pass)
-    }
-    .toList,
   organization := "com.github.xuwei-k",
   homepage := Some(url("https://github.com/msgpack4z")),
   licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php")),
