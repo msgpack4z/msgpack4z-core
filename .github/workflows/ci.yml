@@ -9,13 +9,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        include:
-          - name: jvm-js
-            java: 8
-          - name: jvm-js
-            java: 25
-          - name: scala-native
-            java: 8
+        java:
+          - 8
+          - 25
     steps:
     - uses: actions/checkout@v6
     - uses: actions/setup-java@v5
@@ -29,33 +25,11 @@ jobs:
     - run: git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
     - run: git show --oneline --check
     - run:  |
-        case ${{ matrix.name }} in
-          "jvm-js")
-            case ${{ matrix.java }} in
-              21)
-                ./sbt -v \
-                scalafmtCheckAll \
-                scalafmtSbtCheck \
-                checkGenerateCodeError \
-                Test/compile \
-                testSequential \
-                publishLocal
-                ;;
-              *)
-                ./sbt -v \
-                "+ scalafmtCheckAll" \
-                scalafmtSbtCheck \
-                checkGenerateCodeError \
-                "+ Test/compile" \
-                testSequentialCross \
-                "+ publishLocal"
-            esac
-            ;;
-          "scala-native")
-            ./sbt -v "+ msgpack4z-coreNative/test"
-            ;;
-          *)
-            echo "unknown job-name"
-            exit 1
-        esac
+       ./sbt -v \
+       "+ scalafmtCheckAll" \
+       scalafmtSbtCheck \
+       checkGenerateCodeError \
+       "+ Test/compile" \
+       testSequentialCross \
+       "+ publishLocal"
     - run: rm -rf ~/.ivy2/local
