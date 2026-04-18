@@ -27,7 +27,7 @@ abstract class SpecBase extends Scalaprops {
   final def checkRoundTripBytes[A](checkHashCode: Boolean)(implicit A: MsgpackCodec[A], G: Gen[A], E: Equal[A]): Property =
     Property.forAll { (a: A) =>
       try {
-        A.roundtripz(a, packer(), unpacker _) match {
+        A.roundtripz(a, packer(), unpacker) match {
           case None =>
             if (checkHashCode) {
               A.unpackAndClose(unpacker(A.toBytes(a, packer()))) match {
@@ -55,11 +55,11 @@ abstract class SpecBase extends Scalaprops {
     }
 
   final def checkLawz[A](implicit A: MsgpackCodec[A], G: Gen[A], E: Equal[A]) =
-    checkRoundTripBytes(true)(A, G, E)
+    checkRoundTripBytes(true)(using A, G, E)
 
   final def checkLaw[A](implicit A: MsgpackCodec[A], G: Gen[A]) =
-    checkRoundTripBytes(true)(A, G, Equal.equalA[A])
+    checkRoundTripBytes(true)(using A, G, Equal.equalA[A])
 
   final def checkLawWithoutHashCode[A](implicit A: MsgpackCodec[A], G: Gen[A], E: Equal[A]) =
-    checkRoundTripBytes(false)(A, G, E)
+    checkRoundTripBytes(false)(using A, G, E)
 }

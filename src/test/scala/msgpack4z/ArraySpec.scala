@@ -20,7 +20,7 @@ abstract class ArraySpec extends SpecBase {
       checkLawWithoutHashCode[Array[Long]].toProperties("Long"),
       checkLawWithoutHashCode[Array[Float]].toProperties("Float"),
       checkLawWithoutHashCode[Array[Double]].toProperties("Double"),
-      checkLawWithoutHashCode[Array[Byte]](CodecInstances.byteArray.arrayByte, implicitly, arrayEq[Byte]).toProperties("Byte")
+      checkLawWithoutHashCode[Array[Byte]](using CodecInstances.byteArray.arrayByte, implicitly, arrayEq[Byte]).toProperties("Byte")
     )
   }
 

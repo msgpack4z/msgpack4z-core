@@ -93,10 +93,10 @@ private[msgpack4z] object AllImpl
     )
 
   override implicit val stringCodec: MsgpackCodec[String] =
-    tryConst(_ packString _, _.unpackString())
+    tryConst(_.packString(_), _.unpackString())
 
   override implicit val symbolCodec: MsgpackCodec[Symbol] =
-    tryConst(_ packString _.name, x => Symbol(x.unpackString()))
+    tryConst((x1, x2) => x1.packString(x2.name), x => Symbol(x.unpackString()))
 
   override implicit def vectorCodec[A](implicit A: MsgpackCodec[A]): MsgpackCodec[Vector[A]] =
     MsgpackCodec.tryE(

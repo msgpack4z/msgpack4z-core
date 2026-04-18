@@ -11,7 +11,7 @@ abstract class StdSpec extends SpecBase {
   private[this] def isSurrogate(c: Char): Boolean =
     (Character.MIN_SURROGATE <= c) && (c <= Character.MAX_SURROGATE)
 
-  val unicode = checkLaw[String](
+  val unicode = checkLaw[String](using
     implicitly,
     Gen.arrayOfN(100, Gen.genCharAll).map { s =>
       val b = new java.lang.StringBuilder
@@ -33,12 +33,12 @@ abstract class StdSpec extends SpecBase {
     }
   )
 
-  val `string 16` = checkLaw[String](
+  val `string 16` = checkLaw[String](using
     implicitly,
     Gen.value(Random.alphanumeric.take(1 << (8 + 1)).mkString)
   )
 
-  val `string 32` = checkLaw[String](
+  val `string 32` = checkLaw[String](using
     implicitly,
     Gen.value(Random.alphanumeric.take((1 << 16) + 5).mkString)
   )
@@ -65,8 +65,8 @@ abstract class StdSpec extends SpecBase {
 
   val `Map[String, String]` = checkLawz[Map[String, String]]
 
-  val `Either String` = checkLaw[Either[Int, Long]](EitherCodec.eitherStringCodec, implicitly)
-  val `Either Compact` = checkLaw[Either[List[Int], Long]](EitherCodec.eitherCompactCodec, implicitly)
+  val `Either String` = checkLaw[Either[Int, Long]](using EitherCodec.eitherStringCodec, implicitly)
+  val `Either Compact` = checkLaw[Either[List[Int], Long]](using EitherCodec.eitherCompactCodec, implicitly)
 
   val twentyTwo = checkLaw[TwentyTwo]
 
