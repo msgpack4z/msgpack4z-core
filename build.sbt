@@ -80,6 +80,8 @@ val commonSettings = Def.settings(
     "-language:existentials",
     "-language:higherKinds",
     "-language:implicitConversions",
+    "-Wconf:msg=Implicit parameters should be provided with:error",
+    "-Wconf:msg=with as a type operator has been deprecated:error",
   ),
   scalacOptions ++= PartialFunction
     .condOpt(CrossVersion.partialVersion(scalaVersion.value)) { case Some((2, _)) =>
