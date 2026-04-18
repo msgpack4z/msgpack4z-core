@@ -73,7 +73,7 @@ val commonSettings = Def.settings(
   ),
   organization := "com.github.xuwei-k",
   homepage := Some(url("https://github.com/msgpack4z")),
-  licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php")),
+  licenses := Seq(License.MIT),
   scalacOptions ++= Seq(
     "-deprecation",
     "-unchecked",
