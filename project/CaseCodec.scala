@@ -42,7 +42,7 @@ object CaseCodec {
     )
 
   ${methodDef("codec")}
-    $methodName($construct, $extract)($tparams1)
+    $methodName($construct, $extract)(using $tparams1)
 """
   }
 
@@ -72,7 +72,7 @@ object CaseCodec {
     )
 
   ${methodDef("codec")}
-    $codec1($construct, $extract)($A1)
+    $codec1($construct, $extract)(using $A1)
 """
   }
 

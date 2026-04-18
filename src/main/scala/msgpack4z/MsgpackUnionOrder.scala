@@ -15,7 +15,7 @@ private[msgpack4z] object MsgpackUnionOrder extends Order[MsgpackUnion] {
     x === y
 
   private[this] val UnionListOrder: Order[List[MsgpackUnion]] =
-    scalaz.std.list.listOrder(this)
+    scalaz.std.list.listOrder(using this)
 
   private[this] val UnionMapOrder: Order[Map[MsgpackUnion, MsgpackUnion]] =
     scalaz.std.map.mapOrder(using this, this)

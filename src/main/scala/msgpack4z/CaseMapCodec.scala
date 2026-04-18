@@ -6,10 +6,10 @@ import scalaz._
 object CaseMapCodec {
 
   def string(factory: PackerUnpackerFactory) =
-    new CaseMapCodec[String](factory)(CodecInstances.std.stringCodec)
+    new CaseMapCodec[String](factory)(using CodecInstances.std.stringCodec)
 
   def int(factory: PackerUnpackerFactory) =
-    new CaseMapCodec[Int](factory)(CodecInstances.anyVal.intCodec)
+    new CaseMapCodec[Int](factory)(using CodecInstances.anyVal.intCodec)
 }
 
 class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K]) {
@@ -35,14 +35,14 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
           case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
-            b1.get.as[A1](factory)(A1).map(apply)
+            b1.get.as[A1](factory)(using A1).map(apply)
         }
       case e @ -\/(_) => e.coerceRight
     }
   )
 
   def codec[A1, Z](apply: A1 => Z, unapply: Z => Option[A1])(a1: K)(implicit A1: MsgpackCodec[A1]): MsgpackCodec[Z] =
-    codec1(apply, unapply)(a1)(A1)
+    codec1(apply, unapply)(a1)(using A1)
 
   def codec2[A1, A2, Z](apply: (A1, A2) => Z, unapply: Z => Option[(A1, A2)])(a1: K, a2: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -64,7 +64,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply2(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -72,7 +72,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, Z](apply: (A1, A2) => Z, unapply: Z => Option[(A1, A2)])(a1: K, a2: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2]): MsgpackCodec[Z] =
-    codec2(apply, unapply)(a1, a2)(A1, A2)
+    codec2(apply, unapply)(a1, a2)(using A1, A2)
 
   def codec3[A1, A2, A3, Z](apply: (A1, A2, A3) => Z, unapply: Z => Option[(A1, A2, A3)])(a1: K, a2: K, a3: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -95,7 +95,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply3(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -103,7 +103,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, Z](apply: (A1, A2, A3) => Z, unapply: Z => Option[(A1, A2, A3)])(a1: K, a2: K, a3: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3]): MsgpackCodec[Z] =
-    codec3(apply, unapply)(a1, a2, a3)(A1, A2, A3)
+    codec3(apply, unapply)(a1, a2, a3)(using A1, A2, A3)
 
   def codec4[A1, A2, A3, A4, Z](apply: (A1, A2, A3, A4) => Z, unapply: Z => Option[(A1, A2, A3, A4)])(a1: K, a2: K, a3: K, a4: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -127,7 +127,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply4(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -135,7 +135,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, Z](apply: (A1, A2, A3, A4) => Z, unapply: Z => Option[(A1, A2, A3, A4)])(a1: K, a2: K, a3: K, a4: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4]): MsgpackCodec[Z] =
-    codec4(apply, unapply)(a1, a2, a3, a4)(A1, A2, A3, A4)
+    codec4(apply, unapply)(a1, a2, a3, a4)(using A1, A2, A3, A4)
 
   def codec5[A1, A2, A3, A4, A5, Z](apply: (A1, A2, A3, A4, A5) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5)])(a1: K, a2: K, a3: K, a4: K, a5: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -160,7 +160,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply5(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -168,7 +168,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, Z](apply: (A1, A2, A3, A4, A5) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5)])(a1: K, a2: K, a3: K, a4: K, a5: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5]): MsgpackCodec[Z] =
-    codec5(apply, unapply)(a1, a2, a3, a4, a5)(A1, A2, A3, A4, A5)
+    codec5(apply, unapply)(a1, a2, a3, a4, a5)(using A1, A2, A3, A4, A5)
 
   def codec6[A1, A2, A3, A4, A5, A6, Z](apply: (A1, A2, A3, A4, A5, A6) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -194,7 +194,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply6(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -202,7 +202,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, Z](apply: (A1, A2, A3, A4, A5, A6) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6]): MsgpackCodec[Z] =
-    codec6(apply, unapply)(a1, a2, a3, a4, a5, a6)(A1, A2, A3, A4, A5, A6)
+    codec6(apply, unapply)(a1, a2, a3, a4, a5, a6)(using A1, A2, A3, A4, A5, A6)
 
   def codec7[A1, A2, A3, A4, A5, A6, A7, Z](apply: (A1, A2, A3, A4, A5, A6, A7) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -229,7 +229,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply7(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -237,7 +237,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, Z](apply: (A1, A2, A3, A4, A5, A6, A7) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7]): MsgpackCodec[Z] =
-    codec7(apply, unapply)(a1, a2, a3, a4, a5, a6, a7)(A1, A2, A3, A4, A5, A6, A7)
+    codec7(apply, unapply)(a1, a2, a3, a4, a5, a6, a7)(using A1, A2, A3, A4, A5, A6, A7)
 
   def codec8[A1, A2, A3, A4, A5, A6, A7, A8, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -265,7 +265,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply8(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -273,7 +273,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8]): MsgpackCodec[Z] =
-    codec8(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8)(A1, A2, A3, A4, A5, A6, A7, A8)
+    codec8(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8)(using A1, A2, A3, A4, A5, A6, A7, A8)
 
   def codec9[A1, A2, A3, A4, A5, A6, A7, A8, A9, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -302,7 +302,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply9(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -310,7 +310,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9]): MsgpackCodec[Z] =
-    codec9(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9)(A1, A2, A3, A4, A5, A6, A7, A8, A9)
+    codec9(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9)(using A1, A2, A3, A4, A5, A6, A7, A8, A9)
 
   def codec10[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -340,7 +340,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply10(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -348,7 +348,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10]): MsgpackCodec[Z] =
-    codec10(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)
+    codec10(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)
 
   def codec11[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -379,7 +379,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply11(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -387,7 +387,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11]): MsgpackCodec[Z] =
-    codec11(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)
+    codec11(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)
 
   def codec12[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -419,7 +419,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply12(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -427,7 +427,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12]): MsgpackCodec[Z] =
-    codec12(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)
+    codec12(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)
 
   def codec13[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -460,7 +460,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply13(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -468,7 +468,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13]): MsgpackCodec[Z] =
-    codec13(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)
+    codec13(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)
 
   def codec14[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -502,7 +502,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply14(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -510,7 +510,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14]): MsgpackCodec[Z] =
-    codec14(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)
+    codec14(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)
 
   def codec15[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -545,7 +545,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply15(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14), b15.get.as[A15](factory)(using A15)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -553,7 +553,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15]): MsgpackCodec[Z] =
-    codec15(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15)
+    codec15(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15)
 
   def codec16[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -589,7 +589,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply16(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14), b15.get.as[A15](factory)(using A15), b16.get.as[A16](factory)(using A16)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -597,7 +597,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16]): MsgpackCodec[Z] =
-    codec16(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16)
+    codec16(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16)
 
   def codec17[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -634,7 +634,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply17(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14), b15.get.as[A15](factory)(using A15), b16.get.as[A16](factory)(using A16), b17.get.as[A17](factory)(using A17)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -642,7 +642,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17]): MsgpackCodec[Z] =
-    codec17(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17)
+    codec17(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17)
 
   def codec18[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -680,7 +680,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply18(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14), b15.get.as[A15](factory)(using A15), b16.get.as[A16](factory)(using A16), b17.get.as[A17](factory)(using A17), b18.get.as[A18](factory)(using A18)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -688,7 +688,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18]): MsgpackCodec[Z] =
-    codec18(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)
+    codec18(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)
 
   def codec19[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K, a19: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -727,7 +727,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply19(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18), b19.get.as[A19](factory)(A19)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14), b15.get.as[A15](factory)(using A15), b16.get.as[A16](factory)(using A16), b17.get.as[A17](factory)(using A17), b18.get.as[A18](factory)(using A18), b19.get.as[A19](factory)(using A19)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -735,7 +735,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K, a19: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19]): MsgpackCodec[Z] =
-    codec19(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19)
+    codec19(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19)
 
   def codec20[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K, a19: K, a20: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -775,7 +775,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply20(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18), b19.get.as[A19](factory)(A19), b20.get.as[A20](factory)(A20)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14), b15.get.as[A15](factory)(using A15), b16.get.as[A16](factory)(using A16), b17.get.as[A17](factory)(using A17), b18.get.as[A18](factory)(using A18), b19.get.as[A19](factory)(using A19), b20.get.as[A20](factory)(using A20)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -783,7 +783,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K, a19: K, a20: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20]): MsgpackCodec[Z] =
-    codec20(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20)
+    codec20(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20)
 
   def codec21[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K, a19: K, a20: K, a21: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20], A21: MsgpackCodec[A21]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -824,7 +824,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply21(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18), b19.get.as[A19](factory)(A19), b20.get.as[A20](factory)(A20), b21.get.as[A21](factory)(A21)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14), b15.get.as[A15](factory)(using A15), b16.get.as[A16](factory)(using A16), b17.get.as[A17](factory)(using A17), b18.get.as[A18](factory)(using A18), b19.get.as[A19](factory)(using A19), b20.get.as[A20](factory)(using A20), b21.get.as[A21](factory)(using A21)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -832,7 +832,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K, a19: K, a20: K, a21: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20], A21: MsgpackCodec[A21]): MsgpackCodec[Z] =
-    codec21(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21)
+    codec21(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21)
 
   def codec22[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K, a19: K, a20: K, a21: K, a22: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20], A21: MsgpackCodec[A21], A22: MsgpackCodec[A22]): MsgpackCodec[Z] =
     MsgpackCodec.codec[Z](
@@ -874,7 +874,7 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
             zeroapply.DisjunctionApply.apply22(
-              b1.get.as[A1](factory)(A1), b2.get.as[A2](factory)(A2), b3.get.as[A3](factory)(A3), b4.get.as[A4](factory)(A4), b5.get.as[A5](factory)(A5), b6.get.as[A6](factory)(A6), b7.get.as[A7](factory)(A7), b8.get.as[A8](factory)(A8), b9.get.as[A9](factory)(A9), b10.get.as[A10](factory)(A10), b11.get.as[A11](factory)(A11), b12.get.as[A12](factory)(A12), b13.get.as[A13](factory)(A13), b14.get.as[A14](factory)(A14), b15.get.as[A15](factory)(A15), b16.get.as[A16](factory)(A16), b17.get.as[A17](factory)(A17), b18.get.as[A18](factory)(A18), b19.get.as[A19](factory)(A19), b20.get.as[A20](factory)(A20), b21.get.as[A21](factory)(A21), b22.get.as[A22](factory)(A22)
+              b1.get.as[A1](factory)(using A1), b2.get.as[A2](factory)(using A2), b3.get.as[A3](factory)(using A3), b4.get.as[A4](factory)(using A4), b5.get.as[A5](factory)(using A5), b6.get.as[A6](factory)(using A6), b7.get.as[A7](factory)(using A7), b8.get.as[A8](factory)(using A8), b9.get.as[A9](factory)(using A9), b10.get.as[A10](factory)(using A10), b11.get.as[A11](factory)(using A11), b12.get.as[A12](factory)(using A12), b13.get.as[A13](factory)(using A13), b14.get.as[A14](factory)(using A14), b15.get.as[A15](factory)(using A15), b16.get.as[A16](factory)(using A16), b17.get.as[A17](factory)(using A17), b18.get.as[A18](factory)(using A18), b19.get.as[A19](factory)(using A19), b20.get.as[A20](factory)(using A20), b21.get.as[A21](factory)(using A21), b22.get.as[A22](factory)(using A22)
             )(apply)
         }
       case e @ -\/(_) => e.coerceRight
@@ -882,5 +882,5 @@ class CaseMapCodec[K](factory: PackerUnpackerFactory)(implicit K: MsgpackCodec[K
   )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, Z](apply: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22) => Z, unapply: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22)])(a1: K, a2: K, a3: K, a4: K, a5: K, a6: K, a7: K, a8: K, a9: K, a10: K, a11: K, a12: K, a13: K, a14: K, a15: K, a16: K, a17: K, a18: K, a19: K, a20: K, a21: K, a22: K)(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20], A21: MsgpackCodec[A21], A22: MsgpackCodec[A22]): MsgpackCodec[Z] =
-    codec22(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22)
+    codec22(apply, unapply)(a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11, a12, a13, a14, a15, a16, a17, a18, a19, a20, a21, a22)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22)
 }

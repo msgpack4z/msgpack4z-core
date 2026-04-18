@@ -29,7 +29,7 @@ object CaseMapCodec {
 
     private def overload(name: String) = {
       signature("codec") + s"""
-    $name($apply, $unapply)(${params0.mkString(", ")})($tparams1)"""
+    $name($apply, $unapply)(${params0.mkString(", ")})(using $tparams1)"""
     }
 
     private def method(name: String) = {
@@ -59,7 +59,7 @@ ${signature(name)}
             $left(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), $K)))
           case _ =>
             zeroapply.DisjunctionApply.apply$n(
-              ${(0 until n).map(i => s"b${i + 1}.get.as[${tparams0(i)}]($factory)(${tparams0(i)})").mkString(", ")}
+              ${(0 until n).map(i => s"b${i + 1}.get.as[${tparams0(i)}]($factory)(using ${tparams0(i)})").mkString(", ")}
             )($apply)
         }
       case e @ $left(_) => e.coerceRight
@@ -89,14 +89,14 @@ ${signature(name)}
           case ICons(h, t) =>
             -\/(Err(CaseClassMapMissingKeyError(NonEmptyList.nel(h, t), K)))
           case _ =>
-            b1.get.as[A1](factory)(A1).map(apply)
+            b1.get.as[A1](factory)(using A1).map(apply)
         }
       case e @ -\/(_) => e.coerceRight
     }
   )
 
   def codec[A1, Z](apply: A1 => Z, unapply: Z => Option[A1])(a1: K)(implicit A1: MsgpackCodec[A1]): MsgpackCodec[Z] =
-    codec1(apply, unapply)(a1)(A1)"""
+    codec1(apply, unapply)(a1)(using A1)"""
 
     s"""package $pack
 
@@ -106,10 +106,10 @@ import scalaz._
 object CaseMapCodec {
 
   def string(factory: PackerUnpackerFactory) =
-    new CaseMapCodec[String](factory)(CodecInstances.std.stringCodec)
+    new CaseMapCodec[String](factory)(using CodecInstances.std.stringCodec)
 
   def int(factory: PackerUnpackerFactory) =
-    new CaseMapCodec[Int](factory)(CodecInstances.anyVal.intCodec)
+    new CaseMapCodec[Int](factory)(using CodecInstances.anyVal.intCodec)
 }
 
 class CaseMapCodec[$K]($factory: PackerUnpackerFactory)(implicit K: $c[K]) {
