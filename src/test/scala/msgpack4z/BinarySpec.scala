@@ -14,12 +14,12 @@ abstract class BinarySpec extends SpecBase {
 
   val binary = checkLawz[Binary]
 
-  val `binary 16` = checkLaw[Binary](
+  val `binary 16` = checkLaw[Binary](using
     implicitly,
     Gen.value(new Binary(Array.fill[Byte](1 << (8 + 1))(Random.nextInt().toByte)))
   )
 
-  val `binary 32` = checkLaw[Binary](
+  val `binary 32` = checkLaw[Binary](using
     implicitly,
     Gen.value(new Binary(Array.fill[Byte](1 << (16 + 1))(Random.nextInt().toByte)))
   )

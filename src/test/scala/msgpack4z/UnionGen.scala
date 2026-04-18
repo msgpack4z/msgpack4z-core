@@ -67,7 +67,7 @@ object UnionGen {
     )
 
   val arrayGen: Gen[MsgpackUnion] =
-    Gen.list(unionGen0).map(MsgpackArray)
+    Gen.list(using unionGen0).map(MsgpackArray)
 
   val mapGen: Gen[MsgpackUnion] =
     Gen.mapGen(using unionGen0, unionGen0).map(MsgpackMap)

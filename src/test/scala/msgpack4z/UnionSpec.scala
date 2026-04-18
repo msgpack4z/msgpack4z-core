@@ -9,7 +9,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
 
   private def supportExtType: Boolean = unionGen == UnionGen.unionGen
 
-  val union = checkLaw(MsgpackUnion.codecInstance, unionGen)
+  val union = checkLaw(using MsgpackUnion.codecInstance, unionGen)
 
   val `equals hashCode` = Property.forAll { (a: MsgpackUnion) =>
     val M = MsgpackCodec[MsgpackUnion]
