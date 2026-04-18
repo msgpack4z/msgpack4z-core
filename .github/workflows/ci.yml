@@ -35,3 +35,22 @@ jobs:
        testSequentialCross \
        "+ publishLocal"
     - run: rm -rf ~/.ivy2/local
+  latest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@v6
+    - uses: actions/setup-java@v5
+      with:
+        java-version: 25
+        distribution: zulu
+    - shell: bash
+      run: curl -Ls https://raw.githubusercontent.com/dwijnand/sbt-extras/b65ba508d917b2897/sbt > ./sbt && chmod 0755 ./sbt
+    - uses: coursier/cache-action@v8
+    - run:
+       ./sbt -v
+       '++ 3.8.3!'
+       Test/compile
+       testSequential
+       publishLocal
+    - run: rm -rf ~/.ivy2/local
