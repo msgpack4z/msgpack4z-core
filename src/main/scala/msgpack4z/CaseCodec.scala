@@ -24,7 +24,7 @@ object CaseCodec {
     )
 
   def codec[A1, Z](construct: A1 => Z, extract: Z => Option[A1])(implicit A1: MsgpackCodec[A1]): MsgpackCodec[Z] =
-    codec1(construct, extract)(A1)
+    codec1(construct, extract)(using A1)
 
 
 
@@ -52,7 +52,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, Z](construct: (A1, A2) => Z, extract: Z => Option[(A1, A2)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2]): MsgpackCodec[Z] =
-    codec2(construct, extract)(A1, A2)
+    codec2(construct, extract)(using A1, A2)
 
 
   def codec3[A1, A2, A3, Z](construct: (A1, A2, A3) => Z, extract: Z => Option[(A1, A2, A3)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3]): MsgpackCodec[Z] =
@@ -79,7 +79,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, Z](construct: (A1, A2, A3) => Z, extract: Z => Option[(A1, A2, A3)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3]): MsgpackCodec[Z] =
-    codec3(construct, extract)(A1, A2, A3)
+    codec3(construct, extract)(using A1, A2, A3)
 
 
   def codec4[A1, A2, A3, A4, Z](construct: (A1, A2, A3, A4) => Z, extract: Z => Option[(A1, A2, A3, A4)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4]): MsgpackCodec[Z] =
@@ -106,7 +106,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, Z](construct: (A1, A2, A3, A4) => Z, extract: Z => Option[(A1, A2, A3, A4)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4]): MsgpackCodec[Z] =
-    codec4(construct, extract)(A1, A2, A3, A4)
+    codec4(construct, extract)(using A1, A2, A3, A4)
 
 
   def codec5[A1, A2, A3, A4, A5, Z](construct: (A1, A2, A3, A4, A5) => Z, extract: Z => Option[(A1, A2, A3, A4, A5)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5]): MsgpackCodec[Z] =
@@ -133,7 +133,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, Z](construct: (A1, A2, A3, A4, A5) => Z, extract: Z => Option[(A1, A2, A3, A4, A5)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5]): MsgpackCodec[Z] =
-    codec5(construct, extract)(A1, A2, A3, A4, A5)
+    codec5(construct, extract)(using A1, A2, A3, A4, A5)
 
 
   def codec6[A1, A2, A3, A4, A5, A6, Z](construct: (A1, A2, A3, A4, A5, A6) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6]): MsgpackCodec[Z] =
@@ -160,7 +160,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, Z](construct: (A1, A2, A3, A4, A5, A6) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6]): MsgpackCodec[Z] =
-    codec6(construct, extract)(A1, A2, A3, A4, A5, A6)
+    codec6(construct, extract)(using A1, A2, A3, A4, A5, A6)
 
 
   def codec7[A1, A2, A3, A4, A5, A6, A7, Z](construct: (A1, A2, A3, A4, A5, A6, A7) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7]): MsgpackCodec[Z] =
@@ -187,7 +187,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, Z](construct: (A1, A2, A3, A4, A5, A6, A7) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7]): MsgpackCodec[Z] =
-    codec7(construct, extract)(A1, A2, A3, A4, A5, A6, A7)
+    codec7(construct, extract)(using A1, A2, A3, A4, A5, A6, A7)
 
 
   def codec8[A1, A2, A3, A4, A5, A6, A7, A8, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8]): MsgpackCodec[Z] =
@@ -214,7 +214,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8]): MsgpackCodec[Z] =
-    codec8(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8)
+    codec8(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8)
 
 
   def codec9[A1, A2, A3, A4, A5, A6, A7, A8, A9, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9]): MsgpackCodec[Z] =
@@ -241,7 +241,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9]): MsgpackCodec[Z] =
-    codec9(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9)
+    codec9(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9)
 
 
   def codec10[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10]): MsgpackCodec[Z] =
@@ -268,7 +268,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10]): MsgpackCodec[Z] =
-    codec10(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)
+    codec10(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10)
 
 
   def codec11[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11]): MsgpackCodec[Z] =
@@ -295,7 +295,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11]): MsgpackCodec[Z] =
-    codec11(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)
+    codec11(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11)
 
 
   def codec12[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12]): MsgpackCodec[Z] =
@@ -322,7 +322,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12]): MsgpackCodec[Z] =
-    codec12(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)
+    codec12(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12)
 
 
   def codec13[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13]): MsgpackCodec[Z] =
@@ -349,7 +349,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13]): MsgpackCodec[Z] =
-    codec13(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)
+    codec13(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13)
 
 
   def codec14[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14]): MsgpackCodec[Z] =
@@ -376,7 +376,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14]): MsgpackCodec[Z] =
-    codec14(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)
+    codec14(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14)
 
 
   def codec15[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15]): MsgpackCodec[Z] =
@@ -403,7 +403,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15]): MsgpackCodec[Z] =
-    codec15(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15)
+    codec15(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15)
 
 
   def codec16[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16]): MsgpackCodec[Z] =
@@ -430,7 +430,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16]): MsgpackCodec[Z] =
-    codec16(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16)
+    codec16(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16)
 
 
   def codec17[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17]): MsgpackCodec[Z] =
@@ -457,7 +457,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17]): MsgpackCodec[Z] =
-    codec17(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17)
+    codec17(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17)
 
 
   def codec18[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18]): MsgpackCodec[Z] =
@@ -484,7 +484,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18]): MsgpackCodec[Z] =
-    codec18(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)
+    codec18(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18)
 
 
   def codec19[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19]): MsgpackCodec[Z] =
@@ -511,7 +511,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19]): MsgpackCodec[Z] =
-    codec19(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19)
+    codec19(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19)
 
 
   def codec20[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20]): MsgpackCodec[Z] =
@@ -538,7 +538,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20]): MsgpackCodec[Z] =
-    codec20(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20)
+    codec20(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20)
 
 
   def codec21[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20], A21: MsgpackCodec[A21]): MsgpackCodec[Z] =
@@ -565,7 +565,7 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20], A21: MsgpackCodec[A21]): MsgpackCodec[Z] =
-    codec21(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21)
+    codec21(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21)
 
 
   def codec22[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20], A21: MsgpackCodec[A21], A22: MsgpackCodec[A22]): MsgpackCodec[Z] =
@@ -592,6 +592,6 @@ object CaseCodec {
     )
 
   def codec[A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22, Z](construct: (A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22) => Z, extract: Z => Option[(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22)])(implicit A1: MsgpackCodec[A1], A2: MsgpackCodec[A2], A3: MsgpackCodec[A3], A4: MsgpackCodec[A4], A5: MsgpackCodec[A5], A6: MsgpackCodec[A6], A7: MsgpackCodec[A7], A8: MsgpackCodec[A8], A9: MsgpackCodec[A9], A10: MsgpackCodec[A10], A11: MsgpackCodec[A11], A12: MsgpackCodec[A12], A13: MsgpackCodec[A13], A14: MsgpackCodec[A14], A15: MsgpackCodec[A15], A16: MsgpackCodec[A16], A17: MsgpackCodec[A17], A18: MsgpackCodec[A18], A19: MsgpackCodec[A19], A20: MsgpackCodec[A20], A21: MsgpackCodec[A21], A22: MsgpackCodec[A22]): MsgpackCodec[Z] =
-    codec22(construct, extract)(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22)
+    codec22(construct, extract)(using A1, A2, A3, A4, A5, A6, A7, A8, A9, A10, A11, A12, A13, A14, A15, A16, A17, A18, A19, A20, A21, A22)
 
 }

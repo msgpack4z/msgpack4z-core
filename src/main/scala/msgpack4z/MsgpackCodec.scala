@@ -49,7 +49,7 @@ trait MsgpackCodec[A] {
    *   `Some(\/-(_))` if `fromBytes` and `toByte` are inconsistent
    */
   final def roundtrip(a: A, packer: MsgPacker, unpacker: Array[Byte] => MsgUnpacker): Option[UnpackError \/ A] =
-    roundtripz(a, packer, unpacker)(Equal.equalA[A])
+    roundtripz(a, packer, unpacker)(using Equal.equalA[A])
 }
 
 private class MsgpackCodecConstant[A](
