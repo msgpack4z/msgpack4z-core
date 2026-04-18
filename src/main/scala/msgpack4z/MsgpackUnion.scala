@@ -415,6 +415,8 @@ final case class MsgpackArray(value: List[MsgpackUnion]) extends MsgpackUnion {
   }
 }
 
+object MsgpackArray extends (List[MsgpackUnion] => MsgpackArray)
+
 final case class MsgpackMap(value: Map[MsgpackUnion, MsgpackUnion]) extends MsgpackUnion {
   override protected[msgpack4z] def pack(packer: MsgPacker): Unit = {
     packer.packMapHeader(value.size)
