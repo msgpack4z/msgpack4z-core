@@ -54,5 +54,5 @@ jobs:
        msgpack4z-coreJS3/test
        msgpack4z-coreNative3/test
        testJavaLatest3/test
-       publishLocal
+       "all msgpack4z-coreJVM3/publishLocal msgpack4z-coreJS3/publishLocal msgpack4z-coreNative3/publishLocal"
     - run: rm -rf ~/.ivy2/local
