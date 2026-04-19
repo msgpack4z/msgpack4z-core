@@ -242,7 +242,6 @@ lazy val msgpack4zCoreNative = msgpack4zCore.native.settings(
 val subProjects = List(
   msgpack4zCoreJVM,
   msgpack4zCoreJS,
-  testJava07,
   testJavaLatest
 )
 
@@ -256,16 +255,6 @@ commands += Command.command("testSequentialCross") {
 }
 Compile / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
 Test / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
-
-lazy val testJava07 = Project("testJava07", file("test-java07"))
-  .settings(
-    commonSettings,
-    noPublish,
-    libraryDependencies ++= Seq(
-      "com.github.xuwei-k" % "msgpack4z-java07" % "0.2.0" % "test",
-    )
-  )
-  .dependsOn(msgpack4zCoreJVM % "test->test")
 
 lazy val testJavaLatest = Project("testJavaLatest", file("test-java-latest"))
   .settings(
