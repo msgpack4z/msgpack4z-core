@@ -241,6 +241,7 @@ lazy val msgpack4zCoreNative = msgpack4zCore.native.settings(
 
 val subProjects = List(
   msgpack4zCoreJVM,
+  msgpack4zCoreNative,
   msgpack4zCoreJS,
   testJava07,
   testJavaLatest
