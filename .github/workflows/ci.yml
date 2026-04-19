@@ -28,12 +28,12 @@ jobs:
     - run: git show --oneline --check
     - run:  |
        ./sbt -v \
-       "+ scalafmtCheckAll" \
+       scalafmtCheckAll \
        scalafmtSbtCheck \
        checkGenerateCodeError \
-       "+ Test/compile" \
-       testSequentialCross \
-       "+ publishLocal"
+       Test/compile \
+       testSequential \
+       publishLocal
     - run: rm -rf ~/.ivy2/local
   latest:
     runs-on: ubuntu-latest
@@ -50,7 +50,9 @@ jobs:
     - run:
        ./sbt -v
        '++ 3.8.3!'
-       Test/compile
-       testSequential
+       msgpack4z-coreJVM3/test
+       msgpack4z-coreJS3/test
+       msgpack4z-coreNative3/test
+       testJavaLatest3/test
        publishLocal
     - run: rm -rf ~/.ivy2/local

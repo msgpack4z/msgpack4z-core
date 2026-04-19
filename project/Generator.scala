@@ -25,7 +25,7 @@ object Generator {
   val settings: Seq[Def.Setting[_]] = Seq(
     generateFiles := {
       val pack = "msgpack4z"
-      val dir = CustomCrossType.shared(baseDirectory.value, "main") / pack
+      val dir = (file("src") / "main" / "scala" / pack).getAbsoluteFile
       val caseCodec = dir / "CaseCodec.scala"
       val caseMapCodec = dir / "CaseMapCodec.scala"
       val arrayCodec = dir / "AnyValArrayCodec.scala"

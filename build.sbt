@@ -1,11 +1,11 @@
 import build._
 import sbtrelease.ReleaseStateTransformations._
-import sbtcrossproject.CrossProject
 
 val msgpack4zNativeVersion = "0.4.0"
 val scalapropsVersion = "0.10.1"
 def ScalazVersion = "7.3.8"
 def Scala213 = "2.13.18"
+val scalaVersions = "2.12.21" :: Scala213 :: "3.3.7" :: Nil
 
 val tagName = Def.setting {
   s"v${if (releaseUseGlobalVersion.value) (ThisBuild / version).value else version.value}"
@@ -19,6 +19,12 @@ def gitHash(): String =
 
 val unusedWarnings = Seq(
   "-Ywarn-unused",
+)
+
+val jsNativeCommon = Def.settings(
+  libraryDependencies ++= Seq(
+    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
+  )
 )
 
 val setMimaVersion: State => State = { st =>
@@ -62,7 +68,7 @@ val commonSettings = Def.settings(
         val extracted = Project extract state
         extracted.runAggregated(extracted.get(thisProjectRef) / (Global / PgpKeys.publishSigned), state)
       },
-      enableCrossBuild = true
+      enableCrossBuild = false
     ),
     releaseStepCommandAndRemaining("sonaRelease"),
     setNextVersion,
@@ -114,8 +120,6 @@ val commonSettings = Def.settings(
     }
     .toList
     .flatten,
-  scalaVersion := Scala213,
-  crossScalaVersions := "2.12.21" :: Scala213 :: "3.3.7" :: Nil,
   (Compile / doc / scalacOptions) ++= {
     val tag = tagOrHash.value
     Seq(
@@ -152,78 +156,79 @@ val commonSettings = Def.settings(
   }
 ) ++ Seq(Compile, Test).flatMap(c => c / console / scalacOptions --= unusedWarnings)
 
-lazy val msgpack4zCore = CrossProject(
-  id = msgpack4zCoreName,
-  base = file(".")
-)(
-  JSPlatform,
-  JVMPlatform,
-  NativePlatform
-).crossType(
-  CustomCrossType
-).settings(
-  commonSettings,
-  Generator.settings,
-  buildInfoKeys := Seq[BuildInfoKey](
-    organization,
-    name,
-    version,
-    scalaVersion,
-    sbtVersion,
-    licenses,
-    "scalazVersion" -> ScalazVersion
-  ),
-  buildInfoPackage := "msgpack4z",
-  buildInfoObject := "BuildInfoMsgpack4zCore",
-  name := msgpack4zCoreName,
-  (Test / unmanagedSourceDirectories) ++= {
-    CrossVersion
-      .partialVersion(scalaVersion.value)
-      .map { case (v, _) =>
-        (LocalRootProject / baseDirectory).value / "src" / "test" / s"scala-${v}"
+lazy val msgpack4zCore = projectMatrix
+  .defaultAxes()
+  .withId(msgpack4zCoreName)
+  .in(file("."))
+  .settings(
+    commonSettings,
+    Test / parallelExecution := false,
+    Generator.settings,
+    buildInfoKeys := Seq[BuildInfoKey](
+      organization,
+      name,
+      version,
+      scalaVersion,
+      sbtVersion,
+      licenses,
+      "scalazVersion" -> ScalazVersion
+    ),
+    buildInfoPackage := "msgpack4z",
+    buildInfoObject := "BuildInfoMsgpack4zCore",
+    name := msgpack4zCoreName,
+    Test / sourceDirectories ~= (_.distinct),
+    libraryDependencies ++= Seq(
+      "org.scalaz" %%% "scalaz-core" % ScalazVersion,
+      "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
+      "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
+      "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.5.1" % "provided",
+    ),
+    libraryDependencies ++= {
+      if (CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 2)) {
+        Seq("com.chuusai" %%% "shapeless" % "2.3.13" % "test")
+      } else {
+        Nil
       }
-      .toList
-  },
-  Test / sourceDirectories ~= (_.distinct),
-  libraryDependencies ++= Seq(
-    "org.scalaz" %%% "scalaz-core" % ScalazVersion,
-    "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
-    "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
-  ),
-  libraryDependencies += "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.5.1" % "provided"
-).enablePlugins(
-  MimaPlugin,
-  sbtbuildinfo.BuildInfoPlugin
-).jvmSettings(
-  libraryDependencies ++= Seq(
-    "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
-    "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",
-    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test",
+    },
   )
-).jsSettings(
-  scalacOptions += {
-    val a = (LocalRootProject / baseDirectory).value.toURI.toString
-    val g = "https://raw.githubusercontent.com/msgpack4z/msgpack4z-core/" + tagOrHash.value
-    CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, _)) =>
-        s"-P:scalajs:mapSourceURI:$a->$g/"
-      case _ =>
-        s"-scalajs-mapSourceURI:$a->$g/"
-    }
-  },
-).settings(
-  libraryDependencies ++= {
-    if (CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 2)) {
-      Seq("com.chuusai" %%% "shapeless" % "2.3.13" % "test")
-    } else {
-      Nil
-    }
-  },
-).platformsSettings(NativePlatform, JSPlatform)(
-  libraryDependencies ++= Seq(
-    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
+  .enablePlugins(
+    MimaPlugin,
+    sbtbuildinfo.BuildInfoPlugin
   )
-)
+  .jvmPlatform(
+    scalaVersions = scalaVersions,
+    settings = Def.settings(
+      libraryDependencies ++= Seq(
+        "com.github.xuwei-k" % "msgpack4z-api" % "0.2.0",
+        "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",
+        "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test",
+      ),
+
+    )
+  )
+  .jsPlatform(
+    scalaVersions,
+    Def.settings(
+      scalacOptions += {
+        val a = (LocalRootProject / baseDirectory).value.toURI.toString
+        val g = "https://raw.githubusercontent.com/msgpack4z/msgpack4z-core/" + tagOrHash.value
+        CrossVersion.partialVersion(scalaVersion.value) match {
+          case Some((2, _)) =>
+            s"-P:scalajs:mapSourceURI:$a->$g/"
+          case _ =>
+            s"-scalajs-mapSourceURI:$a->$g/"
+        }
+      },
+      jsNativeCommon
+    )
+  )
+  .nativePlatform(
+    scalaVersions,
+    Def.settings(
+      scalapropsNativeSettings,
+      jsNativeCommon
+    )
+  )
 
 lazy val noPublish = Seq(
   mimaPreviousArtifacts := Set.empty,
@@ -235,31 +240,22 @@ lazy val noPublish = Seq(
   Test / publishArtifact := false
 )
 
-lazy val msgpack4zCoreJVM = msgpack4zCore.jvm
-lazy val msgpack4zCoreJS = msgpack4zCore.js
-lazy val msgpack4zCoreNative = msgpack4zCore.native.settings(
-  scalapropsNativeSettings,
-)
-
-val subProjects = List(
-  msgpack4zCoreJVM,
-  msgpack4zCoreNative,
-  msgpack4zCoreJS,
-  testJavaLatest
-)
-
+TaskKey[Unit]("testSequential") := Def
+  .sequential(
+    List(
+      msgpack4zCore.allProjects(),
+      testJavaLatest.allProjects(),
+    ).flatten.map(_._1).sortBy(_.id).map(_ / Test / test)
+  )
+  .value
 commonSettings
 noPublish
-commands += Command.command("testSequential") {
-  subProjects.map(_.id).map(_ + "/test").sorted ::: _
-}
-commands += Command.command("testSequentialCross") {
-  subProjects.map(_.id).map("+ " + _ + "/test").sorted ::: _
-}
 Compile / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
 Test / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
+autoScalaLibrary := false
 
-lazy val testJavaLatest = Project("testJavaLatest", file("test-java-latest"))
+lazy val testJavaLatest = projectMatrix
+  .in(file("test-java-latest"))
   .settings(
     commonSettings,
     noPublish,
@@ -267,4 +263,8 @@ lazy val testJavaLatest = Project("testJavaLatest", file("test-java-latest"))
       ("com.github.xuwei-k" % "msgpack4z-java" % "0.4.0" % "test"),
     )
   )
-  .dependsOn(msgpack4zCoreJVM % "test->test")
+  .defaultAxes(VirtualAxis.jvm)
+  .jvmPlatform(
+    scalaVersions = scalaVersions
+  )
+  .dependsOn(msgpack4zCore % "test->test")
