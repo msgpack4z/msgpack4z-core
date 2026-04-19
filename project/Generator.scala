@@ -1,9 +1,12 @@
 import sbt._, Keys._
 
 object Generator {
+  @transient
   private val generateCode = taskKey[Unit]("")
   private val generateFiles = settingKey[Seq[GeneratedCode]]("")
+  @transient
   private val checkGenerateCode = taskKey[Boolean]("")
+  @transient
   private val checkGenerateCodeError = taskKey[Unit]("")
 
   private final case class GeneratedCode(file: File, code: String) {
