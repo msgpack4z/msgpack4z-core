@@ -8,11 +8,11 @@ object Generator {
 
   private final case class GeneratedCode(file: File, code: String) {
     def write(): Unit = IO.write(file, code)
-    def check: Boolean = {
+    def check(): Boolean = {
       if (file.isFile) {
         IO.read(file) == code
       } else {
-        println(red(file + " not found!"))
+        println(red(s"${file} not found!"))
         false
       }
     }
@@ -39,8 +39,8 @@ object Generator {
         GeneratedCode(anyValCodec, AnyValCodec.generate(pack))
       )
     },
-    generateCode := generateFiles.value.foreach(_.write),
-    checkGenerateCode := generateFiles.value.forall(_.check),
+    generateCode := generateFiles.value.foreach(_.write()),
+    checkGenerateCode := generateFiles.value.forall(_.check()),
     checkGenerateCodeError := {
       generateCode.value
       Thread.sleep(1000)
