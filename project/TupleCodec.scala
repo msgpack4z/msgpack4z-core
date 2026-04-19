@@ -18,12 +18,12 @@ object TupleCodec {
 
 // GENERATED CODE: DO NOT EDIT.
 trait TupleCodec {
-${(1 to 22 map defdef map ("  " + _)).mkString("\n")}
+${(1 to 22).map(defdef).map("  " + _).mkString("\n")}
 }
 
 private[$pack] trait TupleCodecImpl extends TupleCodec {
 
-${(1 to 22 map f).mkString("\n")}
+${(1 to 22).map(f).mkString("\n")}
 }
 """
   }
