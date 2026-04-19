@@ -31,7 +31,7 @@ val setMimaVersion: State => State = { st =>
   val extracted = Project.extract(st)
   val (releaseV, _) = st.get(ReleaseKeys.versions).getOrElse(sys.error("impossible"))
   IO.write(
-    extracted get releaseVersionFile,
+    extracted.get(releaseVersionFile),
     s"""\nThisBuild / build.${build.mimaBasis.key.label} := \"${releaseV}\"\n""",
     append = true
   )
@@ -65,7 +65,7 @@ val commonSettings = Def.settings(
     tagRelease,
     ReleaseStep(
       action = { state =>
-        val extracted = Project extract state
+        val extracted = Project.extract(state)
         extracted.runAggregated(extracted.get(thisProjectRef) / (Global / PgpKeys.publishSigned), state)
       },
       enableCrossBuild = false
