@@ -22,7 +22,7 @@ object Generator {
     ("\n" * 2) + scala.Console.RED + str + ("\n " * 2) + scala.Console.RESET
   }
 
-  val settings: Seq[Def.Setting[_]] = Seq(
+  val settings: Seq[Def.Setting[?]] = Seq(
     generateFiles := {
       val pack = "msgpack4z"
       val dir = (file("src") / "main" / "scala" / pack).getAbsoluteFile
