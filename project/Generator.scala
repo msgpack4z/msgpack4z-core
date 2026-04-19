@@ -1,10 +1,10 @@
 import sbt._, Keys._
 
 object Generator {
-  private val generateCode = TaskKey[Unit]("generateCode")
-  private val generateFiles = SettingKey[Seq[GeneratedCode]]("generateFiles")
-  private val checkGenerateCode = TaskKey[Boolean]("checkGenerateCode")
-  private val checkGenerateCodeError = TaskKey[Unit]("checkGenerateCodeError")
+  private val generateCode = taskKey[Unit]("")
+  private val generateFiles = settingKey[Seq[GeneratedCode]]("")
+  private val checkGenerateCode = taskKey[Boolean]("")
+  private val checkGenerateCodeError = taskKey[Unit]("")
 
   private final case class GeneratedCode(file: File, code: String) {
     def write(): Unit = IO.write(file, code)
