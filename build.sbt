@@ -38,6 +38,23 @@ val setMimaVersion: State => State = { st =>
   reapply(Seq(ThisBuild / build.mimaBasis := releaseV), st)
 }
 
+val jvmSettings = Def.settings(
+  scalacOptions ++= {
+    if (scalaVersion.value.startsWith("3.3.")) {
+      Seq(
+        "-Yfuture-lazy-vals",
+        "-release:11",
+      )
+    } else if (scalaBinaryVersion.value == "3") {
+      Nil
+    } else {
+      Seq(
+        "-release:8",
+      )
+    }
+  },
+)
+
 val commonSettings = Def.settings(
   ReleasePlugin.extraReleaseCommands,
   scalapropsCoreSettings,
@@ -203,7 +220,7 @@ lazy val msgpack4zCore = projectMatrix
         "com.github.xuwei-k" % "msgpack4z-java06" % "0.2.0" % "test",
         "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion % "test",
       ),
-
+      jvmSettings,
     )
   )
   .jsPlatform(
@@ -265,6 +282,7 @@ lazy val testJavaLatest = projectMatrix
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(
-    scalaVersions = scalaVersions
+    scalaVersions = scalaVersions,
+    jvmSettings,
   )
   .dependsOn(msgpack4zCore % "test->test")
