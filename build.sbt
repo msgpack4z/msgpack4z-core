@@ -15,7 +15,7 @@ val tagOrHash = Def.setting {
 }
 
 def gitHash(): String =
-  sys.process.Process("git rev-parse HEAD").lineStream_!.head
+  sys.process.Process("git rev-parse HEAD").lazyLines_!.head
 
 val unusedWarnings = Seq(
   "-Ywarn-unused",
@@ -23,7 +23,7 @@ val unusedWarnings = Seq(
 
 val jsNativeCommon = Def.settings(
   libraryDependencies ++= Seq(
-    "com.github.xuwei-k" %%% "msgpack4z-native" % msgpack4zNativeVersion,
+    "com.github.xuwei-k" %% "msgpack4z-native" % msgpack4zNativeVersion,
   )
 )
 
@@ -195,14 +195,14 @@ lazy val msgpack4zCore = projectMatrix
     name := msgpack4zCoreName,
     Test / sourceDirectories ~= (_.distinct),
     libraryDependencies ++= Seq(
-      "org.scalaz" %%% "scalaz-core" % ScalazVersion,
-      "com.github.scalaprops" %%% "scalaprops" % scalapropsVersion % "test",
-      "com.github.scalaprops" %%% "scalaprops-scalaz" % scalapropsVersion % "test",
-      "com.github.xuwei-k" %% "zeroapply-scalaz" % "0.5.1" % "provided",
+      "org.scalaz" %% "scalaz-core" % ScalazVersion,
+      "com.github.scalaprops" %% "scalaprops" % scalapropsVersion % "test",
+      "com.github.scalaprops" %% "scalaprops-scalaz" % scalapropsVersion % "test",
+      ("com.github.xuwei-k" %% "zeroapply-scalaz" % "0.5.1" % "provided").platform(Platform.jvm),
     ),
     libraryDependencies ++= {
       if (CrossVersion.partialVersion(scalaVersion.value).exists(_._1 == 2)) {
-        Seq("com.chuusai" %%% "shapeless" % "2.3.13" % "test")
+        Seq("com.chuusai" %% "shapeless" % "2.3.13" % "test")
       } else {
         Nil
       }
@@ -257,19 +257,29 @@ lazy val noPublish = Seq(
   Test / publishArtifact := false
 )
 
-TaskKey[Unit]("testSequential") := Def
-  .sequential(
-    List(
-      msgpack4zCore.allProjects(),
-      testJavaLatest.allProjects(),
-    ).flatten.map(_._1).sortBy(_.id).map(_ / Test / test)
-  )
-  .value
-commonSettings
-noPublish
-Compile / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
-Test / scalaSource := (ThisBuild / baseDirectory).value / "dummy"
-autoScalaLibrary := false
+val msgpack4zCoreRoot = rootProject.autoAggregate.settings(
+  TaskKey[Unit]("testSequential") := Def
+    .sequential(
+      List(
+        msgpack4zCore.allProjects(),
+        testJavaLatest.allProjects(),
+      ).flatten
+        .map(_._1)
+        .sortBy(_.id)
+        .flatMap(p =>
+          Seq[Def.Initialize[Task[Unit]]](
+            Def.task(streams.value.log.info(s"start ${p.id} test")),
+            (p / Test / testFull).map(_ => ())
+          )
+        )
+    )
+    .value,
+  commonSettings,
+  noPublish,
+  Compile / scalaSource := (ThisBuild / baseDirectory).value / "dummy",
+  Test / scalaSource := (ThisBuild / baseDirectory).value / "dummy",
+  autoScalaLibrary := false,
+)
 
 lazy val testJavaLatest = projectMatrix
   .in(file("test-java-latest"))
