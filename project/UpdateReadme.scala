@@ -11,9 +11,8 @@ object UpdateReadme {
     val modules = build.modules
     val readme = "README.md"
     val readmeFile = file(readme)
-    val newReadme = Predef
-      .augmentString(IO.read(readmeFile))
-      .lines
+    val newReadme = IO
+      .readLines(readmeFile)
       .map { line =>
         val matchReleaseOrSnapshot = line.contains("SNAPSHOT") == v.contains("SNAPSHOT")
         def n = modules(modules.indexWhere(line.contains))
