@@ -7,7 +7,7 @@ object CaseCodec {
   private final val extract = "extract"
   private final val Z = "Z"
 
-  private[this] val f: Int => String = { i =>
+  private val f: Int => String = { i =>
     val tparams = tparamList(i)
     val tparams1 = tparams.mkString(", ")
     val implicitParams = tparams.map(x => x + ": MsgpackCodec[" + x + "]").mkString(", ")
@@ -46,7 +46,7 @@ object CaseCodec {
 """
   }
 
-  private[this] def one = {
+  private def one = {
     val codec1 = "codec1"
     val A1 = "A1"
     def methodDef(name: String) =
