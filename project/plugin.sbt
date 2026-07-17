@@ -6,7 +6,7 @@ addSbtPlugin("com.github.scalaprops" % "sbt-scalaprops" % "0.5.3")
 addSbtPlugin("com.typesafe" % "sbt-mima-plugin" % "1.1.6")
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.22.0")
 addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.5.12")
-addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.1")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.2")
 
 scalacOptions ++= Seq(
   "-deprecation",
