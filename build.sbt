@@ -4,7 +4,7 @@ import sbtrelease.ReleaseStateTransformations._
 val msgpack4zNativeVersion = "0.4.0"
 val scalapropsVersion = "0.11.1"
 def ScalazVersion = "7.3.9"
-def Scala213 = "2.13.18"
+def Scala213 = "3.9.0"
 val scalaVersions = "2.12.21" :: Scala213 :: "3.3.8" :: Nil
 
 val tagName = Def.setting {
