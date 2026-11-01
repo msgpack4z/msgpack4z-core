@@ -95,7 +95,7 @@ val commonSettings = Def.settings(
     pushChanges
   ),
   organization := "com.github.xuwei-k",
-  homepage := Some(url("https://github.com/msgpack4z")),
+  homepage := Some(uri("https://github.com/msgpack4z")),
   licenses := Seq(License.MIT),
   scalacOptions ++= Seq(
     "-deprecation",
