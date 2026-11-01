@@ -11,7 +11,7 @@ object CaseClassExample extends Scalaprops {
 
   val sample = Foo(true, "abcde", List(10, 20, 30))
 
-  val `case class map example` = forAll {
+  property("case class map example") = forAll {
     val factory = new PackerUnpackerFactory {
       def packer: MsgPacker = MsgOutBuffer.create()
       def unpacker(bytes: Array[Byte]): MsgUnpacker = MsgInBuffer(bytes)
@@ -41,7 +41,7 @@ object CaseClassExample extends Scalaprops {
     instance.unpackAndClose(MsgInBuffer(bytes)) == \/.right(sample)
   }
 
-  val `case class array example` = forAll {
+  property("case class array example") = forAll {
     val instance = CaseCodec.codec(Foo.apply _, (x: Foo) => Some(x.asTuple))
 
     val bytes = instance.toBytes(sample, MsgOutBuffer.create())

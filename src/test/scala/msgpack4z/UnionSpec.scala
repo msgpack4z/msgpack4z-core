@@ -9,9 +9,9 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
 
   private def supportExtType: Boolean = unionGen == UnionGen.unionGen
 
-  val union = checkLaw(using MsgpackUnion.codecInstance, unionGen)
+  property("union") = checkLaw(using MsgpackUnion.codecInstance, unionGen)
 
-  val `equals hashCode` = Property.forAll { (a: MsgpackUnion) =>
+  property("equals hashCode") = Property.forAll { (a: MsgpackUnion) =>
     val M = MsgpackCodec[MsgpackUnion]
     val bytes = M.toBytes(a, packer())
     M.unpackAndClose(unpacker(bytes)) match {
@@ -23,13 +23,13 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     }
   }.toProperties((), Param.minSuccessful(10000))
 
-  val `MsgpackLong and MsgpackULong` = Property.forAll { (a: Long) =>
+  property("MsgpackLong and MsgpackULong") = Property.forAll { (a: Long) =>
     val x = MsgpackLong(a)
     val y = MsgpackULong(java.math.BigInteger.valueOf(a))
     (y == x) && (x == y) && (x.hashCode == y.hashCode)
   }
 
-  val `MsgpackLong pack/unpack MsgpackLong` = Property.forAll { (a: Long) =>
+  property("MsgpackLong pack/unpack MsgpackLong") = Property.forAll { (a: Long) =>
     val M = MsgpackCodec[MsgpackUnion]
     val b = MsgpackLong(a)
     val c = M.toBytes(b, packer())
@@ -41,7 +41,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     }
   }
 
-  val extEqualsHashcode = Property.forAllG(UnionGen.extGen) { (e1: MsgpackExt) =>
+  property("extEqualsHashcode") = Property.forAllG(UnionGen.extGen) { (e1: MsgpackExt) =>
     val e2 = e1.copy()
     (e1 ne e2) && (e1 == e2) && (e1.## == e2.##)
   }
@@ -70,9 +70,10 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     } else true
   }
 
-  val extSize2 = extSize1.toProperties((), Param.maxSize(1 << 18))
+  property("extSize1") = extSize1
+  property("extSize2") = extSize1.toProperties((), Param.maxSize(1 << 18))
 
-  val ext16 = Property.forAll {
+  property("ext16") = Property.forAll {
     if (supportExtType) {
       val size = 1 << 10
       val e = MsgpackUnion.ext((Random.nextInt().toByte, Array.fill[Byte](size)(Random.nextInt().toByte)))
@@ -89,7 +90,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     } else true
   }
 
-  val ext32 = Property.forAll {
+  property("ext32") = Property.forAll {
     if (supportExtType) {
       val size = 1 << 17
       val e = MsgpackUnion.ext((Random.nextInt().toByte, Array.fill[Byte](size)(Random.nextInt().toByte)))
@@ -106,7 +107,7 @@ abstract class UnionSpec(unionGen0: Gen[MsgpackUnion] = UnionGen.unionGen) exten
     } else true
   }
 
-  val `map imap` = Property.forAll { (a: Map[MsgpackUnion, MsgpackUnion]) =>
+  property("map imap") = Property.forAll { (a: Map[MsgpackUnion, MsgpackUnion]) =>
     val b = MsgpackUnion.map(a)
     val c = IMap.fromList(a.toList)
     val d = MsgpackUnion.imap(c)

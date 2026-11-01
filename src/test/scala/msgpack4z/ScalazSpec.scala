@@ -7,11 +7,11 @@ import scalaprops.ScalapropsScalaz._
 
 abstract class ScalazSpec extends SpecBase {
 
-  val iList = checkLawz[IList[Long]]
-  val iSet = checkLawz[ISet[Long]]
-  val maybe = checkLawz[Maybe[Long]]
-  val iMap = checkLawz[String ==>> Maybe[Byte]]
-  val nonEmptyList = checkLawz[NonEmptyList[NonEmptyList[Long]]]
+  property("iList") = checkLawz[IList[Long]]
+  property("iSet") = checkLawz[ISet[Long]]
+  property("maybe") = checkLawz[Maybe[Long]]
+  property("iMap") = checkLawz[String ==>> Maybe[Byte]]
+  property("nonEmptyList") = checkLawz[NonEmptyList[NonEmptyList[Long]]]
 
   import msgpack4z.EitherCodec.eitherCompactCodec
 
@@ -19,12 +19,12 @@ abstract class ScalazSpec extends SpecBase {
   private type EitherR = Either[Int, String]
   private type EitherTest = EitherL \/ EitherR
 
-  val `disjunction String` = {
+  property("disjunction String") = {
     import msgpack4z.DisjunctionCodec.disjunctionStringCodec
     checkLaw[EitherTest]
   }
 
-  val `disjunction Compact` = {
+  property("disjunction Compact") = {
     import msgpack4z.DisjunctionCodec.disjunctionCompactCodec
     checkLaw[EitherTest]
   }
