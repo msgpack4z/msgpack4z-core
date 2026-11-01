@@ -11,7 +11,7 @@ abstract class ArraySpec extends SpecBase {
   private implicit def arrayEq[A](implicit A: Equal[A]): Equal[Array[A]] =
     Equal.equalBy(_.toList)
 
-  val primitive = {
+  property("primitive") = {
     import msgpack4z.CodecInstances.anyValArray._
     Properties.list(
       checkLawWithoutHashCode[Array[Short]].toProperties("Short"),
@@ -24,7 +24,7 @@ abstract class ArraySpec extends SpecBase {
     )
   }
 
-  val generic = {
+  property("generic") = {
     import CodecInstances.array.arrayCodec
     import CodecInstances.anyVal._
     import CodecInstances.std.stringCodec

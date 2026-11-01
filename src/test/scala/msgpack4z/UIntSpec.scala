@@ -30,7 +30,7 @@ abstract class UIntSpec extends SpecBase {
       90 -> Gen.chooseLong(min, max)
     )
 
-  val uint8 = forAllG(chooseWithBoundaries(0, (1 << 8) - 1)) { x =>
+  property("uint8") = forAllG(chooseWithBoundaries(0, (1 << 8) - 1)) { x =>
     def u = unpacker(Array[Byte](msgpack4z.Code.UINT8, x.toByte))
     if (x < 128) {
       assert(u.unpackByte() == x)
@@ -47,7 +47,7 @@ abstract class UIntSpec extends SpecBase {
     true
   }
 
-  val uint16 = forAllG(chooseWithBoundaries(0, (1 << 16) - 1)) { x =>
+  property("uint16") = forAllG(chooseWithBoundaries(0, (1 << 16) - 1)) { x =>
     def u = {
       val buf = MsgOutBuffer.create()
       buf.writeByteAndShort(Code.UINT16, x.toShort)
@@ -74,7 +74,7 @@ abstract class UIntSpec extends SpecBase {
     true
   }
 
-  val uint32 = {
+  property("uint32") = {
     val g = Gen.frequency(
       1 -> Gen.value(Int.MaxValue.toLong - 1),
       1 -> Gen.value(Int.MaxValue.toLong),
@@ -117,7 +117,7 @@ abstract class UIntSpec extends SpecBase {
     }
   }
 
-  val uint64 = {
+  property("uint64") = {
     val g = {
       val longPos = chooseLongWithBoundaries(0, Long.MaxValue)
 

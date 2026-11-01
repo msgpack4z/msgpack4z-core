@@ -9,7 +9,7 @@ object CaseClassExample2 extends Scalaprops {
   final case class UserId(value: Long)
   object UserId extends MsgpackCompanion[Long, UserId]
 
-  val `single parameter case class use MsgpackCompanion` = forAll {
+  property("single parameter case class use MsgpackCompanion") = forAll {
     val userId = UserId(42)
 
     val bytes = MsgpackCodec[UserId].toBytes(userId, MsgOutBuffer.create())
