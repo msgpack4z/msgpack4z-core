@@ -23,7 +23,7 @@ jobs:
     - shell: bash
       name: install sbt
       run: curl -Ls https://raw.githubusercontent.com/dwijnand/sbt-extras/aff36a23f7213d94189aabfcc47a32b11f3a6fba/sbt > ./sbt && chmod 0755 ./sbt
-    - uses: coursier/cache-action@v8
+    - uses: coursier/cache-action@v9
     - run: git config core.whitespace tab-in-indent,trailing-space,space-before-tab,cr-at-eol
     - run: git show --oneline --check
     - run:  |
@@ -46,7 +46,7 @@ jobs:
         distribution: zulu
     - shell: bash
       run: curl -Ls https://raw.githubusercontent.com/dwijnand/sbt-extras/b65ba508d917b2897/sbt > ./sbt && chmod 0755 ./sbt
-    - uses: coursier/cache-action@v8
+    - uses: coursier/cache-action@v9
     - run:
        ./sbt -v
        '++ 3.9.0-RC1!'
