@@ -4,7 +4,7 @@ addSbtPlugin("com.eed3si9n" % "sbt-buildinfo" % "0.14.0")
 addSbtPlugin("com.github.scalaprops" % "sbt-scalaprops" % "0.6.0")
 addSbtPlugin("com.typesafe" % "sbt-mima-plugin" % "1.2.1")
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % "1.23.0")
-addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.5.12")
+addSbtPlugin("org.scala-native" % "sbt-scala-native" % "0.5.13")
 addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.6.2")
 
 scalacOptions ++= Seq(
