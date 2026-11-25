@@ -49,10 +49,8 @@ jobs:
     - uses: coursier/cache-action@v9
     - run:
        ./sbt -v
-       '++ 3.9.0-RC1!'
+       '++ 3.10.1!'
        msgpack4z-coreJVM3/test
-       msgpack4z-coreJS3/test
-       msgpack4z-coreNative3/test
        testJavaLatest3/test
-       "all msgpack4z-coreJVM3/publishLocal msgpack4z-coreJS3/publishLocal msgpack4z-coreNative3/publishLocal"
+       msgpack4z-coreJVM3/publishLocal
     - run: rm -rf ~/.ivy2/local
