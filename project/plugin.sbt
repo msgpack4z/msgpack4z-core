@@ -13,5 +13,3 @@ scalacOptions ++= Seq(
   "-language:existentials",
   "-language:implicitConversions",
 )
-
-fullResolvers ~= { _.filterNot(_.name == "jcenter") }
