@@ -59,7 +59,6 @@ val commonSettings = Def.settings(
   ReleasePlugin.extraReleaseCommands,
   scalapropsCoreSettings,
   publishTo := (if (isSnapshot.value) None else localStaging.value),
-  fullResolvers ~= { _.filterNot(_.name == "jcenter") },
   commands += Command.command("updateReadme")(UpdateReadme.updateReadmeTask),
   commands += Command.command("setMimaVersion")(setMimaVersion),
   mimaPreviousArtifacts := {
